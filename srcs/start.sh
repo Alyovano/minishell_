@@ -23,10 +23,10 @@ mv ./minishell/*.o ./
 #---------------------------------------------------
 #Compilation basique
 echo "\n\n${UNDERLINE_GREEN}Creation de l'executable${NC}\n\n"
-gcc ${FLAGS} *.o libftprintfgnl.a
+#gcc ${FLAGS} *.o libftprintfgnl.a
 #Compilation de deboguage
 #Mets la basique en com et utilise celle-ci, si t'as une galere
-#gcc ${FLAGS} ${DEBBUG} *.o libftprintfgnl.a
+gcc ${FLAGS} ${DEBBUG} *.o libftprintfgnl.a
 #---------------------------------------------------
 #Clean up
 echo "\n\n${UNDERLINE_CYAN} Clean and ready${NC}\n\n"
