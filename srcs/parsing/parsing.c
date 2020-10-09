@@ -1,5 +1,5 @@
 #include "../includes/minishell.h"
-
+#define NO_QUOTE -1
 
 int         is_my_quote(char *str, char quote_needed)
 {
@@ -20,7 +20,7 @@ int         is_my_quote(char *str, char quote_needed)
     if (token == 1)
         return (i);
     else
-        return (0);
+        return (NO_QUOTE);
 }
 
 char        *quote_prompt(char *input, char quote_needed)
@@ -30,9 +30,9 @@ char        *quote_prompt(char *input, char quote_needed)
 
     while (1)
     {
-        quote_needed == '\'' ? ft_printf("quote>") : ft_printf("dquote>");
+        quote_needed == '\'' ? ft_printf("quote> ") : ft_printf("dquote> ");
         get_next_line(0, &next_str);
-        if (is_my_quote(next_str, quote_needed) > 0)
+        if (is_my_quote(next_str, quote_needed) != NO_QUOTE)
         {
             tmp = ft_strjoin(input, next_str);
             return (tmp);
@@ -49,7 +49,7 @@ char        *catch_more_quote(char *input, int token_quote)
     quote_verif = 0;
     quote_verif = token_quote % 2 == 0 ? '"' : '\'';
     //Ici, j'admets que quote_verif a la valeur de la quote qu'on cherche
-    quote_prompt(input, quote_verif);
+    return (quote_prompt(input, quote_verif));
 }
 
 char        *verify_line_integrity(char *input)
