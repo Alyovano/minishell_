@@ -12,7 +12,7 @@ int     minishell_loop(t_user *start)
         ft_printf("minishell> ");
         get_next_line(0, &user_Input);
         parsing_input(user_Input, start); // Je bosse dans cet appel ./parsing/parsing.c
-        free(user_Input);
+        free(user_Input); // Faudra tout free, pas que input
     }
     return (0);
 }

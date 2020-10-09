@@ -23,6 +23,12 @@ echo "${UNDERLINE_GREEN}Compilation du parseur${NC}\n\n"
 gcc -c ./parsing/*.c
 mv ./parsing/*.o ./
 #---------------------------------------------------
+#Compilation Utils
+echo "\n\n"
+echo "${UNDERLINE_GREEN}Compilation des utils${NC}\n\n"
+gcc -c ./utils/*.c
+mv ./utils/*.o ./
+#---------------------------------------------------
 #Compilation minishell_
 echo "\n\n"
 echo "${UNDERLINE_GREEN}Compilation du main minishell${NC}\n\n"
