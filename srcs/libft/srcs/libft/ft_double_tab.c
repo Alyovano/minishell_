@@ -34,6 +34,5 @@ char    **copy_double_tab(char **src)
         new_Tab[i] = ft_strdup(src[i]);
         i++;
     }
-    printf("SIZE = %d\n", size);
     return (new_Tab);
 }

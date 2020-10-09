@@ -27,3 +27,5 @@ typedef struct      s_user
 /*
 ** Des fonctions
 */
+
+int         parsing_input(char *input, t_user *start);

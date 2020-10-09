@@ -1,6 +1,8 @@
 #Maintainer ;
 # Lturbang, Alyovano
 
+#Il faudra juste ajouter les .c a compiler
+
 RED='\033[0;31m'
 UNDERLINE_CYAN='\033[4;36m'
 UNDERLINE_GREEN='\033[4;32m'
@@ -14,6 +16,12 @@ echo "\n\n"
 echo "${UNDERLINE_GREEN}Compilation de la libft${NC}\n\n"
 make -C ./libft
 mv ./libft/libftprintfgnl.a ./
+#---------------------------------------------------
+#Compilation Parsing
+echo "\n\n"
+echo "${UNDERLINE_GREEN}Compilation du parseur${NC}\n\n"
+gcc -c ./parsing/*.c
+mv ./parsing/*.o ./
 #---------------------------------------------------
 #Compilation minishell_
 echo "\n\n"

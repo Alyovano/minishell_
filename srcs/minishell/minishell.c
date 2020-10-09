@@ -1,6 +1,8 @@
 #include "../includes/minishell.h"
 
-
+/*
+** Je commence le debut du parsing sous l'appel de GNL
+*/
 
 int     minishell_loop(t_user *start)
 {
@@ -9,8 +11,10 @@ int     minishell_loop(t_user *start)
     {
         ft_printf("minishell> ");
         get_next_line(0, &user_Input);
+        parsing_input(user_Input, start); // Je bosse dans cet appel ./parsing/parsing.c
         free(user_Input);
     }
+    return (0);
 }
 
 /*
