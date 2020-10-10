@@ -23,7 +23,7 @@ echo "${UNDERLINE_GREEN}Compilation du parseur${NC}\n\n"
 gcc -c ./parsing/*.c
 mv ./parsing/*.o ./
 #---------------------------------------------------
-#Compilation Utils
+#Compilation Utilos (Contient aussi quote multilignes)
 echo "\n\n"
 echo "${UNDERLINE_GREEN}Compilation des utils${NC}\n\n"
 gcc -c ./utils/*.c

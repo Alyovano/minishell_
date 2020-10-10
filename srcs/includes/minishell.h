@@ -29,3 +29,9 @@ typedef struct      s_user
 */
 
 int         parsing_input(char *input, t_user *start);
+
+/*
+** Quote multilignes (Bonus ?)
+*/
+
+char        *verify_quote_integrity(char *input);
