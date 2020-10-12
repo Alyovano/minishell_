@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
+/*   Updated: 2020/10/12 15:53:54 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#endif
+#define OK 0
+#define FAIL 1
 
 /*
 ** Des librairies
@@ -20,8 +33,8 @@
 */
 typedef struct      s_user
 {
-    char **user_Env;
-    char *user_Input;
+    char **user_env;
+    char *user_input;
 }                   t_user;
 
 /*
@@ -29,9 +42,12 @@ typedef struct      s_user
 */
 
 int         parsing_input(char *input, t_user *start);
+int		    check_quote(t_user *start);
 
 /*
 ** Quote multilignes (Bonus ?)
 */
 
 char        *verify_quote_integrity(char *input);
+
+#endif

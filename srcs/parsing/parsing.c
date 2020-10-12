@@ -1,6 +1,4 @@
 #include "../includes/minishell.h"
-#define OK 0
-#define FAIL 1
 //Ici il restera des failles dues a backslash avant la quote ...
 
 // L'appel de verify_quote_integrity c'est le fameux bonus que je fais pour rire
@@ -17,13 +15,13 @@ int         check_quote_number(t_user *start)
     quote_token = 0;
     dquote_token = 0;
     backslash = 0;
-    while (start->user_Input[i])
+    while (start->user_input[i])
     {
         j = 0;
-        if (start->user_Input[i] == '\'')
+        if (start->user_input[i] == '\'')
         {
             backslash = 0;
-            while (start->user_Input[i + j] && start->user_Input[i + j] == '\\')
+            while (start->user_input[i + j] && start->user_input[i + j] == '\\')
             {
                 j--;
                 backslash++;
@@ -31,10 +29,10 @@ int         check_quote_number(t_user *start)
             if (backslash % 2 == 0)
                 quote_token++;
         }
-        else if (start->user_Input[i] == '"')
+        else if (start->user_input[i] == '"')
         {
             backslash = 0;
-            while (start->user_Input[i + j] && start->user_Input[i + j] == '\\')
+            while (start->user_input[i + j] && start->user_input[i + j] == '\\')
             {
                 j--;
                 backslash++;
@@ -54,11 +52,11 @@ int         check_quote_number(t_user *start)
 
 int         parsing_input(char *input, t_user *start)
 {
-    start->user_Input = ft_strdup(input);
+    start->user_input = ft_strdup(input);
     if (check_quote_number(start) == FAIL)
         return (ft_printf("Bad quotes conditionning\n"));
     //backslash_gestion(start);
-    //start->user_Input = verify_quote_integrity(start->user_Input);
-    //ft_printf("%s\n", start->user_Input);
+    //start->user_input = verify_quote_integrity(start->user_input);
+    //ft_printf("%s\n", start->user_input);
     return (0);
 }

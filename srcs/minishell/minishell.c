@@ -6,13 +6,13 @@
 
 int     minishell_loop(t_user *start)
 {
-    char *user_Input;
+    char *user_input;
     while (1)
     {
         ft_printf("minishell> ");
-        get_next_line(0, &user_Input);
-        parsing_input(user_Input, start); // Je bosse dans cet appel ./parsing/parsing.c
-        free(user_Input); // Faudra tout free, pas que input
+        get_next_line(0, &user_input);
+        parsing_input(user_input, start); // Je bosse dans cet appel ./parsing/parsing.c
+        free(user_input); // Faudra tout free, pas que input
     }
     return (0);
 }
@@ -28,17 +28,17 @@ int     main(int argc, char **argv, char **env)
 
     if (!(start = malloc(sizeof(start))))
         return (-1);
-    start->user_Env = copy_double_tab(env);
+    start->user_env = copy_double_tab(env);
     minishell_loop(start);
     //------------------------------
     int i = 0;
-    while (start->user_Env[i])
+    while (start->user_env[i])
     {
-        ft_printf("%s\n", start->user_Env[i]);
-        free(start->user_Env[i]);
+        ft_printf("%s\n", start->user_env[i]);
+        free(start->user_env[i]);
         i++;
     }
-    free(start->user_Env);
+    free(start->user_env);
     free(start);
     return (0);
 }
