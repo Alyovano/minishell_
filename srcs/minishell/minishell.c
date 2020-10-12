@@ -26,6 +26,8 @@ int     main(int argc, char **argv, char **env)
 {
     t_user *start;
 
+    (void) argc;
+    (void) argv;
     if (!(start = malloc(sizeof(start))))
         return (-1);
     start->user_env = copy_double_tab(env);

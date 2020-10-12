@@ -4,5 +4,6 @@
 
 char        **ft_export(char **env)
 {
+    (void) env;
     return 0;
 }
