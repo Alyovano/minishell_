@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alyovano.h                                         :+:      :+:    :+:   */
+/*   libftprintfgnl.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alyovano <alyovano@student.s19.be>         +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 11:22:23 by alyovano          #+#    #+#             */
-/*   Updated: 2020/02/18 11:56:33 by alyovano         ###   ########.fr       */
+/*   Updated: 2020/10/12 08:50:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ALYOVANO_H
-# define ALYOVANO_H
+#ifndef LIBFTPRINTFGNL_H
+# define LIBFTPRINTFGNL_H
 # include "./srcs/ft_printf/ft_printf.h"
 # include "./srcs/libft/libft.h"
 

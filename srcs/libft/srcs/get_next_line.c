@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alyovano <alyovano@student.s19.be>         +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 11:46:52 by alyovano          #+#    #+#             */
-/*   Updated: 2020/02/18 11:51:08 by alyovano         ###   ########.fr       */
+/*   Updated: 2020/10/12 08:50:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../alyovano.h"
+#include "../libftprintfgnl.h"
 #define BUFFER_SIZE 32
 
 static int		ft_scann_gnl(const char *s)
