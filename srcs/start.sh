@@ -25,8 +25,8 @@ mv ./parsing/*.o ./
 #---------------------------------------------------
 #Compilation Utilos (Contient aussi quote multilignes)
 echo "\n\n"
-echo "${UNDERLINE_GREEN}Compilation des utils${NC}\n\n"
-gcc -c ./utils/*.c
+echo "${UNDERLINE_GREEN}Compilation quote${NC}\n\n"
+gcc -c ./quote/*.c
 mv ./utils/*.o ./
 #---------------------------------------------------
 #Compilation minishell_
