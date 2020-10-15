@@ -47,6 +47,8 @@ typedef struct      s_quote
 {
     int     token_in_dquote;
     int     token_in_simple_quote;
+    int     verif;
+    int     len;
 }                   t_quote;
 
 /*
@@ -55,7 +57,7 @@ typedef struct      s_quote
 
 int		    get_backslash(char *str, int i);
 int         parsing_input(char *input, t_user *start);
-int         parsing_quote(char *input);
+int         quote_get_len_and_validity(t_user *start, t_quote *quote, int i);
 
 /*
 ** Quote multilignes (Bonus ?)

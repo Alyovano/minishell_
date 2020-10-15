@@ -1,38 +1,41 @@
 #include "../includes/minishell.h"
 
-int parsing_quote(char *input)
+/*
+** Retourne la taille de la quote
+** stock dans quote->verif si elle est valide
+** Si quote->len vaut -1 :
+** - Alors la quote a ete slm ouverte et est invalide
+** Si la quote->len vaut 1:
+** Alors c'est une quote vide type "" ou ''
+** Si quote->len > 1 :
+** Je considere qu'il y a du texte recuperable dans la quote
+*/
+
+int quote_get_len_and_validity(t_user *start, t_quote *quote, int i)
 {
-    int i;
-    int verif;
-    t_quote quote;
- 
-    i = 0;
-    verif = 0;
-    quote.token_in_simple_quote = 0;
-    quote.token_in_dquote = 0;
-    while (input[i])
+    quote->len = 0;
+    quote->verif = 0;
+    while (start->user_input[i] 
+    && (quote->token_in_simple_quote % 2 != 0 || quote->token_in_dquote % 2 != 0))
     {
-        if (input[i] == '"')
+        if (start->user_input[i] == '"')
         {
-            if (get_backslash(input, i) == 0 && quote.token_in_simple_quote % 2 == 0)
-                quote.token_in_dquote++;
+            if (get_backslash(start->user_input, i) == 0 && quote->token_in_simple_quote % 2 == 0)
+                quote->token_in_dquote++;
         }
-        else if (input[i] == '\'')
+        else if (start->user_input[i] == '\'')
         {
-            if (quote.token_in_simple_quote % 2 == 0 && quote.token_in_dquote % 2 == 0)
+            if (quote->token_in_simple_quote % 2 == 0 && quote->token_in_dquote % 2 == 0)
             {
-                // premiere simple_quote
-                if (get_backslash(input, i) == 0)
-                    quote.token_in_simple_quote++;
+                if (get_backslash(start->user_input, i) == 0)
+                    quote->token_in_simple_quote++;
             }
-            else if (quote.token_in_simple_quote % 1 == 0 && quote.token_in_dquote % 2 == 0)
-            {
-                quote.token_in_simple_quote++;
-            }
-            // encore quelques doutes ici pt ? 
+            else if (quote->token_in_simple_quote % 1 == 0 && quote->token_in_dquote % 2 == 0)
+                quote->token_in_simple_quote++;
         }
         i++;
+        quote->len++;
     }
-    verif = (quote.token_in_dquote % 2) + (quote.token_in_simple_quote % 2);
-    return (verif);
+    quote->verif = (quote->token_in_dquote % 2) + (quote->token_in_simple_quote % 2);
+    return (quote->len - 1);
 }
