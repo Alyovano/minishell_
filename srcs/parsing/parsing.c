@@ -91,7 +91,8 @@ int         parsing_input(char *input, t_user *start)
         ft_printf("bash: erreur de syntaxe près du symbole inattendu « ; »\n");
         return (-1);
     }
-    
+    //else
+        //split ./parsing/first_split.c
     // on va split ici
     // Le chantier du debugger
     //-----------------------
