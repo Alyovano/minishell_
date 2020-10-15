@@ -18,8 +18,10 @@ int     minishell_loop(t_user *start)
 }
 
 /*
-** Le main aura d'autres utilites, enfin j'espere,
-** Pour le moment je laisse comme ca, mais ca va bouger (je crois ?)
+** LE MAIN : 
+** Malloc notre structure ;
+** Copie le tableau environnemental
+** Appele la boucle infinie du minishell
 */
 
 int     main(int argc, char **argv, char **env)
@@ -32,15 +34,5 @@ int     main(int argc, char **argv, char **env)
         return (-1);
     start->user_env = copy_double_tab(env);
     minishell_loop(start);
-    //------------------------------
-    int i = 0;
-    while (start->user_env[i])
-    {
-        ft_printf("%s\n", start->user_env[i]);
-        free(start->user_env[i]);
-        i++;
-    }
-    free(start->user_env);
-    free(start);
     return (0);
 }

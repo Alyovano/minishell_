@@ -23,10 +23,11 @@
 #include "../libft/libftprintfgnl.h"
 
 /*
-** Des structures
+**               Des structures
 */
 
-/* (s_user)
+/* 
+** (s_user)
 ** Dans cette struct je vais tenter de garder slm ce qui sera
 ** utile dans la premiere partie du projet -> Ce qui est relatif au parsing
 ** aux entrees de l'utilisateur et les infos du systeme
@@ -38,11 +39,23 @@ typedef struct      s_user
 }                   t_user;
 
 /*
-** Des fonctions
+** (s_quote)
+** Rien de ouf juste quelques token pour verifier les validites
 */
 
+typedef struct      s_quote
+{
+    int     token_in_dquote;
+    int     token_in_simple_quote;
+}                   t_quote;
+
+/*
+**                 Des fonctions
+*/
+
+int		    get_backslash(char *str, int i);
 int         parsing_input(char *input, t_user *start);
-int		    check_quote(t_user *start);
+int         parsing_quote(char *input);
 
 /*
 ** Quote multilignes (Bonus ?)

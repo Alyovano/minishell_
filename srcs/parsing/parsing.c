@@ -53,15 +53,14 @@ int         check_quote_number(t_user *start)
 
 int         parsing_input(char *input, t_user *start)
 {
+    int is_valid;
+
+    is_valid = 0;
     start->user_input = ft_strdup(input);
-    //if (check_quote_number(start) == FAIL)
-    //    return (ft_printf("Bad quotes conditionning\n"));
-    if (check_quote(start) == FAIL) //début de travail sur le check des quotes
-        ft_printf("%s\n", "erreur de quote dans la string");
+    is_valid = parsing_quote(input);
+    if (is_valid == 0)
+        printf("OK : quotes\n");
     else
-        ft_printf("%s\n", "string quote valable");
-    //backslash_gestion(start);
-    //start->user_input = verify_quote_integrity(start->user_input);
-    //ft_printf("%s\n", start->user_input);
-    return (0);
+        printf("BAD : quotes\n");
+    
 }
