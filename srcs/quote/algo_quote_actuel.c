@@ -11,10 +11,15 @@
 ** Je considere qu'il y a du texte recuperable dans la quote
 */
 
-int quote_get_len_and_validity(t_user *start, t_quote *quote, int i)
+void    init_quote_len_validity(t_quote *quote)
 {
     quote->len = 0;
     quote->verif = 0;
+}
+
+int quote_get_len_and_validity(t_user *start, t_quote *quote, int i)
+{
+    init_quote_len_validity(quote);
     while (start->user_input[i] 
     && (quote->token_in_simple_quote % 2 != 0 || quote->token_in_dquote % 2 != 0))
     {

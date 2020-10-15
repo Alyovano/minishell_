@@ -36,6 +36,7 @@ typedef struct      s_user
 {
     char **user_env;
     char *user_input;
+    int  split_nb;
 }                   t_user;
 
 /*
