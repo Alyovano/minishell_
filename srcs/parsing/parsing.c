@@ -70,10 +70,17 @@ int         input_to_tab(t_user *start, t_quote *quote)
         }
         if (is_this_splitable(start, quote, i) == -1)
             return (-1);
+        // On pourrait check les "<> >> $" ici aussi
         i++;
     }
     return (0);
 }
+
+/*
+** Ne pas oublier de :
+** Cas a patch -> minishell> ; echo lol
+** Ce cas la doit retourner une erreur
+*/
 
 int         parsing_input(char *input, t_user *start)
 {
@@ -88,12 +95,11 @@ int         parsing_input(char *input, t_user *start)
     start->split_nb = 1;
     if ((input_to_tab(start, quote) == -1))
     {
+        //free_all(start, quote);
         ft_printf("bash: erreur de syntaxe près du symbole inattendu « ; »\n");
         return (-1);
     }
-    //else
-        //split ./parsing/first_split.c
-    // on va split ici
+    first_split_dirty_line(start, quote);
     // Le chantier du debugger
     //-----------------------
     if (quote->verif == 0)

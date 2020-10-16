@@ -28,6 +28,8 @@ char    **copy_double_tab(char **src)
     i = 0;
     size = double_tab_size(src);
     new_Tab = malloc(sizeof(char**) * (size + 1));
+    if (!new_Tab)
+        return (NULL);
     new_Tab[size] = 0;
     while (src[i])
     {

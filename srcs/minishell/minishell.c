@@ -2,6 +2,7 @@
 
 /*
 ** Je commence le debut du parsing sous l'appel de GNL
+** On attend l'input, on l'envoie dans le parseur
 */
 
 int     minishell_loop(t_user *start)
@@ -33,6 +34,11 @@ int     main(int argc, char **argv, char **env)
     if (!(start = malloc(sizeof(start))))
         return (-1);
     start->user_env = copy_double_tab(env);
+    if (!start->user_env)
+    {
+        free(start);
+        return (-1);
+    }
     minishell_loop(start);
     return (0);
 }

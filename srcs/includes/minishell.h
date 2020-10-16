@@ -35,6 +35,7 @@
 typedef struct      s_user
 {
     char **user_env;
+    char **user_cmd_tab;
     char *user_input;
     int  split_nb;
 }                   t_user;
@@ -56,9 +57,11 @@ typedef struct      s_quote
 **                 Des fonctions
 */
 
+int         free_all(t_user *start, t_quote *quote);
 int		    get_backslash(char *str, int i);
 int         parsing_input(char *input, t_user *start);
 int         quote_get_len_and_validity(t_user *start, t_quote *quote, int i);
+int         first_split_dirty_line(t_user *start, t_quote *quote);
 
 /*
 ** Quote multilignes (Bonus ?)
