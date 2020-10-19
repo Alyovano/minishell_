@@ -42,6 +42,29 @@ int         is_this_splitable(t_user *start, t_quote *quote, int i)
     return (1);
 }
 
+int         input_to_tab_verif(t_user *start, t_quote *quote, int i)
+{
+    if (start->user_input[i] == '\'' 
+    && (get_backslash(start->user_input, i) == 0))
+        { 
+        // ma simple quote commence ici si je suis entre
+        quote->token_in_simple_quote = 1;
+        quote_get_len_and_validity(start, quote, i + 1);
+        i += quote->len;
+        quote->token_in_simple_quote = 0;
+    }
+    if (start->user_input[i] == '"' 
+    && (get_backslash(start->user_input, i) == 0))
+    { 
+        // ma double quote commence ici si je suis entre
+        quote->token_in_dquote = 1;
+        quote_get_len_and_validity(start, quote, i + 1);
+        i += quote->len;
+        quote->token_in_dquote = 0;
+    }
+    return (i);
+}
+
 int         input_to_tab(t_user *start, t_quote *quote)
 {
     int i = 0;
@@ -50,24 +73,7 @@ int         input_to_tab(t_user *start, t_quote *quote)
     {
         quote->token_in_simple_quote = 0;
         quote->token_in_dquote = 0;
-        if (start->user_input[i] == '\'' 
-        && (get_backslash(start->user_input, i) == 0))
-        { 
-            // ma simple quote commence ici si je suis entre
-            quote->token_in_simple_quote = 1;
-            quote_get_len_and_validity(start, quote, i + 1);
-            i += quote->len;
-            quote->token_in_simple_quote = 0;
-        }
-        if (start->user_input[i] == '"' 
-        && (get_backslash(start->user_input, i) == 0))
-        { 
-            // ma double quote commence ici si je suis entre
-            quote->token_in_dquote = 1;
-            quote_get_len_and_validity(start, quote, i + 1);
-            i += quote->len;
-            quote->token_in_dquote = 0;
-        }
+        i = input_to_tab_verif(start, quote, i);
         if (is_this_splitable(start, quote, i) == -1)
             return (-1);
         // On pourrait check les "<> >> $" ici aussi
