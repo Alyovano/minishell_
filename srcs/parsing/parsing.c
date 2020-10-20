@@ -1,47 +1,5 @@
 #include "../includes/minishell.h"
 
-int         check_semicolon_validity(t_user *start, int i)
-{
-    while (start->user_input[i] && start->user_input[i] == ' ')
-    {
-        i++;
-    }
-    if (start->user_input[i] == ';')
-    {
-        // erreur critique, bash arrete tout dans ce cas
-        // il faudra evidemment sortir proprement ici
-        return (-1);
-    }
-    return (0);
-}
-
-/*
-** Si split_nb == -1 ca veut dire qu'on arrete tout pour cette ligne de cmd
-*/
-
-int         is_this_splitable(t_user *start, t_quote *quote, int i)
-{
-    (void)quote;
-    if (start->user_input[i] == ';')
-    {
-        if (get_backslash(start->user_input, i) == 0)
-        {
-            if (check_semicolon_validity(start, i + 1) == -1)
-            {
-                //cas critique de double ;;
-                start->split_nb = -1;
-                return (-1);
-            }
-            else
-            {
-                start->split_nb++;
-                return (0);
-            }
-        }
-    }
-    return (1);
-}
-
 int         input_to_tab_verif(t_user *start, t_quote *quote, int i)
 {
     if (start->user_input[i] == '\'' 
@@ -76,20 +34,37 @@ int         input_to_tab(t_user *start, t_quote *quote)
         i = input_to_tab_verif(start, quote, i);
         if (is_this_splitable(start, quote, i) == -1)
             return (-1);
-        // On pourrait check les "<> >> $" ici aussi
+        if (is_this_redirectable(start, quote, i) == -1)
+            return (-2);
+        if (is_this_redirectable_reverse(start, quote, i) == -1)
+            return (-3);
         i++;
     }
     return (0);
 }
 
-/*
-** Ne pas oublier de :
-** Cas a patch -> minishell> ; echo lol
-** Ce cas la doit retourner une erreur
-*/
+void        error_output_token(t_user *start, int error)
+{
+    (void)start;
+    if (error == -1)
+        ft_printf("bash: erreur de syntaxe près du symbole inattendu « ; »\n");
+    else if (error == -2)
+        ft_printf("bash: erreur de syntaxe près du symbole inattendu « > »\n");
+    else if (error == -3)
+        ft_printf("Minishell cannot do that: No multilines : « < »\n");
+    //Ici ca va free comme jaja
+
+}
+
+void        token_to_parse_init(t_user *start)
+{
+    start->split_nb = 1;
+    start->chevron_nb = 0;
+}
 
 int         parsing_input(char *input, t_user *start)
 {
+    int error;
     t_quote *quote;
 
     if (!input || !*input)
@@ -98,11 +73,11 @@ int         parsing_input(char *input, t_user *start)
         return (-1);
     if (!(start->user_input = ft_strdup(input)))
         return (-1);
-    start->split_nb = 1;
-    if ((input_to_tab(start, quote) == -1))
+    token_to_parse_init(start);
+    error = input_to_tab(start, quote);
+    if (error < 0)
     {
-        //free_all(start, quote);
-        ft_printf("bash: erreur de syntaxe près du symbole inattendu « ; »\n");
+        error_output_token(start, error);
         return (-1);
     }
     first_split_dirty_line(start, quote);

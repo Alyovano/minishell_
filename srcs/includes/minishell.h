@@ -37,7 +37,8 @@ typedef struct      s_user
     char **user_env;
     char **user_cmd_tab;
     char *user_input;
-    int  split_nb;
+    int  split_nb; //Token de validite + malloc size
+    int  chevron_nb; //Token de validite inutilise
 }                   t_user;
 
 /*
@@ -58,11 +59,20 @@ typedef struct      s_quote
 */
 
 int         free_all(t_user *start, t_quote *quote);
-int		    get_backslash(char *str, int i);
 int         parsing_input(char *input, t_user *start);
 int         quote_get_len_and_validity(t_user *start, t_quote *quote, int i);
 int         first_split_dirty_line(t_user *start, t_quote *quote);
 void        clean_line(t_user *start);
+
+
+/*
+**          Semicolon; Chevron<>  Backslash\\
+*/
+
+int		    get_backslash(char *str, int i);
+int         is_this_splitable(t_user *start, t_quote *quote, int i);
+int         is_this_redirectable(t_user *start, t_quote *quote, int i);
+int         is_this_redirectable_reverse(t_user *start, t_quote *quote, int i);
 
 /*
 ** Quote multilignes (Bonus ?)
