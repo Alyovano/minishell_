@@ -106,7 +106,6 @@ int         parsing_input(char *input, t_user *start)
         return (-1);
     }
     first_split_dirty_line(start, quote);
-    //clean_line(start);
     // Le chantier du debugger
     //-----------------------
     if (quote->verif == 0)

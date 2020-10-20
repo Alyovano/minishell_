@@ -102,6 +102,7 @@ int         first_split_dirty_line(t_user *start, t_quote *quote)
     int i = 0;
     printf("Nb split = [%d]\n", start->split_nb);
     cut_input_to_tab(start, quote);
+    clean_line(start);
     while (start->user_cmd_tab[i])
     {
         printf("[%s]\n", start->user_cmd_tab[i]);
