@@ -41,19 +41,6 @@ int         input_to_tab(t_user *start, t_quote *quote)
     return (0);
 }
 
-void        error_output_token(t_user *start, int error)
-{
-    (void)start;
-    if (error == -1)
-        ft_printf("bash: erreur de syntaxe près du symbole inattendu « ; »\n");
-    else if (error == -2)
-        ft_printf("bash: erreur de syntaxe près du symbole inattendu « > »\n");
-    else if (error == -3)
-        ft_printf("Minishell cannot do that: No multilines : « < »\n");
-    //Ici ca va free comme jaja
-
-}
-
 void        token_to_parse_init(t_user *start)
 {
     start->split_nb = 1;
@@ -72,6 +59,12 @@ int         parsing_input(char *input, t_user *start)
     if (!(start->user_input = ft_strdup(input)))
         return (-1);
     token_to_parse_init(start);
+    error = check_input_start(start);
+    if (error < 0)
+    {
+        error_output_token(start, error);
+        return (-1);
+    }
     error = input_to_tab(start, quote);
     if (error < 0)
     {

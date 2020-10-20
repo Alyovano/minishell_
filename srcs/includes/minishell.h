@@ -63,6 +63,8 @@ int         parsing_input(char *input, t_user *start);
 int         quote_get_len_and_validity(t_user *start, t_quote *quote, int i);
 int         first_split_dirty_line(t_user *start, t_quote *quote);
 void        clean_line(t_user *start);
+int         check_input_start(t_user *start);
+void        error_output_token(t_user *start, int error);
 
 
 /*
