@@ -106,8 +106,21 @@ int         parsing_input(char *input, t_user *start)
         return (-1);
     }
     first_split_dirty_line(start, quote);
+    clean_line(start);
+    //-----------------------
+    //-----------------------
+    //-----------------------
     // Le chantier du debugger
     //-----------------------
+    //-----------------------
+    //-----------------------
+    int i = 0;
+    printf("Nb split = [%d]\n", start->split_nb);
+    while (start->user_cmd_tab[i])
+    {
+        printf("[%s]\n", start->user_cmd_tab[i]);
+        i++;
+    }
     if (quote->verif == 0)
         printf("Quote valides\n");
     else

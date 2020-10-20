@@ -79,7 +79,7 @@ int         cut_input_to_tab(t_user *start, t_quote *quote)
         }
         if (maybe_split(start, i) == 0)
         {
-            printf("Je suis la\n");
+            //printf("Je suis la\n");
             start->user_cmd_tab[k] = ft_str_n_dup(start->user_input + j, i - j);
             k++;
             j = i;
@@ -88,7 +88,7 @@ int         cut_input_to_tab(t_user *start, t_quote *quote)
     }
     if (start->user_input[i] == 0 && quote->verif == 0)
     {
-        printf("fin de str\n");
+        //printf("fin de str\n");
         start->user_cmd_tab[k] = ft_str_n_dup(start->user_input + j, i - j);
         k++;
     }
@@ -99,14 +99,7 @@ int         first_split_dirty_line(t_user *start, t_quote *quote)
 {
     if (init_double_tab_cmd(start) == -1)
         return (-1);
-    int i = 0;
-    printf("Nb split = [%d]\n", start->split_nb);
+    //printf("Nb split = [%d]\n", start->split_nb);
     cut_input_to_tab(start, quote);
-    clean_line(start);
-    while (start->user_cmd_tab[i])
-    {
-        printf("[%s]\n", start->user_cmd_tab[i]);
-        i++;
-    }
     return (0);
 }
