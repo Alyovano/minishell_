@@ -17,7 +17,7 @@ int		get_clean_index(char *str)
 	int i;
 
 	i = 0;
-	while (str[i] && str[i] ==  " " || str[i] == ";")
+	while (str[i] && str[i] ==  ' ' || str[i] == ';')
 		i++;
 	return (i);
 }

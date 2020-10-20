@@ -45,6 +45,13 @@ int         maybe_split(t_user *start, int i)
 // Il faudra tout reverifier encore une fois, ligne par ligne
 // directement a l'interieur du tableau, des erreurs peuvent encore passer
 // + norme |!|
+void         init_quotes_to_fix(t_quote *quote)
+{
+        quote->verif = 0;
+        quote->token_in_simple_quote = 0;
+        quote->token_in_dquote = 0;
+}
+
 int         cut_input_to_tab(t_user *start, t_quote *quote)
 {
     int k = 0;
@@ -53,8 +60,7 @@ int         cut_input_to_tab(t_user *start, t_quote *quote)
 
     while (start->user_input[i])
     {
-        quote->token_in_simple_quote = 0;
-        quote->token_in_dquote = 0;
+        init_quotes_to_fix(quote);
         if (start->user_input[i] == '\'' 
         && (get_backslash(start->user_input, i) == 0))
         {
