@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/10/12 15:53:54 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/20 10:28:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int		    get_backslash(char *str, int i);
 int         parsing_input(char *input, t_user *start);
 int         quote_get_len_and_validity(t_user *start, t_quote *quote, int i);
 int         first_split_dirty_line(t_user *start, t_quote *quote);
+void        clean_line(t_user *start);
 
 /*
 ** Quote multilignes (Bonus ?)

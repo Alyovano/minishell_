@@ -35,8 +35,9 @@ int         maybe_split(t_user *start, int i)
         if (get_backslash(start->user_input, i) == 0)
             return (0);
     }
-    else
+    else 
         return (1);
+    return (0);
 }
 
 

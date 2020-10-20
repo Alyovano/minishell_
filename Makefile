@@ -1,7 +1,7 @@
 BUILTIN = $(addprefix srcs/builtin/, export.c)
 MINISHELL = $(addprefix srcs/minishell/, minishell.c)
-PARSING = $(addprefix srcs/parsing/, backslash.c parsing.c)
-QUOTE = $(addprefix srcs/quote/, check_quote.c multilines_quote.c)
+PARSING = $(addprefix srcs/parsing/, backslash.c parsing.c first_split.c)
+QUOTE = $(addprefix srcs/quote/, algo_quote_actuel.c multilines_quote.c)
 
 SRCS		= 	$(BUILTIN)					\
 				$(MINISHELL)				\
