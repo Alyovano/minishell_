@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
-/*   Updated: 2020/10/20 15:12:55 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/21 11:34:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	clean_line(t_user *start)
 		free(tmp);
 		i++;
 	}
-	if (start->user_cmd_tab[i - 1][0] == '\0')
+	if (start->user_cmd_tab[i - 1] && \
+				start->user_cmd_tab[i - 1][0] == '\0')
 	{
 		free(start->user_cmd_tab[i - 1]);
 		start->user_cmd_tab[i - 1] = NULL;
