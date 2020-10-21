@@ -78,6 +78,12 @@ int         is_this_redirectable(t_user *start, t_quote *quote, int i);
 int         is_this_redirectable_reverse(t_user *start, t_quote *quote, int i);
 
 /*
+**          Environnement - Variable - $
+*/
+
+int         add_environnement_var(t_user *start, t_quote *quote);
+
+/*
 ** Quote multilignes (Bonus ?)
 */
 

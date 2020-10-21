@@ -73,6 +73,10 @@ int         parsing_input(char *input, t_user *start)
     }
     first_split_dirty_line(start, quote);
     clean_line(start, quote);
+    //add_environnement_var(start, quote);
+    // je bosse dans add_environnement_var, retire pas le comm,
+    // c'est la mega merde la dedans MDR
+
     //-----------------------
     //-----------------------
     //-----------------------
@@ -81,7 +85,7 @@ int         parsing_input(char *input, t_user *start)
     //-----------------------
     //-----------------------
     int i = 0;
-    printf("Nb split = [%d]\n", start->split_nb);
+    //printf("Nb split = [%d]\n", start->split_nb);
     while (start->user_cmd_tab[i])
     {
         printf("[%s]\n", start->user_cmd_tab[i]);
