@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/10/20 13:51:17 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/21 12:48:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ int         free_all(t_user *start, t_quote *quote);
 int         parsing_input(char *input, t_user *start);
 int         quote_get_len_and_validity(t_user *start, t_quote *quote, int i);
 int         first_split_dirty_line(t_user *start, t_quote *quote);
-void        clean_line(t_user *start);
+void        clean_line(t_user *start, t_quote *quote);
 int         check_input_start(t_user *start);
 void        error_output_token(t_user *start, int error);
+void	    clean_spaces(t_user *start, t_quote *quote);
 
 
 /*

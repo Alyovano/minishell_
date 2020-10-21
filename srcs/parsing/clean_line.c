@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
-/*   Updated: 2020/10/21 11:34:47 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/21 14:04:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		get_clean_index(char *str)
 ** Remove also empty string "echo ;" ==> [echo] [] ==> [echo]
 */
 
-void	clean_line(t_user *start)
+void	clean_line(t_user *start, t_quote *quote)
 {
 	int i;
 	char *tmp;
@@ -35,7 +35,6 @@ void	clean_line(t_user *start)
 	i = 1;
 	while (start->user_cmd_tab[i])
 	{
-		
 		tmp = ft_strdup(start->user_cmd_tab[i]);
 		free(start->user_cmd_tab[i]);
 		start->user_cmd_tab[i] = ft_substr(tmp, \
@@ -49,4 +48,5 @@ void	clean_line(t_user *start)
 		free(start->user_cmd_tab[i - 1]);
 		start->user_cmd_tab[i - 1] = NULL;
 	}
+	clean_spaces(start, quote);
 }
