@@ -6,11 +6,16 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 13:20:17 by user42            #+#    #+#             */
-/*   Updated: 2020/10/23 09:15:42 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/23 09:40:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*
+** Same function as maybe_split, 
+** but str[i] == ';' is replaced with '|'
+*/
 
 static int         maybe_split(char *str, int i)
 {
@@ -21,6 +26,11 @@ static int         maybe_split(char *str, int i)
     }
     return (1);
 }
+
+/*
+** Same function as quote_get_len_and_validity, 
+** but t_user *start is replaced by char *str
+*/
 
 static int quote_get_len_and_validity2(char *str, t_quote *quote, int i)
 {
@@ -50,14 +60,19 @@ static int quote_get_len_and_validity2(char *str, t_quote *quote, int i)
     return (quote->len - 1);
 }
 
+/*
+** Same function as cut_input_to_tab, 
+** but t_user *start is replaced by char *str
+** a t_list cmd is created in place of char **tab for previus split
+*/
+
 static t_list         *cut_input_to_tab(t_quote *quote, char *str)
 {
     int		k = 0;
     int		i = 0;
     int		j = 0;
 	t_list	*cmd;
-	t_list *test2;
-	char *test;
+	char *temp;
 
     while (str[i])
     {
@@ -80,15 +95,11 @@ static t_list         *cut_input_to_tab(t_quote *quote, char *str)
         }
         if (maybe_split(str, i) == 0)
         {
-			test = ft_str_n_dup(str + j, i - j);
-			//ft_printf("Maybe split: %s\n", test);
-            //printf("Je suis la\n");
+			temp = ft_str_n_dup(str + j, i - j);
 			if (k == 0)
-				cmd = ft_lstnew(test);
+				cmd = ft_lstnew(temp);
 			else
-			{
-				ft_lstadd_back(&cmd, ft_lstnew(test));
-			}
+				ft_lstadd_back(&cmd, ft_lstnew(temp));
             k++;
             j = i + 2;
         }
@@ -96,55 +107,14 @@ static t_list         *cut_input_to_tab(t_quote *quote, char *str)
     }
     if (str[i] == 0 && quote->verif == 0)
     {
-		test = ft_str_n_dup(str + j, i - j);
-		//ft_printf("End: %s\n", test);
+		temp = ft_str_n_dup(str + j, i - j);
         if (k == 0)
-			cmd = ft_lstnew(test);
+			cmd = ft_lstnew(temp);
 		else
-		{
-			ft_lstadd_back(&cmd, ft_lstnew(test));
-			//ft_printf("in: %s\n", cmd->content);
-			(void)test2;
-			/*
-			test2 = cmd->next;
-			ft_printf("in 2: %s\n", test2->content);
-			*/
-		}
+			ft_lstadd_back(&cmd, ft_lstnew(temp));
         k++;
     }
     return (cmd);
-}
-
-void	print_lst(t_list *line)
-{
-	t_list *cmd;
-
-	while (line->next != NULL)
-	{
-		cmd = line->content;
-		while (cmd->next != NULL)
-		{
-			write(1, "1", 1);
-			ft_printf("line: %s\n", cmd->content);
-			cmd = cmd->next;
-		}
-		ft_printf("line: %s\n", cmd->content);
-		line = line->next;
-	}
-	
-}
-
-void print2(void *str)
-{
-	ft_printf("cmd: %s\n", (char *)str);
-}
-
-void print(void *line)
-{
-	t_list *lst;
-	lst = (t_list *)line;
-	ft_printf("Line: \n");
-	ft_lstiter(lst, &print2);
 }
 
 int		find_char(char *str, char c)
@@ -161,6 +131,17 @@ int		find_char(char *str, char c)
 	return (0);
 }
 
+/*
+** Function to split start->user_cmd_tab[i] with '|'
+** Split is stored to start->line (type t_list)
+** In each t_list->content there is another t_list
+** ex. minishell> echo hello | grep -e ; echo lol
+** t_list lst1->content = echo hello
+** t_list lst1->content = grep -e
+** t_list lst2->content = echo lol
+** t_lsit start_line-> content = lst1, lst2
+*/
+
 void	split_pipe(t_user *start, t_quote *quote)
 {
 	t_list	*tmp;
@@ -175,50 +156,8 @@ void	split_pipe(t_user *start, t_quote *quote)
 		else
 		{
 			ft_lstadd_back(&start->line, ft_lstnew(tmp));
-		}
-	
-		/*
-		else
-		{
-			tmp = ft_lstnew(start->user_cmd_tab[i]);
-			if (i == 0)
-				start->line = ft_lstnew(tmp);
-			else
-			{
-				ft_lstadd_back(&start->line, ft_lstnew(tmp));
-			}
-		}
-		*/
-		
+		}		
 		i++;
 	}
-	
-	tmp = start->line;
-	/*
-	if (tmp->next == NULL)
-		print(tmp->content);
-	while (tmp->next != NULL)
-	{
-		ft_printf("Line: \n");
-		ft_lstiter(tmp, &print);
-		tmp = tmp->next;
-	}
-	*/
-	ft_lstiter(tmp, &print);
-	//print(tmp->content);
-	/*
-	tmp = start->line->content;
-	ft_printf("First elem: %s\n", tmp->content);
-	*/
-
-
-
-	
-	/*
-	tmp = start->line->content;
-	if (start->line->next != NULL)
-		ft_printf("1 elemn t_list: %s\n", tmp->content);
-	print_lst(start->line);
-	*/
-	//ft_lstiter(start->line, &print);
+	print_list(start);
 }

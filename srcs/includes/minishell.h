@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/10/22 17:39:00 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/23 09:26:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,11 @@ int         add_environnement_var(t_user *start, t_quote *quote);
 */
 
 char        *verify_quote_integrity(char *input);
+
+/*
+** Debug (delete before last push)
+*/
+
+void	    print_list(t_user *start);
 
 #endif
