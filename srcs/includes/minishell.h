@@ -53,6 +53,7 @@ typedef struct      s_quote
     int     token_in_simple_quote;
     int     verif;
     int     len;
+    int     dollar_quote;
 }                   t_quote;
 
 /*
