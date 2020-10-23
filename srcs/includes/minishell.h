@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/10/21 12:48:01 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/22 17:39:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@
 */
 typedef struct      s_user
 {
-    char **user_env;
-    char **user_cmd_tab;
-    char *user_input;
-    int  split_nb; //Token de validite + malloc size
-    int  chevron_nb; //Token de validite inutilise
+    char    **user_env;
+    char    **user_cmd_tab;
+    char    *user_input;
+    int     split_nb; //Token de validite + malloc size
+    int     chevron_nb; //Token de validite inutilise
+    t_list  *line;
 }                   t_user;
 
 /*
@@ -66,6 +67,9 @@ void        clean_line(t_user *start, t_quote *quote);
 int         check_input_start(t_user *start);
 void        error_output_token(t_user *start, int error);
 void	    clean_spaces(t_user *start, t_quote *quote);
+void	    split_pipe(t_user *start, t_quote *quote);
+char	    *ft_str_n_dup(const char *s1, int size);
+void        init_quotes_to_fix(t_quote *quote);
 
 
 /*
