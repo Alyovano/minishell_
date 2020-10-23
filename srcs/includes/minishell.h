@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/10/23 09:26:30 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/23 12:59:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,24 @@ typedef struct      s_quote
 int         free_all(t_user *start, t_quote *quote);
 int         parsing_input(char *input, t_user *start);
 int         quote_get_len_and_validity(t_user *start, t_quote *quote, int i);
-int         first_split_dirty_line(t_user *start, t_quote *quote);
-void        clean_line(t_user *start, t_quote *quote);
 int         check_input_start(t_user *start);
 void        error_output_token(t_user *start, int error);
-void	    clean_spaces(t_user *start, t_quote *quote);
-void	    split_pipe(t_user *start, t_quote *quote);
-char	    *ft_str_n_dup(const char *s1, int size);
 void        init_quotes_to_fix(t_quote *quote);
 
+/*
+**          Split
+*/
+char	    *ft_str_n_dup(const char *s1, int size);
+void	    clean_spaces(t_user *start, t_quote *quote);
+void        clean_line(t_user *start, t_quote *quote);
+int         first_split_dirty_line(t_user *start, t_quote *quote);
+
+
+/*
+**          Pipe '|'
+*/
+int		    check_pipe(char **str);
+void	    split_pipe(t_user *start, t_quote *quote);
 
 /*
 **          Semicolon; Chevron<>  Backslash\\

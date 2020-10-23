@@ -74,6 +74,7 @@ int         parsing_input(char *input, t_user *start)
     first_split_dirty_line(start, quote);
     clean_line(start, quote);
     split_pipe(start, quote);
+    error = check_pipe(start->user_cmd_tab);
     add_environnement_var(start, quote);
     // je bosse dans add_environnement_var, retire pas le comm,
     // c'est la mega merde la dedans MDR
