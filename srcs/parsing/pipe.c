@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 12:54:49 by user42            #+#    #+#             */
-/*   Updated: 2020/10/23 13:02:43 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/26 11:51:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,33 @@
 ** minishell> echo | ; --> bash: erreur de syntaxe près du symbole inattendu « ; »
 ** minishell> echo | --> on ne gère pas les multi-lignes
 */
-int		check_pipe(char **str)
+int		check_pipe(char *str, t_quote *quote)
 {
-	(void)str;
-	ft_printf("Check pipe !\n");
+	int i;
+
+	i = 0;
+	ft_printf("%s\n", str);
+	quote->token_in_simple_quote = -1;
+	quote->token_in_dquote = -1;
+	while (str[i])
+	{
+		if (str[i] == '\'' && (get_backslash(str, i) == 0))
+			quote->token_in_simple_quote *= -1;
+		if (str[i] == '"' && (get_backslash(str, i) == 0))
+			quote->token_in_dquote *= -1;
+		if (quote->token_in_simple_quote == -1 && quote->token_in_dquote == -1)
+			if (str[i++] == '|')
+			{
+				write(1, "a", 1);
+				while (str[i] == ' ')
+					i++;
+				printf("\nchar: %c\n", str[i]); 
+				if (str[i] == ';')
+					return (-1);
+				if (str[i] == '\0')
+					return (-5);
+			}
+		i++;
+	}
 	return (1);
 }

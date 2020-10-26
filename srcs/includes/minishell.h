@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/10/23 12:59:10 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/26 11:40:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int         first_split_dirty_line(t_user *start, t_quote *quote);
 /*
 **          Pipe '|'
 */
-int		    check_pipe(char **str);
+int		    check_pipe(char *str, t_quote *quote);
 void	    split_pipe(t_user *start, t_quote *quote);
 
 /*
