@@ -22,7 +22,6 @@ int		check_pipe(char *str, t_quote *quote)
 	int i;
 
 	i = 0;
-	ft_printf("%s\n", str);
 	quote->token_in_simple_quote = -1;
 	quote->token_in_dquote = -1;
 	while (str[i])
@@ -32,17 +31,20 @@ int		check_pipe(char *str, t_quote *quote)
 		if (str[i] == '"' && (get_backslash(str, i) == 0))
 			quote->token_in_dquote *= -1;
 		if (quote->token_in_simple_quote == -1 && quote->token_in_dquote == -1)
-			if (str[i++] == '|')
+		{
+			if (str[i] == '|')
 			{
+				i++;
 				write(1, "a", 1);
 				while (str[i] == ' ')
 					i++;
-				printf("\nchar: %c\n", str[i]); 
+				printf("\nchar: [%c]\n", str[i]); 
 				if (str[i] == ';')
 					return (-1);
 				if (str[i] == '\0')
 					return (-5);
 			}
+		}
 		i++;
 	}
 	return (1);

@@ -43,6 +43,7 @@ int         maybe_split(t_user *start, int i)
 // Il faudra tout reverifier encore une fois, ligne par ligne
 // directement a l'interieur du tableau, des erreurs peuvent encore passer
 // + norme |!|
+
 void         init_quotes_to_fix(t_quote *quote)
 {
         quote->verif = 0;
@@ -77,7 +78,6 @@ int         cut_input_to_tab(t_user *start, t_quote *quote)
         }
         if (maybe_split(start, i) == 0)
         {
-            //printf("Je suis la\n");
             start->user_cmd_tab[k] = ft_str_n_dup(start->user_input + j, i - j);
             k++;
             j = i;
@@ -86,7 +86,6 @@ int         cut_input_to_tab(t_user *start, t_quote *quote)
     }
     if (start->user_input[i] == 0 && quote->verif == 0)
     {
-        //printf("fin de str\n");
         start->user_cmd_tab[k] = ft_str_n_dup(start->user_input + j, i - j);
         k++;
     }
@@ -97,7 +96,6 @@ int         first_split_dirty_line(t_user *start, t_quote *quote)
 {
     if (init_double_tab_cmd(start) == -1)
         return (-1);
-    //printf("Nb split = [%d]\n", start->split_nb);
     cut_input_to_tab(start, quote);
     return (0);
 }
