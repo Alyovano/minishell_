@@ -162,12 +162,3 @@ void	split_pipe(t_user *start, t_quote *quote)
     if (start->user_cmd_tab[0])
         print_list(start);
 }
-
-// ICI ca crash :: Rapport memoire: 
-// ==39785==The signal is caused by a READ memory access.
-// ==39785==Hint: address points to the zero page.
-//     #0 0x55fd1b56ee6f in ft_lstiter (/home/aly/19/minishell_/a.out+0x3e6f)
-//     #1 0x55fd1b56d089 in print_list (/home/aly/19/minishell_/a.out+0x2089)
-//     #2 0x55fd1b56e883 in split_pipe (/home/aly/19/minishell_/a.out+0x3883)
-// Dans lstiter quelque chose n'est pas stable
-// Je commente l'appel jusqu'a ce que ce soit fix

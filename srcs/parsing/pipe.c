@@ -17,6 +17,7 @@
 ** minishell> echo | ; --> bash: erreur de syntaxe près du symbole inattendu « ; »
 ** minishell> echo | --> on ne gère pas les multi-lignes
 */
+
 int		check_pipe(char *str, t_quote *quote)
 {
 	int i;
@@ -35,10 +36,8 @@ int		check_pipe(char *str, t_quote *quote)
 			if (str[i] == '|')
 			{
 				i++;
-				write(1, "a", 1);
 				while (str[i] == ' ')
 					i++;
-				printf("\nchar: [%c]\n", str[i]); 
 				if (str[i] == ';')
 					return (-1);
 				if (str[i] == '\0')

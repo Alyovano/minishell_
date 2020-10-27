@@ -53,6 +53,15 @@ int simple_quote_get_len_and_validity(t_user *start, t_quote *quote, int i, int 
     return (quote->len - 1);
 }
 
+/*	
+**  ce token (quote->dollar_quote) permet de savoir
+**  si on est pas deja dans une doucle quote
+**	pcq si c'est le cas meme entre simple quote, il faudrait afficher
+**	la var d'envi --- exemple de piege possible
+**	input> " '$USER' "
+**	output> "'alyovano'"
+*/
+
 int         check_simple_quote(t_user *start, t_quote *quote, int j, int i)
 {
     if (start->user_cmd_tab[i][j] == '\'' 
@@ -66,16 +75,10 @@ int         check_simple_quote(t_user *start, t_quote *quote, int j, int i)
 	if (start->user_cmd_tab[i][j] == '"'
     && (get_backslash(start->user_cmd_tab[i], j) == 0))
 	{
-		// ce token permet de savoir si on est pas deja dans une doucle quote
-		// pcq si c'est le cas meme entre simple quote, il faudrait afficher
-		// la var d'envi --- exemple de piege possible
-		// input> " '$USER' "
-		// output> "'alyovano'"
 		quote->dollar_quote += 1;
 	}
     return (j);
 }
-//=================================================================
 
 int         str_check(char *str_envi, char *to_catch)
 {
@@ -124,7 +127,12 @@ char        *check_var_in_env(t_user *start, char *var_name)
     return (new);
 }
 
-//ici start->user_cmd_tab[i][j] == '$' au depart
+/*
+**ici start->user_cmd_tab[i][j] == '$' au depart
+**k represente la len du nom de la variable d'envi
+**Je suis pas sur dans la while pour : start->user_cmd_tab[i][j] != '='
+*/
+
 int        dollar_var_name(t_user *start, int i, int j, t_dollar *dol)
 {
 	int tmp;
@@ -139,34 +147,22 @@ int        dollar_var_name(t_user *start, int i, int j, t_dollar *dol)
     && start->user_cmd_tab[i][j + k] != '\'' && start->user_cmd_tab[i][j + k] != '"' 
     && start->user_cmd_tab[i][j + k] != '=' && start->user_cmd_tab[i][j + k] != '.')
 	{
-		//j++;
-		// k represente la len du nom de la variable d'envi
-        k++; //Je suis pas sur dans la while pour : start->user_cmd_tab[i][j] != '='
+        k++;
 	}
-	printf("tmp apres%d\n", tmp);
-	printf("Index apres %d\n", j);
 	dol->var_name = ft_substr(start->user_cmd_tab[i], tmp, k);
     dol->var_content = check_var_in_env(start, dol->var_name);
 	dol->before_str = ft_substr(start->user_cmd_tab[i], 0, j - 1);
 	dol->after_str = ft_substr(start->user_cmd_tab[i], j + k, ft_strlen(start->user_cmd_tab[i]));
 	one = ft_strjoin(dol->before_str, dol->var_content);
 	two = ft_strjoin(one, dol->after_str);
-	printf("%s\n", one);
-	printf("%s\n", two);
 	start->user_cmd_tab[i] = two;
-	//dol->first_join = ft_strjoin(dol->before_str, dol->var_content);
-	//dol->index = ft_strlen(dol->first_join);
-	//dol->second_join = ft_strjoin(dol->first_join, dol->after_str);
-	// printf("VARNAME[%s]\n", dol->var_name);
-    // printf("VARCONTENT[%s]\n", dol->var_content);
-	// printf("BEFORE CONTENT[%s]\n", dol->before_str);
-	// printf("AFTER CONTENT[%s]\n", dol->after_str);
-	// printf("FIRST JOIN[%s]\n", dol->first_join);
-	//printf("SECOND JOIN[%s]\n", dol->second_join);
-	//printf("SECOND JOIN LEN[%d]\n", dol->index);
 	tmp = ft_strlen(one);
     return (tmp);
 }
+
+/*
+** j = check_simple_quote(start, quote, j, i);// jump sur la char apres la squote
+*/
 
 int         check_dollar_or_not_dollar(t_user *start, t_quote *quote, int i, t_dollar *dol)
 {
@@ -176,7 +172,7 @@ int         check_dollar_or_not_dollar(t_user *start, t_quote *quote, int i, t_d
 	quote->dollar_quote = 0;
     while (start->user_cmd_tab[i][j])
     {
-        j = check_simple_quote(start, quote, j, i);// jump sur la char apres la squote
+        j = check_simple_quote(start, quote, j, i);
         if (start->user_cmd_tab[i][j] == '$' && 
                     (get_backslash(start->user_cmd_tab[i], j) == 0))
         {
@@ -203,5 +199,6 @@ int         add_environnement_var(t_user *start, t_quote *quote)
         check_dollar_or_not_dollar(start, quote, i, dol);
         i++;
     }
+    //free(dol);
     return (0);
 }

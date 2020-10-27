@@ -79,21 +79,8 @@ int         parsing_input(char *input, t_user *start)
     }
     first_split_dirty_line(start, quote);
     clean_line(start, quote);
-    add_environnement_var(start, quote); // deplacee
+    add_environnement_var(start, quote);
     split_pipe(start, quote);
-    //-----------------------
-    //-----------------------
-    //-----------------------
-    // Le chantier du debugger
-    //-----------------------
-    //-----------------------
-    //-----------------------
-    // int i = 0;
-    // while (start->user_cmd_tab[i])
-    // {
-    //     printf("[%s]\n", start->user_cmd_tab[i]);
-    //     i++;
-    // }
     if (quote->verif == 0)
         printf("Quote valides\n");
     else

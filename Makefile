@@ -1,5 +1,5 @@
 BUILTIN = $(addprefix srcs/builtin/, export.c)
-MINISHELL = $(addprefix srcs/minishell/, minishell.c error.c)
+MINISHELL = $(addprefix srcs/minishell/, minishell.c error.c conditionning.c)
 PARSING = $(addprefix srcs/parsing/, backslash.c parsing.c \
 			first_split.c clean_line.c semicolon.c chevron.c \
 			clean_spaces.c check_start.c dollar.c \
