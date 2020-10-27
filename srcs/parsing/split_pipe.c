@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 13:20:17 by user42            #+#    #+#             */
-/*   Updated: 2020/10/23 09:40:02 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/27 09:04:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,8 @@ void	split_pipe(t_user *start, t_quote *quote)
 		}		
 		i++;
 	}
-	//print_list(start);
+    if (start->user_cmd_tab[0])
+        print_list(start);
 }
 
 // ICI ca crash :: Rapport memoire: 
