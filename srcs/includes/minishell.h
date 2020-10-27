@@ -104,6 +104,12 @@ int         add_environnement_var(t_user *start, t_quote *quote);
 char        *verify_quote_integrity(char *input);
 
 /*
+**    Preparation a l'execution
+*/
+
+int         conditionning(t_user *start);
+
+/*
 ** Debug (delete before last push)
 */
 

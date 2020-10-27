@@ -2,6 +2,7 @@
 
 int         conditionning(t_user *start)
 {
-    (void)start;
+    if (start->user_cmd_tab[0])
+        print_list(start);
     return (0);
 }

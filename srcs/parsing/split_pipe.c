@@ -159,6 +159,6 @@ void	split_pipe(t_user *start, t_quote *quote)
 		}		
 		i++;
 	}
-    if (start->user_cmd_tab[0])
-        print_list(start);
+    // if (start->user_cmd_tab[0])
+    //     print_list(start);
 }
