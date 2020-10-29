@@ -6,11 +6,16 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2020/10/29 10:41:59 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/29 11:56:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*
+** Function to get amount of char till specified character
+** EX. get_len_till_char(0, ' ', "echo lol" -> return 4
+*/
 
 int         get_len_till_char(int start, char c, char *str)
 {
@@ -29,6 +34,45 @@ int         get_len_till_char(int start, char c, char *str)
     return (0);
 }
 
+/*
+** Function like strcmp but ignores '\'' and '"' for compare 
+*/
+
+/*
+int         str_cmp_and_ignore(char *to_cmp, char *str)
+{
+	int i;
+    int j;
+
+	i = 0;
+    j = 0;
+	if ((!to_cmp || !str))
+		return (0);
+	while ((to_cmp[j] && str[i]) && (to_cmp[j] == str[i] || \
+                            to_cmp[j] == '\'' || to_cmp[j] == '"'))
+    {
+        if (to_cmp[j] == '\'' || to_cmp[j] == '"')
+            j++;
+        else
+        {
+            i++;
+            j++;
+        }
+    }
+    if (to_cmp[j] == '\'' || to_cmp[j] == '"')
+        return (0);
+    else //else werror does not compile ;((((
+        return ((int)(to_cmp[j] - str[i]));
+}
+*/
+
+/*
+** Last split to store data in t_list
+** builtin, flags, argu
+** "echo" is the only builtin to manage with flags
+** for other elements, everything after builtin goes to argu
+*/
+
 void        last_split(t_list *lst)
 {
     int i;
@@ -46,9 +90,7 @@ void        last_split(t_list *lst)
             i++;
             j = i;
             while (tmp[i] && (tmp[i + 1] == 'e' || tmp[i + 1] == 'E' || tmp[i + 1] == 'n'))
-            {
                 i++;
-            }
             if (tmp[i + 1] == ' ')
             {
                 //Valid flag
@@ -67,27 +109,15 @@ void        last_split(t_list *lst)
             //no flag, add end to argu
             lst->argu = ft_substr(tmp, i + 1, ft_strlen(tmp)); 
         }
-        
     }
     else
-    {
        lst->argu = ft_substr(tmp, i + 1, ft_strlen(tmp));
-    }
-    
     free(tmp);
-
 }
 
-void        next_line(t_list *lst)
-{
-    
-    while (lst)
-    {
-        last_split(lst);
-        lst = lst->next;
-    }
-    
-}
+/*
+** Function to show every element of t_list
+*/
 
 void        debug(t_list *lst)
 {
@@ -102,13 +132,24 @@ void        debug(t_list *lst)
     }
 }
 
+/*
+** Function to prepare for exectution
+** last split to update t_list (builtin, flag, argu)
+*/
+
 int         conditionning(t_user *start)
 {
+    t_list *lst;
     if (start->user_cmd_tab[0])
     {
         while (start->line)
         {
-            next_line(start->line->content);
+            lst = start->line->content;
+            while (lst)
+            {
+                last_split(lst);
+                lst = lst->next;
+            }
             debug(start->line->content);
             start->line = start->line->next;
         }
