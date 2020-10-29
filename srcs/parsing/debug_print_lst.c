@@ -14,7 +14,7 @@
 
 void print2(void *str)
 {
-	ft_printf("cmd: %s\n", (char *)str);
+	ft_printf("[%s]\n", (char *)str);
 }
 
 void print(void *line)

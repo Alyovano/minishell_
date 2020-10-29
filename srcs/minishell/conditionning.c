@@ -76,42 +76,43 @@ int         str_cmp_and_ignore(char *to_cmp, char *str)
 void        last_split(t_list *lst)
 {
     int i;
-    int j;
+    //int j;
     char *tmp;
 
     tmp = ft_strdup(lst->content);
     i = get_len_till_char(0, ' ', tmp);
-    j = 0;
+    //j = 0;
     lst->builtin = ft_substr(tmp, 0, i);
-    if (ft_strncmp(lst->builtin, "echo", 5) == 0)
-    {
-        if (tmp[i + 1] == '-')
-        {
-            i++;
-            j = i;
-            while (tmp[i] && (tmp[i + 1] == 'e' || tmp[i + 1] == 'E' || tmp[i + 1] == 'n'))
-                i++;
-            if (tmp[i + 1] == ' ')
-            {
-                //Valid flag
-                // Do not print flag, add to flag
-                lst->flag = ft_substr(tmp, j, (i - j) + 1);
-                lst->argu = ft_substr(tmp, i + 2, ft_strlen(tmp));
-            }
-            else
-            {
-                //flag unknown
-                lst->argu = ft_substr(tmp, j, ft_strlen(tmp));
-            }
-        }
-        else
-        {
-            //no flag, add end to argu
-            lst->argu = ft_substr(tmp, i + 1, ft_strlen(tmp)); 
-        }
-    }
-    else
-       lst->argu = ft_substr(tmp, i + 1, ft_strlen(tmp));
+    // if (ft_strncmp(lst->builtin, "echo", 5) == 0)
+    // {
+    //     if (tmp[i + 1] == '-')
+    //     {
+    //         i++;
+    //         j = i;
+    //         while (tmp[i] && (tmp[i + 1] == 'e' || tmp[i + 1] == 'E' || tmp[i + 1] == 'n'))
+    //             i++;
+    //         if (tmp[i + 1] == ' ')
+    //         {
+    //             //Valid flag
+    //             // Do not print flag, add to flag
+    //             lst->flag = ft_substr(tmp, j, (i - j) + 1);
+    //             lst->argu = ft_substr(tmp, i + 2, ft_strlen(tmp));
+    //         }
+    //         else
+    //         {
+    //             //flag unknown
+    //             lst->argu = ft_substr(tmp, j, ft_strlen(tmp));
+    //         }
+    //     }
+    //     else
+    //     {
+    //         //no flag, add end to argu
+    //         lst->argu = ft_substr(tmp, i + 1, ft_strlen(tmp)); 
+    //     }
+    // }
+    //else
+    lst->flag = ft_strdup("empty");// temporaire pcq printf crash sinon
+    lst->argu = ft_substr(tmp, i + 1, ft_strlen(tmp));
     free(tmp);
 }
 
@@ -140,6 +141,8 @@ void        debug(t_list *lst)
 int         conditionning(t_user *start)
 {
     t_list *lst;
+    void   *ptr;
+    ptr = start->line;
     if (start->user_cmd_tab[0])
     {
         while (start->line)
@@ -150,9 +153,10 @@ int         conditionning(t_user *start)
                 last_split(lst);
                 lst = lst->next;
             }
-            debug(start->line->content);
+            //debug(start->line->content);
             start->line = start->line->next;
         }
+        start->line = ptr;
     }
     return (0);
 }

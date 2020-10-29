@@ -14,7 +14,8 @@ int     minishell_loop(t_user *start)
         get_next_line(0, &user_input);
         parsing_input(user_input, start); // Je bosse dans cet appel ./parsing/parsing.c
         conditionning(start);
-        //execution(start);
+        // tu peux commenter execution temporaire si jamais, je teste execve
+        execuction_temporaire(start);
         free(user_input); // Faudra tout free, pas que input
     }
     return (0);

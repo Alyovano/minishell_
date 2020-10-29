@@ -13,6 +13,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+#include <sys/types.h>
+#include <sys/stat.h>
+
 #define OK 0
 #define FAIL 1
 
@@ -108,11 +111,13 @@ char        *verify_quote_integrity(char *input);
 */
 
 int         conditionning(t_user *start);
+int         execuction_temporaire(t_user *start);
 
 /*
 ** Debug (delete before last push)
 */
 
 void	    print_list(t_user *start);
+void        debug(t_list *lst);
 
 #endif
