@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/10/30 09:04:52 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/30 10:10:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ char        *verify_quote_integrity(char *input);
 
 int         conditionning(t_user *start);
 int         execuction_temporaire(t_user *start);
+int		    dispatch_cmd(void);
 
 /*
 ** Debug (delete before last push)
