@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/10/30 10:22:52 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/30 10:59:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ int         petite_execution(t_list *lst, char **env)
  		exec_arg[1] = lst->argu;
 		exec_arg[2] = NULL;
 		if (execve(path, exec_arg, env) == -1)
-			return (-1);
+			return (-2);		//error with execve
 	}
+	else
+		return (-1);	//cmd not found in /bin/
 	return (0);
 }
 
@@ -50,8 +52,11 @@ int		launch_exec(t_list *lst, char **env)
 	if (pid == 0)
 	{
 		// Child process
-		if (petite_execution(lst, env) == -1) 
+		if (petite_execution(lst, env) == -1)
+		{
+			ft_printf("existe pas\n");
 			return (-1);
+		}
 	}
 	else if (pid < 0)
 	{
@@ -76,10 +81,10 @@ int         execuction_temporaire(t_user *start)
     ptr = start->line;
     while (start->line)
     {
+		debug(start->line->content);
 		if (launch_exec(start->line->content, start->user_env) == -1)
 			return (-1);
 		//petite_execution(start->line->content, start->user_env);
-        //debug(start->line->content);
         start->line = start->line->next;
     }
 	

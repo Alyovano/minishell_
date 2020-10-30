@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2020/10/29 11:56:53 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/30 11:22:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,26 @@
 ** EX. get_len_till_char(0, ' ', "echo lol" -> return 4
 */
 
-int         get_len_till_char(int start, char c, char *str)
+int         get_len_till_char(int start, char c, char *str, t_quote *quote)
 {
     int i;
 
     i = 0;
+    quote->token_in_simple_quote = -1;
+	quote->token_in_dquote = -1;
     while (str[start])
     {
+        if (str[start] == '\'' && (get_backslash(str, start) == 0))
+			quote->token_in_simple_quote *= -1;
+		if (str[start] == '"' && (get_backslash(str, start) == 0))
+			quote->token_in_dquote *= -1;
+		if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1)
+        {
+            if (str[i] == c)
+                return (i);
+        }
         start++;
         i++;
-        if (str[i] == c)
-            return (i);
     }
     if (str[i] == '\0')
         return (i);
@@ -76,11 +85,15 @@ int         str_cmp_and_ignore(char *to_cmp, char *str)
 void        last_split(t_list *lst)
 {
     int i;
+    t_quote *quote;
     //int j;
     char *tmp;
 
+    quote = malloc(sizeof(t_quote));
+    if (!quote)
+        exit(-1);
     tmp = ft_strdup(lst->content);
-    i = get_len_till_char(0, ' ', tmp);
+    i = get_len_till_char(0, ' ', tmp, quote);
     //j = 0;
     lst->builtin = ft_substr(tmp, 0, i);
     // if (ft_strncmp(lst->builtin, "echo", 5) == 0)

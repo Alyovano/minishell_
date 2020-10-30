@@ -8,6 +8,7 @@
 int     minishell_loop(t_user *start)
 {
     char *user_input;
+    
     while (1)
     {
         ft_printf("minishell> ");
@@ -16,6 +17,7 @@ int     minishell_loop(t_user *start)
         conditionning(start);
         // tu peux commenter execution temporaire si jamais, je teste execve
         execuction_temporaire(start);
+        dispatch_cmd();
         free(user_input); // Faudra tout free, pas que input
     }
     return (0);
