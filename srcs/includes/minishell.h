@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/10/30 10:10:04 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/30 18:53:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int         quote_get_len_and_validity(t_user *start, t_quote *quote, int i);
 int         check_input_start(t_user *start);
 void        error_output_token(t_user *start, int error);
 void        init_quotes_to_fix(t_quote *quote);
+int	    	find_char(char *str, char c);
 
 /*
 **          Split
@@ -113,7 +114,8 @@ char        *verify_quote_integrity(char *input);
 
 int         conditionning(t_user *start);
 int         execuction_temporaire(t_user *start);
-int		    dispatch_cmd(void);
+int		    dispatch_cmd(t_list *lst);
+int		    valid_and_clean_builtin(t_list *lst);
 
 /*
 ** Debug (delete before last push)

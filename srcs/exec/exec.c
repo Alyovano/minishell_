@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/10/30 10:59:45 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/30 18:51:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ int         execuction_temporaire(t_user *start)
     ptr = start->line;
     while (start->line)
     {
-		debug(start->line->content);
+		//debug(start->line->content);
+		dispatch_cmd(start->line->content);
+		//debug(start->line->content);
 		if (launch_exec(start->line->content, start->user_env) == -1)
 			return (-1);
 		//petite_execution(start->line->content, start->user_env);
