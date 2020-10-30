@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2020/10/30 18:53:32 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/30 20:10:28 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		dispatch_cmd(t_list *lst)
 		//return good error with builtin arg
 		ft_printf("Error builtin !\n");
 	}
+	parse_flags(lst);
 	
 	return (1);
 }

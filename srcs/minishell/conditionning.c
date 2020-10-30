@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2020/10/30 11:22:13 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/30 19:50:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void        last_split(t_list *lst)
     //     }
     // }
     //else
-    lst->flag = ft_strdup("empty");// temporaire pcq printf crash sinon
+    lst->flag = NULL;
     lst->argu = ft_substr(tmp, i + 1, ft_strlen(tmp));
     free(tmp);
 }

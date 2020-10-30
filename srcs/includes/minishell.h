@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/10/30 18:53:10 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/30 20:26:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ int         conditionning(t_user *start);
 int         execuction_temporaire(t_user *start);
 int		    dispatch_cmd(t_list *lst);
 int		    valid_and_clean_builtin(t_list *lst);
+void		parse_flags(t_list *lst);
+void    	clean_quote(char **str);
 
 /*
 ** Debug (delete before last push)
