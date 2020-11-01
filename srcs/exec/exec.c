@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/11/01 10:44:28 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/01 11:00:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,10 @@ int		 execution(t_user *start)
     while (start->line)
     {
 		lst = start->line->content;
+		debug(lst);
 		clean_builtin(lst);
+		parse_flags(lst);
+		//debug(lst);
 		launch_exec(start->line->content, start->user_env);
 		start->line = start->line->next;
 	}

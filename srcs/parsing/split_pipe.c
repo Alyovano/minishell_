@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 13:20:17 by user42            #+#    #+#             */
-/*   Updated: 2020/10/27 09:04:27 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/01 11:44:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static int         maybe_split(char *str, int i)
 
 static int quote_get_len_and_validity2(char *str, t_quote *quote, int i)
 {
-    init_quotes_to_fix(quote);
+    quote->len = 0;
+    quote->verif = 0;
     while (str[i] 
     && (quote->token_in_simple_quote % 2 != 0 || quote->token_in_dquote % 2 != 0))
     {
@@ -91,7 +92,7 @@ static t_list         *cut_input_to_tab(t_quote *quote, char *str)
             quote->token_in_dquote = 1;
             quote_get_len_and_validity2(str, quote, i + 1);
             i += quote->len;
-            quote->token_in_dquote = 0;
+            quote->token_in_dquote = 2;
         }
         if (maybe_split(str, i) == 0)
         {

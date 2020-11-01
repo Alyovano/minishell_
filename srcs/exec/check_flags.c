@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 19:46:49 by user42            #+#    #+#             */
-/*   Updated: 2020/10/30 20:41:04 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/01 11:27:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,28 @@ int		valid_flags(char *argu, int *i)
 	return (1); //flag exist
 }
 
+/*
+** Go trough every element of list
+** check if valid flags in argu
+*/
+
 void		parse_flags(t_list *lst)
 {
 	int		i;
 	char	*tmp;
 	
 	i = 0;
-	if (valid_flags(lst->argu, &i) == 1)
+	while (lst)
 	{
-		printf("flag exist\n");
-		lst->flag = ft_str_n_dup(lst->argu, i);
-		clean_quote(&lst->flag);
-		tmp = ft_substr(lst->argu, i + 1, ft_strlen(lst->argu));
-		free(lst->argu);
-		lst->argu = tmp;
+		if (valid_flags(lst->argu, &i) == 1)
+		{
+			//lflag exist
+			lst->flag = ft_str_n_dup(lst->argu, i);
+			clean_quote(&lst->flag);
+			tmp = ft_substr(lst->argu, i + 1, ft_strlen(lst->argu));
+			free(lst->argu);
+			lst->argu = tmp;
+		}	
+		lst = lst->next;
 	}
-	else
-	{
-		printf("NO flag\n");
-	}
-	
 }
