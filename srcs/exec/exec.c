@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/10/30 18:51:40 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/01 10:44:28 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ int		launch_exec(t_list *lst, char **env)
 		// Child process
 		if (petite_execution(lst, env) == -1)
 		{
-			ft_printf("existe pas\n");
-			return (-1);
+			error_output_token(-6, lst->builtin);
+			return (-1);	//cmd not found in /bin/
 		}
 	}
 	else if (pid < 0)
 	{
 		// Fork error
-		return (-1);
+		return (-2);
 	}
 	else
 	{
@@ -82,7 +82,7 @@ int         execuction_temporaire(t_user *start)
     while (start->line)
     {
 		//debug(start->line->content);
-		dispatch_cmd(start->line->content);
+		//dispatch_cmd(start->line->content);
 		//debug(start->line->content);
 		if (launch_exec(start->line->content, start->user_env) == -1)
 			return (-1);
@@ -91,5 +91,22 @@ int         execuction_temporaire(t_user *start)
     }
 	
     start->line = ptr;
+    return (0);
+}
+
+int		 execution(t_user *start)
+{
+	void	*ptr;
+	t_list	*lst;
+
+    ptr = start->line;
+    while (start->line)
+    {
+		lst = start->line->content;
+		clean_builtin(lst);
+		launch_exec(start->line->content, start->user_env);
+		start->line = start->line->next;
+	}
+	start->line = ptr;
     return (0);
 }

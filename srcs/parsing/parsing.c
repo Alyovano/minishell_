@@ -62,19 +62,19 @@ int         parsing_input(char *input, t_user *start)
     error = check_input_start(start);
     if (error < 0)
     {
-        error_output_token(start, error);
+        error_output_token(error, NULL);
         return (-1);
     }
     error = input_to_tab(start, quote);
     if (error < 0)
     {
-        error_output_token(start, error);
+        error_output_token(error, NULL);
         return (-1);
     }
     error = check_pipe(start->user_input, quote);
     if (error < 0)
     {
-        error_output_token(start, error);
+        error_output_token(error, NULL);
         return (-1);
     }
     first_split_dirty_line(start, quote);

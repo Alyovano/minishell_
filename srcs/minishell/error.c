@@ -1,8 +1,12 @@
 #include "../includes/minishell.h"
 
-void        error_output_token(t_user *start, int error)
+/*
+** Modification de la fonction error_output_token pour permettre l'envoi de 
+** chaine de caractères pour imprimer une erreur
+*/
+
+void         error_output_token(int error, char *str)
 {
-    (void)start;
     if (error == -1)
         ft_printf("bash: erreur de syntaxe près du symbole inattendu « ; »\n");
     else if (error == -2)
@@ -11,7 +15,9 @@ void        error_output_token(t_user *start, int error)
         ft_printf("Minishell cannot do that: No multilines : « < »\n");
     else if (error == -4)
         ft_printf("bash: erreur de syntaxe près du symbole inattendu « newline »\n");
-     else if (error == -5)
+    else if (error == -5)
         ft_printf("Minishell cannot do that: No multilines : « | »\n");
-    //Ici ca va free comme jaja
+    else if (error == -6)
+        ft_printf("%s : commande introuvable\n", str);
+    //Ici ca va free comme jaja  --> free dans minishell avant de reprendre boucle while
 }

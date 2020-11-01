@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 18:52:44 by user42            #+#    #+#             */
-/*   Updated: 2020/10/30 20:27:11 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/01 10:44:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ void	clean_quote(char **str)
 	*str = tmp;
 }
 
-int		valid_and_clean_builtin(t_list *lst)
+void	clean_builtin(t_list *lst)
 {
-	if (find_char(lst->builtin, '"') || find_char(lst->builtin, '\''))
-		clean_quote(&lst->builtin);
-	if (find_char(lst->builtin, ' ') == 1)
-		return (-1);
-	return (1);
+	while (lst)
+	{
+		if (find_char(lst->builtin, '"') || find_char(lst->builtin, '\''))
+			clean_quote(&lst->builtin);
+		lst = lst->next;
+	}
 }
