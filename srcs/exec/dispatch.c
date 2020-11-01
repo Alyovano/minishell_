@@ -6,30 +6,39 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2020/11/01 10:41:09 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/01 13:04:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /*
-** Fonction qui va dispatch après notre dernier split vers l'exécution
+** Fonction qui va dispatch vers les builtins ou execve
 */
 
 int		dispatch_cmd(t_list *lst)
 {
-	/*
-	if (valid_and_clean_builtin(lst) == 1)
+	while (lst)
 	{
-		ft_printf("Valid builtin !\n");
-	}
-	else
-	{
-		//return good error with builtin arg
-		ft_printf("Error builtin !\n");
-	}
-	*/
-	parse_flags(lst);
-	
+		/*
+		if (ft_strncmp("echo", lst->builtin, ft_strlen(lst->builtin)))
+			//appel fonction builtin
+		else if (ft_strncmp("cd", lst->builtin, ft_strlen(lst->builtin)))
+			//appel fonction builtin
+		else if (ft_strncmp("pwd", lst->builtin, ft_strlen(lst->builtin)))
+			//appel fonction builtin
+		else if (ft_strncmp("export", lst->builtin, ft_strlen(lst->builtin)))
+			//appel fonction builtin
+		else if (ft_strncmp("unset", lst->builtin, ft_strlen(lst->builtin)))
+			//appel fonction builtin
+		else if (ft_strncmp("env", lst->builtin, ft_strlen(lst->builtin)))
+			//appel fonction builtin
+		else if (ft_strncmp("exit", lst->builtin, ft_strlen(lst->builtin)))
+			//appel fonction builtin
+		else
+			//appel execve (mais il faut gérer la gestion des pipes, je bossse actuellement ici)
+			*/
+		lst = lst->next;
+	}	
 	return (1);
 }
