@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/11/01 13:12:00 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/02 09:02:44 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,11 @@ int		 execution(t_user *start)
 		debug(lst);
 		clean_builtin(lst);
 		parse_flags(lst);
-		//dispatch_cmd(lst); je bosse ici actuellement (dans l'implémentation de la gestion des '|')
-		launch_exec(start->line->content, start->user_env);
+		//dispatch_cmd(lst); 
+		if (ft_lstsize(lst) > 1)
+			exec_pipe(lst);		//je bosse ici actuellement (dans l'implémentation de la gestion des '|')
+		else
+			launch_exec(start->line->content, start->user_env);
 		start->line = start->line->next;
 	}
 	start->line = ptr;

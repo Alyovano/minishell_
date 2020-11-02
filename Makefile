@@ -5,7 +5,8 @@ PARSING = $(addprefix srcs/parsing/, backslash.c parsing.c \
 			clean_spaces.c check_start.c dollar.c \
 			split_pipe.c debug_print_lst.c pipe.c)
 QUOTE = $(addprefix srcs/quote/, algo_quote_actuel.c multilines_quote.c)
-EXEC = $(addprefix srcs/exec/, exec.c dispatch.c check_builtin.c check_flags.c)
+EXEC = $(addprefix srcs/exec/, exec.c dispatch.c check_builtin.c \
+			check_flags.c exec_pipe.c)
 
 SRCS		= 	$(BUILTIN)					\
 				$(MINISHELL)				\
