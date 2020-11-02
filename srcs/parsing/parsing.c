@@ -82,8 +82,14 @@ int         parsing_input(char *input, t_user *start)
     add_environnement_var(start, quote);
     split_pipe(start, quote);
     if (quote->verif == 0)
+    {
         printf("Quote valides\n");
+        return (1);
+    }
     else
+    {
         printf("Quote invalides\n");
-    return (1); //ligne temporaire pour faire taire le return non void
+        error_output_token(-5, NULL);
+        return (-1);
+    }
 }

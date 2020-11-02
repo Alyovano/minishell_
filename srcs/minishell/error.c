@@ -16,7 +16,7 @@ void         error_output_token(int error, char *str)
     else if (error == -4)
         ft_printf("bash: erreur de syntaxe près du symbole inattendu « newline »\n");
     else if (error == -5)
-        ft_printf("Minishell cannot do that: No multilines : « | »\n");
+        ft_printf("Minishell cannot do that: No multilines\n");
     else if (error == -6)
         ft_printf("%s : commande introuvable\n", str);
     //Ici ca va free comme jaja  --> free dans minishell avant de reprendre boucle while

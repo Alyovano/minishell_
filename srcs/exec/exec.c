@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/11/02 09:02:44 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/02 10:21:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,11 @@ int		 execution(t_user *start)
     while (start->line)
     {
 		lst = start->line->content;
-		debug(lst);
+		//debug(lst);
 		clean_builtin(lst);
 		parse_flags(lst);
+		clean_args(lst);
+		debug(lst);
 		//dispatch_cmd(lst); 
 		if (ft_lstsize(lst) > 1)
 			exec_pipe(lst);		//je bosse ici actuellement (dans l'implémentation de la gestion des '|')
