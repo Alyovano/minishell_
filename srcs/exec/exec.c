@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/11/02 10:21:55 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/02 13:40:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,17 @@ int         petite_execution(t_list *lst, char **env)
 	if (stat(path, &test) != -1)
 	{
 		exec_arg[0] = lst->builtin;
-		if (lst->flag)
+		if (lst->argu == NULL || ft_strncmp(lst->argu, "", 1) == 0) //temp fix
+		{
+			if (lst->flag)
+			{
+				exec_arg[1] = lst->flag;
+				exec_arg[2] = NULL;
+			}
+			else
+				exec_arg[1] = NULL;
+		}
+		else if (lst->flag)
 		{
 			exec_arg[1] = lst->flag;
 			exec_arg[2] = lst->argu;
@@ -58,8 +68,8 @@ int         petite_execution(t_list *lst, char **env)
 
 int		launch_exec(t_list *lst, char **env)
 {
-	pid_t pid;
-	int status;
+	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid == 0)
@@ -108,7 +118,7 @@ int		 execution(t_user *start)
 		debug(lst);
 		//dispatch_cmd(lst); 
 		if (ft_lstsize(lst) > 1)
-			exec_pipe(lst);		//je bosse ici actuellement (dans l'implémentation de la gestion des '|')
+			exec_pipe(lst, start->user_env, ft_lstsize(lst));		//je bosse ici actuellement (dans l'implémentation de la gestion des '|')
 		else
 			launch_exec(start->line->content, start->user_env);
 		start->line = start->line->next;

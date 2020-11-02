@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/11/02 10:08:26 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/02 13:48:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 #define OK 0
 #define FAIL 1
+#define READ 0
+#define WRITE 1
 
 /*
 ** Des librairies
@@ -119,7 +121,8 @@ void	    clean_builtin(t_list *lst);
 void		parse_flags(t_list *lst);
 void    	clean_quote(char **str);
 void		clean_args(t_list *lst);
-void		exec_pipe();
+int		    exec_pipe(t_list *lst, char **env, int size);
+int         petite_execution(t_list *lst, char **env);
 
 /*
 ** Debug (delete before last push)

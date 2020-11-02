@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 19:46:49 by user42            #+#    #+#             */
-/*   Updated: 2020/11/01 11:27:29 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/02 13:58:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		valid_flags(char *argu, int *i)
 									&& argu[*i] == ' ')
 			return (0);		//flag invalid, space in quote
 		if ((quote->token_in_simple_quote == -1 && quote->token_in_dquote == -1) \
-									&& argu[*i] == ' ')
+									&& (argu[*i] == ' ' || argu[*i] == '\0'))
 			return (1);		//flag valid, end of flag, out quote
 		(*i)++;
 	}
@@ -57,9 +57,9 @@ void		parse_flags(t_list *lst)
 	int		i;
 	char	*tmp;
 	
-	i = 0;
 	while (lst)
 	{
+		i = 0;
 		if (valid_flags(lst->argu, &i) == 1)
 		{
 			//lflag exist
