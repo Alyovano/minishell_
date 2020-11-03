@@ -47,7 +47,7 @@ void        token_to_parse_init(t_user *start)
     start->chevron_nb = 0;
 }
 
-int         parsing_input(char *input, t_user *start)
+int         parsing_input(char *input, t_user *start, t_env *env)
 {
     int error;
     t_quote *quote;
@@ -79,7 +79,7 @@ int         parsing_input(char *input, t_user *start)
     }
     first_split_dirty_line(start, quote);
     clean_line(start, quote);
-    add_environnement_var(start, quote);
+    add_environnement_var(start, quote, env);
     split_pipe(start, quote);
     if (quote->verif == 0)
     {

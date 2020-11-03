@@ -102,7 +102,7 @@ int		launch_exec(t_list *lst, char **env)
 ** Tout ce qu'il y a après le '|' est ignoré
 */
 
-int		 execution(t_user *start)
+int		 execution(t_user *start, t_env *env)
 {
 	void	*ptr;
 	t_list	*lst;
@@ -118,9 +118,9 @@ int		 execution(t_user *start)
 		debug(lst);
 		//dispatch_cmd(lst); 
 		if (ft_lstsize(lst) > 1)
-			exec_pipe(lst, start->user_env, ft_lstsize(lst));		//je bosse ici actuellement (dans l'implémentation de la gestion des '|')
+			exec_pipe(lst, env->tab, ft_lstsize(lst));		//je bosse ici actuellement (dans l'implémentation de la gestion des '|')
 		else
-			launch_exec(start->line->content, start->user_env);
+			launch_exec(start->line->content, env->tab);
 		start->line = start->line->next;
 	}
 	start->line = ptr;

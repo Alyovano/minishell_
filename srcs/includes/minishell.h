@@ -38,9 +38,9 @@
 ** utile dans la premiere partie du projet -> Ce qui est relatif au parsing
 ** aux entrees de l'utilisateur et les infos du systeme
 */
+
 typedef struct      s_user
 {
-    char    **user_env;
     char    **user_cmd_tab;
     char    *user_input;
     int     split_nb; //Token de validite + malloc size
@@ -62,12 +62,17 @@ typedef struct      s_quote
     int     dollar_quote;
 }                   t_quote;
 
+typedef struct      s_env
+{
+    char **tab;
+}                   t_env;
+
 /*
 **                 Des fonctions
 */
 
 int         free_all(t_user *start, t_quote *quote);
-int         parsing_input(char *input, t_user *start);
+int         parsing_input(char *input, t_user *start, t_env *env);
 int         quote_get_len_and_validity(t_user *start, t_quote *quote, int i);
 int         check_input_start(t_user *start);
 void        error_output_token(int error, char *str);
@@ -104,7 +109,7 @@ int         is_this_redirectable_reverse(t_user *start, t_quote *quote, int i);
 **          Environnement - Variable - $
 */
 
-int         add_environnement_var(t_user *start, t_quote *quote);
+int         add_environnement_var(t_user *start, t_quote *quote, t_env *env);
 
 /*
 ** Quote multilignes (Bonus ?)
@@ -117,8 +122,8 @@ char        *verify_quote_integrity(char *input);
 */
 
 int         conditionning(t_user *start);
-int		    execution(t_user *start);
-int		    dispatch_cmd(t_list *lst, char **env);
+int		    execution(t_user *start, t_env *env);
+//int		    dispatch_cmd(t_list *lst, char **env);
 void	    clean_builtin(t_list *lst);
 void		parse_flags(t_list *lst);
 void    	clean_quote(char **str);

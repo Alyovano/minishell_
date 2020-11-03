@@ -102,7 +102,7 @@ int         str_check(char *str_envi, char *to_catch)
     return (1);
 }
 
-char        *check_var_in_env(t_user *start, char *var_name)
+char        *check_var_in_env(char *var_name, t_env *env)
 {
     int i;
     int token_copy;
@@ -110,18 +110,18 @@ char        *check_var_in_env(t_user *start, char *var_name)
 
     i = 0;
     token_copy = 0;
-    while (start->user_env[i])
+    while (env->tab[i])
     {
-        if (str_check(start->user_env[i], var_name) == 0)
+        if (str_check(env->tab[i], var_name) == 0)
         {
-            if (start->user_env[i])
+            if (env->tab[i])
             token_copy = 1;
             break ;
         }
         i++;
     }
     if (token_copy == 1)
-        new = ft_substr(start->user_env[i], ft_strlen(var_name) + 1, ft_strlen(start->user_env[i]));
+        new = ft_substr(env->tab[i], ft_strlen(var_name) + 1, ft_strlen(env->tab[i]));
     else
         new = ft_strdup("");
     return (new);
@@ -133,7 +133,7 @@ char        *check_var_in_env(t_user *start, char *var_name)
 **Je suis pas sur dans la while pour : start->user_cmd_tab[i][j] != '='
 */
 
-int        dollar_var_name(t_user *start, int i, int j, t_dollar *dol)
+int        dollar_var_name(t_user *start, int i, int j, t_dollar *dol, t_env *env)
 {
 	int tmp;
 	int k;
@@ -150,7 +150,7 @@ int        dollar_var_name(t_user *start, int i, int j, t_dollar *dol)
         k++;
 	}
 	dol->var_name = ft_substr(start->user_cmd_tab[i], tmp, k);
-    dol->var_content = check_var_in_env(start, dol->var_name);
+    dol->var_content = check_var_in_env(dol->var_name, env);
 	dol->before_str = ft_substr(start->user_cmd_tab[i], 0, j - 1);
 	dol->after_str = ft_substr(start->user_cmd_tab[i], j + k, ft_strlen(start->user_cmd_tab[i]));
 	one = ft_strjoin(dol->before_str, dol->var_content);
@@ -164,7 +164,8 @@ int        dollar_var_name(t_user *start, int i, int j, t_dollar *dol)
 ** j = check_simple_quote(start, quote, j, i);// jump sur la char apres la squote
 */
 
-int         check_dollar_or_not_dollar(t_user *start, t_quote *quote, int i, t_dollar *dol)
+int         check_dollar_or_not_dollar(t_user *start,
+                     t_quote *quote, int i, t_dollar *dol, t_env *env)
 {
     int j;
 
@@ -176,14 +177,14 @@ int         check_dollar_or_not_dollar(t_user *start, t_quote *quote, int i, t_d
         if (start->user_cmd_tab[i][j] == '$' && 
                     (get_backslash(start->user_cmd_tab[i], j) == 0))
         {
-            j = dollar_var_name(start, i, j, dol);
+            j = dollar_var_name(start, i, j, dol, env);
         }
         j++;
     }
     return (0);
 }
 
-int         add_environnement_var(t_user *start, t_quote *quote)
+int         add_environnement_var(t_user *start, t_quote *quote, t_env *env)
 {
     int i;
 
@@ -196,7 +197,7 @@ int         add_environnement_var(t_user *start, t_quote *quote)
 	dol->start_cut = 0;
     while  (start->user_cmd_tab[i])
     {
-        check_dollar_or_not_dollar(start, quote, i, dol);
+        check_dollar_or_not_dollar(start, quote, i, dol, env);
         i++;
     }
     //free(dol);
