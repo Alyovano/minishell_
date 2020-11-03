@@ -62,10 +62,33 @@ typedef struct      s_quote
     int     dollar_quote;
 }                   t_quote;
 
+/*
+** (s_env)
+** Notre tableau environnmenetal
+*/
+
 typedef struct      s_env
 {
     char **tab;
 }                   t_env;
+
+/*
+** (s_dollar)
+** Pcq cet algo requier trop de variable a deplacer pour la norme 42
+*/
+
+typedef struct      s_dollar
+{
+    char    *var_name;
+    char    *var_content;
+	char	*before_str;
+	char	*after_str;
+	char	*first_join;
+	char	*second_join;
+	int     start_cut;
+    int     len;
+	int		index;
+}                   t_dollar;
 
 /*
 **                 Des fonctions

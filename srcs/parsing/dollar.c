@@ -1,18 +1,5 @@
 #include "../includes/minishell.h"
 
-typedef struct      s_dollar
-{
-    char    *var_name;
-    char    *var_content;
-	char	*before_str;
-	char	*after_str;
-	char	*first_join;
-	char	*second_join;
-	int     start_cut;
-    int     len;
-	int		index;
-}                   t_dollar;
-
 char	*ft_strn_dup(const char *s1, int len)
 {
 	size_t	longueur;
