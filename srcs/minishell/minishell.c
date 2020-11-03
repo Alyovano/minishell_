@@ -13,11 +13,10 @@ int     minishell_loop(t_user *start)
     {
         ft_printf("minishell> ");
         get_next_line(0, &user_input);
+        
         if (parsing_input(user_input, start) != -1)
-        {
-            conditionning(start);
-            execution(start);
-        }
+            if (conditionning(start) != -1)
+                execution(start);
         free(user_input); // Faudra tout free, pas que input
     }
     return (0);
