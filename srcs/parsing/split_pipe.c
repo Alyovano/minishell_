@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 13:20:17 by user42            #+#    #+#             */
-/*   Updated: 2020/11/01 11:44:03 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/03 13:47:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,11 @@ static t_list         *cut_input_to_tab(t_quote *quote, char *str)
 			else
 				ft_lstadd_back(&cmd, ft_lstnew(temp));
             k++;
-            j = i + 2;
+            j = i + 1;
+            
+            if (str[j + 1] == ' ')
+                j++;
+                
         }
         i++;
     }

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2020/10/30 19:50:09 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/03 13:44:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 
 int         get_len_till_char(int start, char c, char *str, t_quote *quote)
 {
-    int i;
-
-    i = 0;
     quote->token_in_simple_quote = -1;
 	quote->token_in_dquote = -1;
     while (str[start])
@@ -32,14 +29,13 @@ int         get_len_till_char(int start, char c, char *str, t_quote *quote)
 			quote->token_in_dquote *= -1;
 		if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1)
         {
-            if (str[i] == c)
-                return (i);
+            if (str[start] == c)
+                return (start);
         }
         start++;
-        i++;
     }
-    if (str[i] == '\0')
-        return (i);
+    if (str[start] == '\0')
+        return (start);
     return (0);
 }
 
@@ -85,6 +81,7 @@ int         str_cmp_and_ignore(char *to_cmp, char *str)
 void        last_split(t_list *lst)
 {
     int i;
+    int j;
     t_quote *quote;
     //int j;
     char *tmp;
@@ -93,9 +90,12 @@ void        last_split(t_list *lst)
     if (!quote)
         exit(-1);
     tmp = ft_strdup(lst->content);
-    i = get_len_till_char(0, ' ', tmp, quote);
+    j = 0;
+    while (tmp[j] && tmp[j] == ' ')
+        j++;
+    i = get_len_till_char(j, ' ', tmp, quote);
     //j = 0;
-    lst->builtin = ft_substr(tmp, 0, i);
+    lst->builtin = ft_substr(tmp, j, i);
     // if (ft_strncmp(lst->builtin, "echo", 5) == 0)
     // {
     //     if (tmp[i + 1] == '-')
@@ -155,7 +155,10 @@ int         conditionning(t_user *start)
 {
     t_list *lst;
     void   *ptr;
+    
     ptr = start->line;
+    if (!start->user_cmd_tab)
+        return (-1);
     if (start->user_cmd_tab[0])
     {
         while (start->line)

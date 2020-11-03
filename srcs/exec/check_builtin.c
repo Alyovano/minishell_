@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 18:52:44 by user42            #+#    #+#             */
-/*   Updated: 2020/11/01 10:44:23 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/03 13:39:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	clean_builtin(t_list *lst)
 	{
 		if (find_char(lst->builtin, '"') || find_char(lst->builtin, '\''))
 			clean_quote(&lst->builtin);
+		clean_end_spaces(&lst->builtin);
 		lst = lst->next;
 	}
 }
