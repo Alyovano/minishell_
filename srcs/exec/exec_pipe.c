@@ -64,6 +64,82 @@ void	child_not_first(int fd[2], int fd2[2], int size, int i)
 	}
 }
 
+int		ft_strcmp(char *s1, char *s2)
+{
+	size_t i;
+
+	i = 0;
+	while (s1[i] == s2[i] && i < ft_strlen(s2))
+	{
+		if (s1[i] == '\0')
+			return (0);
+		i++;
+	}
+	return (s1[i] - s2[i]);
+}
+
+/*
+** Function pour savoir si la commande existe (ret 1) ou existe pas (ret 0)
+*/
+int		cmd_valididy(char *cmd)
+{
+	struct stat	test;
+	char		*path;
+
+	path = ft_strjoin("/bin/", cmd);
+	if (ft_strcmp(cmd, "echo") == 0 || \
+		ft_strcmp(cmd, "cd") == 0 || \
+		ft_strcmp(cmd, "pwd") == 0 || \
+		ft_strcmp(cmd, "export") == 0 || \
+		ft_strcmp(cmd, "unset") == 0 || \
+		ft_strcmp(cmd, "env") == 0 || \
+		ft_strcmp(cmd, "exit") == 0 || \
+		ft_strcmp(cmd, "$?") == 0)
+		return (1);
+	if (stat(path, &test) != -1)
+		return (1);
+	return (0);
+}
+
+/*
+** Fonction check_cmd_validity permet de corriger le bug qui fait tourner minishell en boucle
+** En introduisant une cmd invalide (ex. echodd lol | cat -e)
+** cat -e attend une entrée dans STDIN, echodd lol fail ==> boucle infinie
+**
+** Il faut donc passer toutes les commandes après une commande inconnue jusqu'à ce
+** qu'on tombe sur un echo ou cat valide
+*/
+void	check_cmd_validity(t_list **lst)
+{
+	int	valid_cmd;
+
+	valid_cmd = cmd_valididy((*lst)->builtin);	
+	while (*lst && valid_cmd == 0)
+	{
+		if (ft_strcmp((*lst)->builtin, "echo") == 0)
+			return ;
+		if (ft_strcmp((*lst)->builtin, "cat") == 0 && (*lst)->argu != NULL && ft_strcmp((*lst)->argu, "") != 0) // need to check is cat -flag FILE is good then resetl
+		{
+			ft_printf("Valid cat\n");
+			return ;
+		}
+		*lst = (*lst)->next;
+	}
+}
+
+/*
+** Error string must be printed at end of pipe execution
+*/
+void	print_validity(t_list *lst)
+{
+	while (lst)
+	{
+		if (cmd_valididy(lst->builtin) == 0)
+			error_output_token(-6, lst->builtin);
+		lst = lst->next;
+	}
+}
+
 /*
 ** La fonction exec_pipe permet d'executer toutes les commandes séparés part un '|'
 ** Le résultat de chque commande est enregistrée avec pipe() et dup2()
@@ -85,10 +161,19 @@ int		exec_pipe(t_list *lst, char **env, int size)
 	int		fd[2];
 	int		fd2[2];
 	int		i;
+	void	*ptr;
 
 	i = 0;
+	ptr = lst;
 	while (lst)
 	{
+		check_cmd_validity(&lst); //check cmd to patch infinite boucle
+		if (!lst) //end of list, reset list and print error messages
+		{
+			lst = ptr;
+			print_validity(lst);
+			return (1);
+		}
 		if (i % 2 != 0) //if odd
 			pipe(fd);
 		else	//if even
@@ -109,9 +194,9 @@ int		exec_pipe(t_list *lst, char **env, int size)
 				dup2(fd2[WRITE], STDOUT_FILENO);
 			else
 				child_not_first(fd, fd2, size, i);
-			if (petite_execution(lst, env) == -1)
+			if (petite_execution(lst, env) == -1) //dipatch cmd here
 			{
-				error_output_token(-6, lst->builtin);
+				error_output_token(-6, lst->builtin); //can be removed, command checked in check_cmd_validity
 				return (-1);	//cmd not found in /bin/
 			}
 		}
@@ -124,5 +209,8 @@ int		exec_pipe(t_list *lst, char **env, int size)
 		lst = lst->next;
 		i++;
 	}
+	//printf("End list: %s\n", lst->builtin);
+	lst = ptr;
+	print_validity(lst);
 	return (1);
 }

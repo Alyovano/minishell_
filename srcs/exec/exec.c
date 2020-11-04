@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/11/02 13:40:52 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/04 09:00:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int         petite_execution(t_list *lst, char **env)
 int		launch_exec(t_list *lst, char **env)
 {
 	pid_t	pid;
-	int		status;
 
 	pid = fork();
 	if (pid == 0)
@@ -89,9 +88,7 @@ int		launch_exec(t_list *lst, char **env)
 	else
 	{
 		// Parent process
-		waitpid(pid, &status, WUNTRACED);
-		while (!WIFEXITED(status) && !WIFSIGNALED(status))
-			waitpid(pid, &status, WUNTRACED);
+		waitpid(pid, NULL, 0);
   	}
 	return 1;
 }
@@ -115,7 +112,7 @@ int		 execution(t_user *start, t_env *env)
 		clean_builtin(lst);
 		parse_flags(lst);
 		clean_args(lst);
-		debug(lst);
+		//debug(lst);
 		//dispatch_cmd(lst); 
 		if (ft_lstsize(lst) > 1)
 			exec_pipe(lst, env->tab, ft_lstsize(lst));		//je bosse ici actuellement (dans l'implémentation de la gestion des '|')

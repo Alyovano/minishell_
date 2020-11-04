@@ -25,5 +25,9 @@ void		clean_end_spaces(char **str)
 
 void		clean_args(t_list *lst)
 {
-	clean_end_spaces(&lst->argu);
+	while (lst)
+	{
+		clean_end_spaces(&lst->argu);
+		lst = lst->next;
+	}
 }
