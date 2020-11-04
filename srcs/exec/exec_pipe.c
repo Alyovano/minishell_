@@ -36,8 +36,10 @@ void	parent_close_fd(int fd[2], int fd2[2], int size, int i)
 
 void	child_not_first(int fd[2], int fd2[2], int size, int i)
 {
+	//printf("child not first: %d %d\n", i, size);
 	if (i == size - 1) //last cmd in lst, no stdout change
 	{
+		//printf("last cmd of line\n");
 		if (i % 2 != 0)	// if odd
 		{
 			close(fd[WRITE]);
@@ -113,18 +115,55 @@ void	check_cmd_validity(t_list **lst)
 {
 	int	valid_cmd;
 
-	valid_cmd = cmd_valididy((*lst)->builtin);	
+	valid_cmd = cmd_valididy((*lst)->builtin);
 	while (*lst && valid_cmd == 0)
 	{
 		if (ft_strcmp((*lst)->builtin, "echo") == 0)
 			return ;
+		if (ft_strcmp((*lst)->builtin, "grep") == 0)
+			return ;
 		if (ft_strcmp((*lst)->builtin, "cat") == 0 && (*lst)->argu != NULL && ft_strcmp((*lst)->argu, "") != 0) // need to check is cat -flag FILE is good then resetl
 		{
-			ft_printf("Valid cat\n");
+			//ft_printf("Valid cat\n");
 			return ;
 		}
 		*lst = (*lst)->next;
 	}
+}
+
+/*
+** Fonction get_good_lst_len qui va compter le nombre de bonnes cmd dans la liste
+*/
+int		get_good_lst_len(t_list *lst)
+{
+	int size;
+	int	valid_cmd;
+
+	size = 0;
+	while (lst)
+	{
+		valid_cmd = cmd_valididy(lst->builtin);
+		//ft_printf("Valid_cmd %d\n", valid_cmd);
+		while (lst && valid_cmd == 0)
+		{
+			//ft_printf("Valid_cmd in while %d\n", valid_cmd);
+			if (ft_strcmp(lst->builtin, "echo") == 0)
+				valid_cmd = 1;
+			else if (ft_strcmp(lst->builtin, "grep") == 0)
+				valid_cmd = 1;
+			else if (ft_strcmp(lst->builtin, "cat") == 0 && \
+						lst->argu != NULL && ft_strcmp(lst->argu, "") != 0)
+				valid_cmd = 1;
+			else
+				lst = lst->next;
+		}
+		if (!lst)
+			return (size);
+		if (valid_cmd == 1)
+			size++;
+		lst = lst->next;
+	}
+	return (size);
 }
 
 /*
@@ -165,15 +204,32 @@ int		exec_pipe(t_list *lst, char **env, int size)
 
 	i = 0;
 	ptr = lst;
+	size = get_good_lst_len(lst);
+	//ft_printf("Good list len %d\n", get_good_lst_len(lst));
+	if (size == 0)
+	{
+		print_validity(lst);
+		return (0);
+	}
+	//ft_printf("Good list len %d\n", get_good_lst_len(lst));
 	while (lst)
 	{
 		check_cmd_validity(&lst); //check cmd to patch infinite boucle
+		if (size == 1)
+		{
+			launch_exec(lst, env);
+			lst = ptr;
+			print_validity(lst);
+			return (0);
+		}
 		if (!lst) //end of list, reset list and print error messages
 		{
 			lst = ptr;
+			//ft_printf("Je quitte \n");
 			print_validity(lst);
 			return (1);
 		}
+		//ft_printf("Builtin is going to run: %s %d\n", lst->builtin, i);
 		if (i % 2 != 0) //if odd
 			pipe(fd);
 		else	//if even

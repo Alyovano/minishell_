@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/11/03 13:51:16 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/04 10:10:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int         check_input_start(t_user *start);
 void        error_output_token(int error, char *str);
 void        init_quotes_to_fix(t_quote *quote);
 int	    	find_char(char *str, char c);
-//int	    	ft_strcmp(char *s1, char *s2);
+int	    	ft_strcmp(char *s1, char *s2);
 void		clean_end_spaces(char **str);
 
 /*
@@ -153,6 +153,7 @@ void    	clean_quote(char **str);
 void		clean_args(t_list *lst);
 int		    exec_pipe(t_list *lst, char **env, int size);
 int         petite_execution(t_list *lst, char **env);
+int		    launch_exec(t_list *lst, char **env);
 
 /*
 ** Debug (delete before last push)

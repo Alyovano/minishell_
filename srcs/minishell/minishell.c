@@ -12,12 +12,15 @@ int     minishell_loop(t_user *start, t_env *env)
     while (1)
     {
         ft_printf("minishell> ");
-        get_next_line(0, &user_input);  
-        if (parsing_input(user_input, start, env) != -1)
+        get_next_line(0, &user_input);
+        if (ft_strcmp(user_input, "") != 0)
         {
-            if (conditionning(start) != -1)
+            if (parsing_input(user_input, start, env) != -1)
             {
-                execution(start, env);
+                if (conditionning(start) != -1)
+                {
+                    execution(start, env);
+                }
             }
         }
         free(user_input); // Faudra tout free, pas que input
