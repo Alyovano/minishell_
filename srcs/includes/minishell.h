@@ -72,6 +72,7 @@ typedef struct      s_env
 {
     char **tab;
     char **export;
+    int  swap_token;
 }                   t_env;
 
 /*

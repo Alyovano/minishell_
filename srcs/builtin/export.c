@@ -92,18 +92,30 @@ int         export_without_args(t_env *env)
     return (NO_ARG);
 }
 
+int         sort_export_swap(t_env *env, int i)
+{
+    char *tmp;
+
+    tmp = ft_strdup(env->export[i]);
+    free(env->export[i]);
+    env->export[i] = ft_strdup(env->export[i + 1]);
+    free(env->export[i + 1]);
+    env->export[i + 1] = ft_strdup(tmp);
+    free(tmp);
+    env->swap_token = -1;
+    return (0);
+}
+
 int         sort_export(t_env *env)
 {
     int i;
     int j;
-    char *tmp;
-    int token;
 
     i = 0;
     j = 0;
     while (env->export[i])
     {
-        token = 0;
+        env->swap_token = 0;
         j = 0;
         if (env->export[i + 1])
         {
@@ -111,24 +123,17 @@ int         sort_export(t_env *env)
             && env->export[i][j] == env->export[i + 1][j])
                 j++;
             if (env->export[i][j] > env->export[i + 1][j])
-            {
-                tmp = ft_strdup(env->export[i]);
-                free(env->export[i]);
-                env->export[i] = ft_strdup(env->export[i + 1]);
-                free(env->export[i + 1]);
-                env->export[i + 1] = ft_strdup(tmp);
-                free(tmp);
-                token = -1;  
-            }
+                sort_export_swap(env, i);
         }
         i++;
-        if (token == -1)
+        if (env->swap_token == -1)
             i = 0;
     }
 }
 
 int         ft_export(t_env *env, char *arg)
 {
+    env->swap_token = 0;
     sort_export(env);
     if (!arg || *arg == '\0')
         return (export_without_args(env));
