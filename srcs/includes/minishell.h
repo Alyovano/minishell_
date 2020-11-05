@@ -64,12 +64,14 @@ typedef struct      s_quote
 
 /*
 ** (s_env)
-** Notre tableau environnmenetal
+** **tab = Notre tableau environnmenetal
+** **export = Notre tableau range facon export
 */
 
 typedef struct      s_env
 {
     char **tab;
+    char **export;
 }                   t_env;
 
 /*
