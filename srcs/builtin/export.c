@@ -129,6 +129,7 @@ int         sort_export(t_env *env)
         if (env->swap_token == -1)
             i = 0;
     }
+    return (1);
 }
 
 int         ft_export(t_env *env, char *arg)
@@ -137,8 +138,9 @@ int         ft_export(t_env *env, char *arg)
     sort_export(env);
     if (!arg || *arg == '\0')
         return (export_without_args(env));
+    return (1);
 }
-
+/*
 int     main(int argc, char **argv, char **environnement)
 {
     t_env   *env;
@@ -152,3 +154,4 @@ int     main(int argc, char **argv, char **environnement)
     ft_export(env, "");
     return (0);
 }
+*/
