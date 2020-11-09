@@ -1,5 +1,6 @@
 #include "../includes/minishell.h"
-#define NO_ARG 0
+#define NO_ARGS 0
+#define ARGS 1
 
 size_t	ft_strlen(const char *s)
 {
@@ -89,7 +90,7 @@ int         export_without_args(t_env *env)
     {
         printf("%s %s\n", "declare -x", env->export[i++]);
     }
-    return (NO_ARG);
+    return (NO_ARGS);
 }
 
 int         sort_export_swap(t_env *env, int i)
@@ -132,15 +133,33 @@ int         sort_export(t_env *env)
     return (1);
 }
 
+
+
+int         export_add_new_var(t_env *env, char *arg)
+{
+    (void)env;
+    (void)arg;
+    printf("OK\n");
+    parsing_arg(env, arg);
+    return (ARGS);
+}
+
 int         ft_export(t_env *env, char *arg)
 {
     env->swap_token = 0;
     sort_export(env);
     if (!arg || *arg == '\0')
-        return (export_without_args(env));
-    return (1);
+    {
+        export_without_args(env);
+        return (NO_ARGS);
+    }
+    else
+    {
+        export_add_new_var(env, arg);
+    }
+    return (ARGS);
 }
-/*
+
 int     main(int argc, char **argv, char **environnement)
 {
     t_env   *env;
@@ -151,7 +170,6 @@ int     main(int argc, char **argv, char **environnement)
         return (-1);
     env->tab = copy_double_tab(environnement);
     env->export = copy_double_tab(env->tab);
-    ft_export(env, "");
+    ft_export(env, "Arg");
     return (0);
 }
-*/
