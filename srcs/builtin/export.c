@@ -2,6 +2,17 @@
 #define NO_ARGS 0
 #define ARGS 1
 
+
+int		get_backslash(char *str, int i)
+{
+	int nb_backslash;
+
+	nb_backslash = 0;
+	while (str[--i] && str[i] == '\\')
+		nb_backslash++;
+	return (nb_backslash % 2);
+}
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
@@ -133,14 +144,67 @@ int         sort_export(t_env *env)
     return (1);
 }
 
+int         quote_len(char *str)
+{
+    int i;
+    char quote;
 
+    i = 1;
+    quote = *str;
+    while (str[i])
+    {
+        if (str[i] == quote && get_backslash(str, i) == 0)
+        {
+            break ;
+        }
+        i++;
+    }
+    //printf("Start = [%s]\n", str);
+    return (i);
+}
+
+int         check_arg_nb(char *arg)
+{
+    int i;
+    int nb;
+    int token;
+
+    i = 0;
+    nb = 0;
+    token = 0;
+    while (arg[i])
+    {
+        token = 0;
+        while (arg[i] && arg[i] != ' ')
+        {
+            if ((arg[i] == '"' || arg[i] == '\'') && get_backslash(arg, i) == 0)
+                i += quote_len(arg + i);
+            token = 1;
+            i++;
+        }
+        if (token == 1)
+            nb += 1;
+        i++;
+    }
+    return (nb);
+}
+
+char        **parsing_arg(char *arg)
+{
+    char **tmp;
+
+    printf("%d\n", check_arg_nb(arg));
+    printf("OK\n");
+    return (tmp);
+}
 
 int         export_add_new_var(t_env *env, char *arg)
 {
     (void)env;
     (void)arg;
-    printf("OK\n");
-    parsing_arg(env, arg);
+    char **arg_tab;
+
+    arg_tab = parsing_arg(arg); // reception des argu coupes dans un tableau
     return (ARGS);
 }
 
@@ -155,21 +219,21 @@ int         ft_export(t_env *env, char *arg)
     }
     else
     {
-        export_add_new_var(env, arg);
+        export_add_new_var(env, arg); // on en est la
     }
     return (ARGS);
 }
 
-int     main(int argc, char **argv, char **environnement)
-{
-    t_env   *env;
+// int     main(int argc, char **argv, char **environnement)
+// {
+//     t_env   *env;
 
-    (void) argc;
-    (void) argv;
-    if (!(env = malloc(sizeof(env))))
-        return (-1);
-    env->tab = copy_double_tab(environnement);
-    env->export = copy_double_tab(env->tab);
-    ft_export(env, "Arg");
-    return (0);
-}
+//     (void) argc;
+//     (void) argv;
+//     if (!(env = malloc(sizeof(env))))
+//         return (-1);
+//     env->tab = copy_double_tab(environnement);
+//     env->export = copy_double_tab(env->tab);
+//     ft_export(env, "lol=54 lol='coucou les loulous' prout=89");
+//     return (0);
+// }
