@@ -83,7 +83,17 @@ char    **copy_double_tab(char **src)
     }
     return (new_Tab);
 }
+char	*ft_str_n_dup(const char *s1, int size)
+{
+	size_t	longueur;
+	char	*tab;
 
+	longueur = size + 1;
+	if (!(tab = malloc(sizeof(char) * longueur)))
+		return (NULL);
+	ft_strlcpy(tab, s1, longueur);
+	return (tab);
+}
 /*
 ** Export recoit la structure avec le tableau d'environnement
 ** et l'argument qui suit l'appel de export
@@ -188,16 +198,63 @@ int         check_arg_nb(char *arg)
     return (nb);
 }
 
+/*
+** Prend l'argument, la nombre de de coupe (size) et
+** le tableau fournit par la fonction precedente, renvoie
+** le tableau remplit par chaque morceau de l'argument
+*/
+
+char        **arg_to_tab(char *arg, int size, char **tab)
+{
+    printf("ARGU= [%s]\n", arg);
+    printf("SIZE= [%d]\n", size);
+    int i;
+    int j;
+    int k;
+    int token;
+
+    i = 0;
+    j = 0;
+    k = 0;
+    tab = malloc(sizeof(char**) * size);
+    if (tab == NULL)
+        exit(EXIT_FAILURE);
+    tab[size] == NULL;
+    while (arg[i])
+    {
+        j = i;
+        while (arg[i] && arg[i] != ' ')
+        {
+            if ((arg[i] == '"' || arg[i] == '\'') && get_backslash(arg, i) == 0)
+                i += quote_len(arg + i);
+            token = 1;
+            i++;
+        }
+        tab[k] = ft_str_n_dup(arg + j, i);
+        k++;
+        i++;
+    }
+    k = 0;
+    while (tab[k])
+        printf("TAB= [%s]\n", tab[k++]);
+    return (tab);
+}
+
+/*
+** size = check_arg_nb(arg) + 1; compte le nombre de coupe
+** a appliquer a l'argument (combien de ligne va-t-on add au tableau env)
+*/
+
+
 char        **parsing_arg(char *arg)
 {
-    char **tmp;
+    char **tab;
+    int  size;
 
-    tmp = malloc(sizeof(char*) * (check_arg_nb(arg) + 1));
-    if (tmp == NULL)
-        exit(0);
-    
+    size = check_arg_nb(arg) + 1;
+    tab = arg_to_tab(arg, size, tab);
     printf("OK\n");
-    return (tmp);
+    return (tab);
 }
 
 int         export_add_new_var(t_env *env, char *arg)
@@ -206,6 +263,7 @@ int         export_add_new_var(t_env *env, char *arg)
     char **arg_tab;
 
     arg_tab = parsing_arg(arg); // reception des argu coupes dans un tableau
+    //add_arg_to_env(env, arg_tab); next step
     return (ARGS);
 }
 
@@ -225,16 +283,16 @@ int         ft_export(t_env *env, char *arg)
     return (ARGS);
 }
 
-int     main(int argc, char **argv, char **environnement)
-{
-    t_env   *env;
+// int     main(int argc, char **argv, char **environnement)
+// {
+//     t_env   *env;
 
-    (void) argc;
-    (void) argv;
-    if (!(env = malloc(sizeof(env))))
-        return (-1);
-    env->tab = copy_double_tab(environnement);
-    env->export = copy_double_tab(env->tab);
-    ft_export(env, "lol=54 lol='coucou les loulous' prout=89");
-    return (0);
-}
+//     (void) argc;
+//     (void) argv;
+//     if (!(env = malloc(sizeof(env))))
+//         return (-1);
+//     env->tab = copy_double_tab(environnement);
+//     env->export = copy_double_tab(env->tab);
+//     ft_export(env, "test=54 test='coucou les loulous' test =89");
+//     return (0);
+// }
