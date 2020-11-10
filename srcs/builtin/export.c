@@ -159,7 +159,6 @@ int         quote_len(char *str)
         }
         i++;
     }
-    //printf("Start = [%s]\n", str);
     return (i);
 }
 
@@ -193,7 +192,10 @@ char        **parsing_arg(char *arg)
 {
     char **tmp;
 
-    printf("%d\n", check_arg_nb(arg));
+    tmp = malloc(sizeof(char*) * (check_arg_nb(arg) + 1));
+    if (tmp == NULL)
+        exit(0);
+    
     printf("OK\n");
     return (tmp);
 }
@@ -201,7 +203,6 @@ char        **parsing_arg(char *arg)
 int         export_add_new_var(t_env *env, char *arg)
 {
     (void)env;
-    (void)arg;
     char **arg_tab;
 
     arg_tab = parsing_arg(arg); // reception des argu coupes dans un tableau
@@ -224,16 +225,16 @@ int         ft_export(t_env *env, char *arg)
     return (ARGS);
 }
 
-// int     main(int argc, char **argv, char **environnement)
-// {
-//     t_env   *env;
+int     main(int argc, char **argv, char **environnement)
+{
+    t_env   *env;
 
-//     (void) argc;
-//     (void) argv;
-//     if (!(env = malloc(sizeof(env))))
-//         return (-1);
-//     env->tab = copy_double_tab(environnement);
-//     env->export = copy_double_tab(env->tab);
-//     ft_export(env, "lol=54 lol='coucou les loulous' prout=89");
-//     return (0);
-// }
+    (void) argc;
+    (void) argv;
+    if (!(env = malloc(sizeof(env))))
+        return (-1);
+    env->tab = copy_double_tab(environnement);
+    env->export = copy_double_tab(env->tab);
+    ft_export(env, "lol=54 lol='coucou les loulous' prout=89");
+    return (0);
+}
