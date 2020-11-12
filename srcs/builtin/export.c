@@ -83,6 +83,41 @@ char    **copy_double_tab(char **src)
     }
     return (new_Tab);
 }
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	unsigned char	*stockdst;
+	unsigned char	*stocksrc;
+	size_t			count;
+
+	stocksrc = (unsigned char*)src;
+	stockdst = (unsigned char*)dst;
+	count = 0;
+	if (!dst && !src)
+		return (NULL);
+	while (count < n)
+	{
+		stockdst[count] = stocksrc[count];
+		count++;
+	}
+	return (stockdst);
+}
+char			*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*finalstr;
+	size_t	size1;
+	size_t	size2;
+
+	if (!s1 || !s2)
+		return (NULL);
+	size1 = ft_strlen(s1);
+	size2 = ft_strlen(s2);
+	if (!((finalstr = malloc(sizeof(char) * (size1 + size2 + 1)))))
+		return (NULL);
+	ft_memcpy(finalstr, s1, size1);
+	ft_memcpy(finalstr + size1, s2, size2);
+	finalstr[size1 + size2] = '\0';
+	return (finalstr);
+}
 char	*ft_str_n_dup(const char *s1, int size)
 {
 	size_t	longueur;
@@ -206,7 +241,7 @@ int         check_arg_nb(char *arg)
 
 char        **arg_to_tab(char *arg, int size)
 {
-    printf("SIZE= [%d]\n", size);
+    //printf("SIZE= [%d]\n", size);
     int i;
     int j;
     int k;
@@ -228,7 +263,6 @@ char        **arg_to_tab(char *arg, int size)
             if ((arg[i] == '"' || arg[i] == '\'') && get_backslash(arg, i) == 0)
             {
                 i += quote_len(arg + i);
-                // printf("CE CHAR =[%c]\n", arg[i]);
             }
             token = 1;
             i++;
@@ -236,14 +270,37 @@ char        **arg_to_tab(char *arg, int size)
         if (token == 1)
         {
             tab[k] = ft_str_n_dup(arg + j, i - j);
-            // printf("MA STR =[%s]\n", tab[k]);
             k++;
             token = 0;
-            j = i; // +1 pr eviter un espace au debut
+            j = i;
         }
         i++;
     }
     return (tab);
+}
+//-------------------ARG TO TAB---------------------------
+
+char        *clear_arg(char *str)
+{
+    char *tmp;
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    tmp = malloc(sizeof(char*) * (ft_strlen(str) + 1));
+    if (str[i] == ' ')
+        i += 1;
+    while (str[i])
+    {
+        tmp[j] = str[i];
+        if (str[i] == '\'' && get_backslash(str, i) == 0)
+            tmp[j] = '"';
+        i++;
+        j++;
+    }
+    tmp[j] = 0;
+    return (tmp);
 }
 
 /*
@@ -251,30 +308,96 @@ char        **arg_to_tab(char *arg, int size)
 ** a appliquer a l'argument (combien de ligne va-t-on add au tableau env)
 */
 
+char        *first_clear_arg(char *str)
+{
+    char *tmp;
+
+    tmp = clear_arg(str);
+    free(str);
+    str = ft_strdup(tmp);
+    free(tmp);
+    return (str);
+}
 
 char        **parsing_arg(char *arg)
 {
     char **arg_tab;
     int  size;
+    int  i;
 
+    i = 0;
     size = check_arg_nb(arg) + 1;
     arg_tab = arg_to_tab(arg, size);
-    int test = 0;
-    while (arg_tab[test])
+    while (arg_tab[i])
     {
-        printf("TAB= [%s]\n", arg_tab[test++]);
+        arg_tab[i] = first_clear_arg(arg_tab[i]);
+        if (arg_tab[i][ft_strlen(arg_tab[i]) - 1] == '=' 
+        && arg_tab[i][ft_strlen(arg_tab[i])] == '\0')
+        {
+            char *tmp;
+            tmp = ft_strjoin(arg_tab[i], "\"\"");
+            free(arg_tab[i]);
+            arg_tab[i] = ft_strdup(tmp);
+            free(tmp);
+        }
+        i++;
     }
-    printf("OK\n");
     return (arg_tab);
+}
+
+int         free_double_tab(char **tab)
+{
+    int i;
+
+    i = 0;
+    while (tab[i])
+    {
+        free(tab[i]);
+        i++;
+    }
+    free(tab);
+    return (0);
+}
+
+int         add_arg_to_env(t_env *env, char **arg_tab)
+{
+    char **tmp;
+    int size;
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    size = (double_tab_size(env->tab) + double_tab_size(arg_tab));
+    tmp = malloc(sizeof(char**) * (size + 1));
+    while (env->tab[i])
+    {
+        tmp[i] = env->tab[i];
+        i++;
+    }
+    while (arg_tab[j])
+    {
+        tmp[i] = arg_tab[j];
+        i++;
+        j++;
+    }
+    tmp[i - 1] = NULL;
+    //free_double_tab(env->tab); // si je le free ici ca copy pas l'autre tableau
+    //free_double_tab(arg_tab);
+    env->tab = copy_double_tab(tmp);
+    return (0);
 }
 
 int         export_add_new_var(t_env *env, char *arg)
 {
-    (void)env;
     char **arg_tab;
 
-    arg_tab = parsing_arg(arg); // reception des argu coupes dans un tableau
-    //add_arg_to_env(env, arg_tab); next step
+    arg_tab = parsing_arg(arg);
+    //check if its ok() A FAIRE 
+    // ici il faudra refuser les variables qui commencent par des char interdit
+    // style str[0] = '=' ou '\'' ou \\ ou """ ou encore *(4,</
+    // if str[0] != d'une lettre alors return error
+    add_arg_to_env(env, arg_tab);
     return (ARGS);
 }
 
@@ -289,7 +412,11 @@ int         ft_export(t_env *env, char *arg)
     }
     else
     {
-        export_add_new_var(env, arg); // on en est la
+        export_add_new_var(env, arg); // ICICICICICICI
+        int debug = 0; 
+        while(env->tab[debug]) {
+            printf("ENV=[%s]\n",env->tab[debug++]);
+        }
     }
     return (ARGS);
 }
@@ -304,6 +431,6 @@ int         ft_export(t_env *env, char *arg)
 //         return (-1);
 //     env->tab = copy_double_tab(environnement);
 //     env->export = copy_double_tab(env->tab);
-//     ft_export(env, "test=54 test2 test='coucou lol' salut xd=45'lol lol' FIN");
+//     ft_export(env, "prem=56 =89 tri um=565'lolo lol'");
 //     return (0);
 // }
