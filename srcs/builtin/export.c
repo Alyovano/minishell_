@@ -241,7 +241,6 @@ int         check_arg_nb(char *arg)
 
 char        **arg_to_tab(char *arg, int size)
 {
-    //printf("SIZE= [%d]\n", size);
     int i;
     int j;
     int k;
@@ -412,7 +411,7 @@ int         ft_export(t_env *env, char *arg)
     }
     else
     {
-        export_add_new_var(env, arg); // ICICICICICICI
+        export_add_new_var(env, arg);
         int debug = 0; 
         while(env->tab[debug]) {
             printf("ENV=[%s]\n",env->tab[debug++]);
@@ -421,16 +420,16 @@ int         ft_export(t_env *env, char *arg)
     return (ARGS);
 }
 
-// int     main(int argc, char **argv, char **environnement)
-// {
-//     t_env   *env;
+int     main(int argc, char **argv, char **environnement)
+{
+    t_env   *env;
 
-//     (void) argc;
-//     (void) argv;
-//     if (!(env = malloc(sizeof(env))))
-//         return (-1);
-//     env->tab = copy_double_tab(environnement);
-//     env->export = copy_double_tab(env->tab);
-//     ft_export(env, "prem=56 =89 tri um=565'lolo lol'");
-//     return (0);
-// }
+    (void) argc;
+    (void) argv;
+    if (!(env = malloc(sizeof(env))))
+        return (-1);
+    env->tab = copy_double_tab(environnement);
+    env->export = copy_double_tab(env->tab);
+    ft_export(env, "prem=56 =89 tri um=565'lolo lol'");
+    return (0);
+}
