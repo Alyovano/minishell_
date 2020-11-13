@@ -358,7 +358,8 @@ int         free_double_tab(char **tab)
     return (0);
 }
 
-int         add_arg_to_env(t_env *env, char **arg_tab)
+
+char        **add_arg_to_env(t_env *env, char **arg_tab)
 {
     char **tmp;
     int size;
@@ -381,10 +382,10 @@ int         add_arg_to_env(t_env *env, char **arg_tab)
         j++;
     }
     tmp[i - 1] = NULL;
-    //free_double_tab(env->tab); // si je le free ici ca copy pas l'autre tableau
+    //free_double_tab(env->tab);
     //free_double_tab(arg_tab);
-    env->tab = copy_double_tab(tmp);
-    return (0);
+    //env->tab = copy_double_tab(tmp);
+    return (tmp);
 }
 
 int         export_add_new_var(t_env *env, char *arg)
@@ -392,11 +393,8 @@ int         export_add_new_var(t_env *env, char *arg)
     char **arg_tab;
 
     arg_tab = parsing_arg(arg);
-    //check if its ok() A FAIRE 
-    // ici il faudra refuser les variables qui commencent par des char interdit
-    // style str[0] = '=' ou '\'' ou \\ ou """ ou encore *(4,</
-    // if str[0] != d'une lettre alors return error
-    add_arg_to_env(env, arg_tab);
+    
+    env->tab = add_arg_to_env(env, arg_tab);
     return (ARGS);
 }
 
@@ -430,6 +428,6 @@ int     main(int argc, char **argv, char **environnement)
         return (-1);
     env->tab = copy_double_tab(environnement);
     env->export = copy_double_tab(env->tab);
-    ft_export(env, "prem=56 =89 tri um=565'lolo lol'");
+    ft_export(env, "'prem'='56' lopl= tri um=565'lolo lol'");
     return (0);
 }
