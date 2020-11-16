@@ -358,6 +358,9 @@ int         free_double_tab(char **tab)
     return (0);
 }
 
+/*
+** Probleme ici -> Les frees ne tiennent pas en fin de fonction
+*/ 
 
 char        **add_arg_to_env(t_env *env, char **arg_tab)
 {
@@ -418,16 +421,16 @@ int         ft_export(t_env *env, char *arg)
     return (ARGS);
 }
 
-int     main(int argc, char **argv, char **environnement)
-{
-    t_env   *env;
+// int     main(int argc, char **argv, char **environnement)
+// {
+//     t_env   *env;
 
-    (void) argc;
-    (void) argv;
-    if (!(env = malloc(sizeof(env))))
-        return (-1);
-    env->tab = copy_double_tab(environnement);
-    env->export = copy_double_tab(env->tab);
-    ft_export(env, "'prem'='56' lopl= tri um=565'lolo lol'");
-    return (0);
-}
+//     (void) argc;
+//     (void) argv;
+//     if (!(env = malloc(sizeof(env))))
+//         return (-1);
+//     env->tab = copy_double_tab(environnement);
+//     env->export = copy_double_tab(env->tab);
+//     ft_export(env, "'prem'='56' lopl= tri um=565'lolo lol'");
+//     return (0);
+// }
