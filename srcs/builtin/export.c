@@ -129,6 +129,10 @@ char	*ft_str_n_dup(const char *s1, int size)
 	ft_strlcpy(tab, s1, longueur);
 	return (tab);
 }
+// AU DESSUS LIBFT A DELETE LORS DE L'AJOUT AU MINISHELL
+// AU DESSUS LIBFT A DELETE LORS DE L'AJOUT AU MINISHELL
+// AU DESSUS LIBFT A DELETE LORS DE L'AJOUT AU MINISHELL
+
 /*
 ** Export recoit la structure avec le tableau d'environnement
 ** et l'argument qui suit l'appel de export
@@ -400,6 +404,11 @@ int         export_add_new_var(t_env *env, char *arg)
     env->tab = add_arg_to_env(env, arg_tab);
     return (ARGS);
 }
+
+/*
+** Reste encore une utilite de la cmd a faire, qui est d'update une valeur
+** si la $VAR existe deja
+*/
 
 int         ft_export(t_env *env, char *arg)
 {
