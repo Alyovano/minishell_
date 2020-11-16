@@ -160,15 +160,15 @@ int     unset_built(t_env *env, char *arg)
     // }
 }
 
-int     main(int ac, char **av, char **environnement)
-{
-    t_env   *env;
+// int     main(int ac, char **av, char **environnement)
+// {
+//     t_env   *env;
 
-    (void)ac;
-    (void)av;
-    if (!(env = malloc(sizeof(env))))
-        return (-1);
-    env->tab = copy_double_tab(environnement);
-    unset_built(env, "VTE_VERSION");
-    return (0);
-}
+//     (void)ac;
+//     (void)av;
+//     if (!(env = malloc(sizeof(env))))
+//         return (-1);
+//     env->tab = copy_double_tab(environnement);
+//     unset_built(env, "VTE_VERSION");
+//     return (0);
+// }
