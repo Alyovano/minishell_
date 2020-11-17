@@ -149,7 +149,7 @@ int         export_without_args(t_env *env)
     i = 0;
     while (env->export[i])
     {
-        printf("%s %s\n", "declare -x", env->export[i++]);
+        ft_printf("%s %s\n", "declare -x", env->export[i++]);
     }
     return (NO_ARGS);
 }
@@ -179,7 +179,7 @@ int         sort_export(t_env *env)
     {
         env->swap_token = 0;
         j = 0;
-        if (env->export[i + 1])
+        if (env->export[i + 1] && ft_strcmp(env->export[i], env->export[i + 1]) != 0)
         {
             while (env->export[i] && env->export[i + 1] 
             && env->export[i][j] == env->export[i + 1][j])
@@ -350,17 +350,24 @@ char        **parsing_arg(char *arg)
     return (arg_tab);
 }
 
-int         free_double_tab(char **tab)
+int         free_copy(char **arg_tab, t_env *env)
 {
     int i;
 
     i = 0;
-    while (tab[i])
+    while (arg_tab[i])
     {
-        free(tab[i]);
+        free(arg_tab[i]);
         i++;
     }
-    free(tab);
+    i = 0;
+    while (env->tab[i])
+    {
+        free(env->tab[i]);
+        i++;
+    }
+    free(arg_tab);
+    free(env->tab);
     return (0);
 }
 
@@ -371,29 +378,27 @@ int         free_double_tab(char **tab)
 char        **add_arg_to_env(t_env *env, char **arg_tab)
 {
     char **tmp;
-    int size;
     int i;
     int j;
 
     i = 0;
     j = 0;
-    size = (double_tab_size(env->tab) + double_tab_size(arg_tab));
-    tmp = malloc(sizeof(char**) * (size + 1));
+    tmp = malloc(sizeof(char**) * 
+        (((double_tab_size(env->tab) + double_tab_size(arg_tab)) + 1)));
     while (env->tab[i])
     {
-        tmp[i] = env->tab[i];
+        tmp[i] = ft_strdup(env->tab[i]);
         i++;
     }
     while (arg_tab[j])
     {
-        tmp[i] = arg_tab[j];
+        tmp[i] = ft_strdup(arg_tab[j]);
         i++;
         j++;
     }
-    tmp[i - 1] = NULL;
-    //free_double_tab(env->tab);
-    //free_double_tab(arg_tab);
-    //env->tab = copy_double_tab(tmp);
+    //tmp[i - 1] = NULL; //<- Peut-etre juste ? 
+    tmp[i] = NULL;
+    free_copy(arg_tab, env);
     return (tmp);
 }
 
@@ -402,7 +407,12 @@ int         export_add_new_var(t_env *env, char *arg)
     char **arg_tab;
 
     arg_tab = parsing_arg(arg);
-    
+    int i = 0; 
+    while (arg_tab[i])
+    {
+        printf("TAB[%d]=%s\n", i, arg_tab[i]);
+        i++;
+    }
     env->tab = add_arg_to_env(env, arg_tab);
     return (ARGS);
 }
