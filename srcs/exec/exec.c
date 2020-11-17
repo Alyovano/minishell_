@@ -89,7 +89,7 @@ int		exec_solo(t_list *lst, char **env)
 	else
 	{
 		// Parent process
-		waitpid(pid, &status, WCONTINUED | WUNTRACED);
+		waitpid(pid, &status, 8 | WUNTRACED);
   	}
 	return 1;
 }
