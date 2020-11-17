@@ -282,6 +282,7 @@ char        **arg_to_tab(char *arg, int size)
     }
     return (tab);
 }
+
 //-------------------ARG TO TAB---------------------------
 
 char        *clear_arg(char *str)
@@ -413,20 +414,25 @@ int         export_add_new_var(t_env *env, char *arg)
 
 int         ft_export(t_env *env, char *arg)
 {
-    printf("ICIICIICI%s\n", arg);
+    int i;
+
+    i = 0;
     env->swap_token = 0;
-    sort_export(env);
     if (!arg || *arg == '\0')
     {
+        env->export = copy_double_tab(env->tab);
+        sort_export(env);
         export_without_args(env);
+        while (env->export[i])
+            free(env->export[i++]);
+        free(env->export);
         return (NO_ARGS);
     }
     else
     {
         export_add_new_var(env, arg);
-        int debug = 0; 
-        while(env->tab[debug]) {
-            printf("ENV=[%s]\n",env->tab[debug++]);
+        while(env->tab[i]) {
+            printf("ENV=[%s]\n",env->tab[i++]);
         }
     }
     return (ARGS);

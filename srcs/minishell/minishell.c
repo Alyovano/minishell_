@@ -47,7 +47,6 @@ int     main(int argc, char **argv, char **environnement)
     if (!(env = malloc(sizeof(env))))
         return (-1);
     env->tab = copy_double_tab(environnement);
-    env->export = copy_double_tab(env->tab);
     minishell_loop(start, env);
     return (0);
 }
