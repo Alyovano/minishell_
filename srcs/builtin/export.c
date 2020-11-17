@@ -3,138 +3,6 @@
 #define ARGS 1
 
 /*
-int		get_backslash(char *str, int i)
-{
-	int nb_backslash;
-
-	nb_backslash = 0;
-	while (str[--i] && str[i] == '\\')
-		nb_backslash++;
-	return (nb_backslash % 2);
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-size_t		ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	size_t	j;
-	size_t	i;
-
-	if (!dst || !src)
-		return (0);
-	i = ft_strlen(src);
-	if (size > 0)
-	{
-		j = 0;
-		while (src[j] != '\0' && j < size - 1)
-		{
-			dst[j] = src[j];
-			j++;
-		}
-		dst[j] = '\0';
-	}
-	return (i);
-}
-char	*ft_strdup(const char *s1)
-{
-	size_t	longueur;
-	char	*tab;
-
-	longueur = ft_strlen(s1) + 1;
-	if (!(tab = malloc(sizeof(char) * longueur)))
-		return (NULL);
-	ft_strlcpy(tab, s1, longueur);
-	return (tab);
-}
-int     double_tab_size(char **src)
-{
-    int i;
-
-    i = 0;
-    while (src[i] != 0)
-        i++;
-    return (i);
-}
-char    **copy_double_tab(char **src)
-{
-    char **new_Tab;
-    int size;
-    int i;
-
-    i = 0;
-    size = double_tab_size(src);
-    new_Tab = malloc(sizeof(char**) * (size + 1));
-    if (!new_Tab)
-        return (NULL);
-    new_Tab[size] = 0;
-    while (src[i])
-    {
-        new_Tab[i] = ft_strdup(src[i]);
-        i++;
-    }
-    return (new_Tab);
-}
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	unsigned char	*stockdst;
-	unsigned char	*stocksrc;
-	size_t			count;
-
-	stocksrc = (unsigned char*)src;
-	stockdst = (unsigned char*)dst;
-	count = 0;
-	if (!dst && !src)
-		return (NULL);
-	while (count < n)
-	{
-		stockdst[count] = stocksrc[count];
-		count++;
-	}
-	return (stockdst);
-}
-char			*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*finalstr;
-	size_t	size1;
-	size_t	size2;
-
-	if (!s1 || !s2)
-		return (NULL);
-	size1 = ft_strlen(s1);
-	size2 = ft_strlen(s2);
-	if (!((finalstr = malloc(sizeof(char) * (size1 + size2 + 1)))))
-		return (NULL);
-	ft_memcpy(finalstr, s1, size1);
-	ft_memcpy(finalstr + size1, s2, size2);
-	finalstr[size1 + size2] = '\0';
-	return (finalstr);
-}
-char	*ft_str_n_dup(const char *s1, int size)
-{
-	size_t	longueur;
-	char	*tab;
-
-	longueur = size + 1;
-	if (!(tab = malloc(sizeof(char) * longueur)))
-		return (NULL);
-	ft_strlcpy(tab, s1, longueur);
-	return (tab);
-}
-*/
-// AU DESSUS LIBFT A DELETE LORS DE L'AJOUT AU MINISHELL
-// AU DESSUS LIBFT A DELETE LORS DE L'AJOUT AU MINISHELL
-// AU DESSUS LIBFT A DELETE LORS DE L'AJOUT AU MINISHELL
-
-/*
 ** Export recoit la structure avec le tableau d'environnement
 ** et l'argument qui suit l'appel de export
 ** Si pas d'argu : il print le tableau
@@ -392,11 +260,15 @@ char        **add_arg_to_env(t_env *env, char **arg_tab)
     }
     while (arg_tab[j])
     {
-        tmp[i] = ft_strdup(arg_tab[j]);
-        i++;
-        j++;
+        if (arg_tab[j][0] != '\0') 
+        {
+            tmp[i] = ft_strdup(arg_tab[j]);
+            i++;
+            j++;
+        }
+        else
+            j++;
     }
-    //tmp[i - 1] = NULL; //<- Peut-etre juste ? 
     tmp[i] = NULL;
     free_copy(arg_tab, env);
     return (tmp);
@@ -407,12 +279,6 @@ int         export_add_new_var(t_env *env, char *arg)
     char **arg_tab;
 
     arg_tab = parsing_arg(arg);
-    int i = 0; 
-    while (arg_tab[i])
-    {
-        printf("TAB[%d]=%s\n", i, arg_tab[i]);
-        i++;
-    }
     env->tab = add_arg_to_env(env, arg_tab);
     return (ARGS);
 }
@@ -441,23 +307,10 @@ int         ft_export(t_env *env, char *arg)
     else
     {
         export_add_new_var(env, arg);
+        // debugg
         while(env->tab[i]) {
             printf("ENV=[%s]\n",env->tab[i++]);
         }
     }
     return (ARGS);
 }
-
-// int     main(int argc, char **argv, char **environnement)
-// {
-//     t_env   *env;
-
-//     (void) argc;
-//     (void) argv;
-//     if (!(env = malloc(sizeof(env))))
-//         return (-1);
-//     env->tab = copy_double_tab(environnement);
-//     env->export = copy_double_tab(env->tab);
-//     ft_export(env, "'prem'='56' lopl= tri um=565'lolo lol'");
-//     return (0);
-// }
