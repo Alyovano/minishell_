@@ -2,7 +2,7 @@
 #define NO_ARGS 0
 #define ARGS 1
 
-
+/*
 int		get_backslash(char *str, int i)
 {
 	int nb_backslash;
@@ -129,6 +129,7 @@ char	*ft_str_n_dup(const char *s1, int size)
 	ft_strlcpy(tab, s1, longueur);
 	return (tab);
 }
+*/
 // AU DESSUS LIBFT A DELETE LORS DE L'AJOUT AU MINISHELL
 // AU DESSUS LIBFT A DELETE LORS DE L'AJOUT AU MINISHELL
 // AU DESSUS LIBFT A DELETE LORS DE L'AJOUT AU MINISHELL

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/11/04 10:10:29 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/17 10:13:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 */
 
 #include "../libft/libftprintfgnl.h"
-#include <wait.h>
+#include <sys/wait.h>
+#include <signal.h>
 
 /*
 **               Des structures
@@ -149,14 +150,16 @@ char        *verify_quote_integrity(char *input);
 
 int         conditionning(t_user *start);
 int		    execution(t_user *start, t_env *env);
-//int		    dispatch_cmd(t_list *lst, char **env);
+int		    dispatch_cmd(t_list *lst, char **env);
 void	    clean_builtin(t_list *lst);
 void		parse_flags(t_list *lst);
 void    	clean_quote(char **str);
 void		clean_args(t_list *lst);
 int		    exec_pipe(t_list *lst, char **env, int size);
-int         petite_execution(t_list *lst, char **env);
-int		    launch_exec(t_list *lst, char **env);
+int         exec_execve(t_list *lst, char **env);
+int		    exec_solo(t_list *lst, char **env);
+int		    exec_pipe(t_list *lst, char **env, int size);
+int		    cmd_valididy(char *cmd);
 
 /*
 ** Debug (delete before last push)

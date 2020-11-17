@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2020/11/03 13:44:54 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/17 09:30:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,51 +40,18 @@ int         get_len_till_char(int start, char c, char *str, t_quote *quote)
 }
 
 /*
-** Function like strcmp but ignores '\'' and '"' for compare 
-*/
-
-/*
-int         str_cmp_and_ignore(char *to_cmp, char *str)
-{
-	int i;
-    int j;
-
-	i = 0;
-    j = 0;
-	if ((!to_cmp || !str))
-		return (0);
-	while ((to_cmp[j] && str[i]) && (to_cmp[j] == str[i] || \
-                            to_cmp[j] == '\'' || to_cmp[j] == '"'))
-    {
-        if (to_cmp[j] == '\'' || to_cmp[j] == '"')
-            j++;
-        else
-        {
-            i++;
-            j++;
-        }
-    }
-    if (to_cmp[j] == '\'' || to_cmp[j] == '"')
-        return (0);
-    else //else werror does not compile ;((((
-        return ((int)(to_cmp[j] - str[i]));
-}
-*/
-
-/*
 ** Last split to store data in t_list
 ** builtin, flags, argu
 ** "echo" is the only builtin to manage with flags
 ** for other elements, everything after builtin goes to argu
 */
 
-void        last_split(t_list *lst)
+void        last_split(t_list *lst, int id, int size)
 {
-    int i;
-    int j;
-    t_quote *quote;
-    //int j;
-    char *tmp;
+    int         i;
+    int         j;
+    t_quote     *quote;
+    char        *tmp;
 
     quote = malloc(sizeof(t_quote));
     if (!quote)
@@ -94,38 +61,27 @@ void        last_split(t_list *lst)
     while (tmp[j] && tmp[j] == ' ')
         j++;
     i = get_len_till_char(j, ' ', tmp, quote);
-    //j = 0;
     lst->builtin = ft_substr(tmp, j, i);
-    // if (ft_strncmp(lst->builtin, "echo", 5) == 0)
-    // {
-    //     if (tmp[i + 1] == '-')
-    //     {
-    //         i++;
-    //         j = i;
-    //         while (tmp[i] && (tmp[i + 1] == 'e' || tmp[i + 1] == 'E' || tmp[i + 1] == 'n'))
-    //             i++;
-    //         if (tmp[i + 1] == ' ')
-    //         {
-    //             //Valid flag
-    //             // Do not print flag, add to flag
-    //             lst->flag = ft_substr(tmp, j, (i - j) + 1);
-    //             lst->argu = ft_substr(tmp, i + 2, ft_strlen(tmp));
-    //         }
-    //         else
-    //         {
-    //             //flag unknown
-    //             lst->argu = ft_substr(tmp, j, ft_strlen(tmp));
-    //         }
-    //     }
-    //     else
-    //     {
-    //         //no flag, add end to argu
-    //         lst->argu = ft_substr(tmp, i + 1, ft_strlen(tmp)); 
-    //     }
-    // }
-    //else
     lst->flag = NULL;
     lst->argu = ft_substr(tmp, i + 1, ft_strlen(tmp));
+    if (id == 0)
+    {
+        //first elem, only stdout
+        lst->stdout_fd = 1;
+        lst->stdin_fd = 0;
+    }
+    else if (id == size - 1)
+    {
+        //last elem, only stdin
+        lst->stdout_fd = 0;
+        lst->stdin_fd = 1;
+    }
+    else
+    {
+        //mid elem, stdin, stdout
+        lst->stdout_fd = 1;
+        lst->stdin_fd = 1;
+    }
     free(tmp);
 }
 
@@ -142,6 +98,8 @@ void        debug(t_list *lst)
         ft_printf("Builtin: |%s|\n", (char *)lst->builtin);
         ft_printf("Flag: |%s|\n", (char *)lst->flag);
         ft_printf("Argu: |%s|\n\n", (char *)lst->argu);
+        //ft_printf("Stdin ? : |%d|\n\n", lst->stdin_fd);
+        //ft_printf("Stdout ?: |%d|\n\n", lst->stdout_fd);
         lst = lst->next;
     }
 }
@@ -153,9 +111,11 @@ void        debug(t_list *lst)
 
 int         conditionning(t_user *start)
 {
-    t_list *lst;
-    void   *ptr;
-    
+    t_list  *lst;
+    void    *ptr;
+    int     i;
+    int     size;
+
     ptr = start->line;
     if (!start->user_cmd_tab)
         return (-1);
@@ -163,13 +123,15 @@ int         conditionning(t_user *start)
     {
         while (start->line)
         {
+            i = 0;
             lst = start->line->content;
+            size = ft_lstsize(lst);
             while (lst)
             {
-                last_split(lst);
+                last_split(lst, i, size);
                 lst = lst->next;
+                i++;
             }
-            //debug(start->line->content);
             start->line = start->line->next;
         }
         start->line = ptr;

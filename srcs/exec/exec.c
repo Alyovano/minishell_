@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/11/04 09:00:52 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/17 10:04:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** Ajout du flag dans execve pour tester le comportement
 */
 
-int         petite_execution(t_list *lst, char **env)
+int         exec_execve(t_list *lst, char **env)
 {
 	struct stat		test;
 	char			*path;
@@ -66,15 +66,16 @@ int         petite_execution(t_list *lst, char **env)
 ** Du coup quand on apelle execve le programme ne s'arrète plus (vu qu'on est dans le process enfant)
 */
 
-int		launch_exec(t_list *lst, char **env)
+int		exec_solo(t_list *lst, char **env)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid == 0)
 	{
 		// Child process
-		if (petite_execution(lst, env) == -1)
+		if (dispatch_cmd(lst, env) == -1)
 		{
 			error_output_token(-6, lst->builtin);
 			return (-1);	//cmd not found in /bin/
@@ -88,15 +89,14 @@ int		launch_exec(t_list *lst, char **env)
 	else
 	{
 		// Parent process
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, WCONTINUED | WUNTRACED);
   	}
 	return 1;
 }
 
 /*
 ** Fonction exectution qui clean les builtins et faire le parsing des flags
-** Actuellement elle n'execute que les premières commandes
-** Tout ce qu'il y a après le '|' est ignoré
+** puis execute les commandes
 */
 
 int		 execution(t_user *start, t_env *env)
@@ -108,16 +108,14 @@ int		 execution(t_user *start, t_env *env)
     while (start->line)
     {
 		lst = start->line->content;
-		//debug(lst);
 		clean_builtin(lst);
 		parse_flags(lst);
 		clean_args(lst);
 		//debug(lst);
-		//dispatch_cmd(lst); 
 		if (ft_lstsize(lst) > 1)
-			exec_pipe(lst, env->tab, ft_lstsize(lst));		//je bosse ici actuellement (dans l'implémentation de la gestion des '|')
+			exec_pipe(lst, env->tab, ft_lstsize(lst));
 		else
-			launch_exec(start->line->content, env->tab);
+			exec_solo(lst, env->tab);
 		start->line = start->line->next;
 	}
 	start->line = ptr;
