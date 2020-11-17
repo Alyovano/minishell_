@@ -66,7 +66,7 @@ int         exec_execve(t_list *lst, char **env)
 ** Du coup quand on apelle execve le programme ne s'arrète plus (vu qu'on est dans le process enfant)
 */
 
-int		exec_solo(t_list *lst, char **env)
+int		exec_solo(t_list *lst, t_env *env)
 {
 	pid_t	pid;
 	int		status;
@@ -113,9 +113,9 @@ int		 execution(t_user *start, t_env *env)
 		clean_args(lst);
 		//debug(lst);
 		if (ft_lstsize(lst) > 1)
-			exec_pipe(lst, env->tab, ft_lstsize(lst));
+			exec_pipe(lst, env, ft_lstsize(lst));
 		else
-			exec_solo(lst, env->tab);
+			exec_solo(lst, env);
 		start->line = start->line->next;
 	}
 	start->line = ptr;

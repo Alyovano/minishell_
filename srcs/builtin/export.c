@@ -413,6 +413,7 @@ int         export_add_new_var(t_env *env, char *arg)
 
 int         ft_export(t_env *env, char *arg)
 {
+    printf("ICIICIICI%s\n", arg);
     env->swap_token = 0;
     sort_export(env);
     if (!arg || *arg == '\0')

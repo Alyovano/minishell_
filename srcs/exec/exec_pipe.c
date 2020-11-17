@@ -26,7 +26,7 @@ int		ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-int		exec_fork(t_list *lst, char **env, int old_fd[2])
+int		exec_fork(t_list *lst, t_env *env, int old_fd[2])
 {
 	pipe(lst->fd);
 	if ((lst->pid = fork()) == -1)
@@ -51,7 +51,7 @@ int		exec_fork(t_list *lst, char **env, int old_fd[2])
 	return (1);
 }
 
-int		exec_pipe(t_list *lst, char **env, int size)
+int		exec_pipe(t_list *lst, t_env *env, int size)
 {
 	int		status;
 	void	*ptr;
@@ -75,7 +75,7 @@ int		exec_pipe(t_list *lst, char **env, int size)
 	lst = ptr;
 	while (lst)
 	{
-		waitpid(lst->pid, &status, WCONTINUED | WUNTRACED);
+		waitpid(lst->pid, &status, 8 | WUNTRACED); // WCONTINUED Devient 8 sur mon OS
 		old_fd[0] = lst->fd[0];
 		old_fd[1] = lst->fd[1];
 		lst = lst->next;

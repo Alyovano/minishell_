@@ -150,16 +150,22 @@ char        *verify_quote_integrity(char *input);
 
 int         conditionning(t_user *start);
 int		    execution(t_user *start, t_env *env);
-int		    dispatch_cmd(t_list *lst, char **env);
+int		    dispatch_cmd(t_list *lst, t_env *env);
 void	    clean_builtin(t_list *lst);
 void		parse_flags(t_list *lst);
 void    	clean_quote(char **str);
 void		clean_args(t_list *lst);
-int		    exec_pipe(t_list *lst, char **env, int size);
+int		    exec_pipe(t_list *lst, t_env *env, int size);
 int         exec_execve(t_list *lst, char **env);
-int		    exec_solo(t_list *lst, char **env);
-int		    exec_pipe(t_list *lst, char **env, int size);
+int		    exec_solo(t_list *lst, t_env *env);
+int		    exec_pipe(t_list *lst, t_env *env, int size);
 int		    cmd_valididy(char *cmd);
+
+/*
+**         Built-in
+*/
+
+int         ft_export(t_env *env, char *arg);
 
 /*
 ** Debug (delete before last push)

@@ -15,6 +15,7 @@
 /*
 ** Function pour savoir si la commande existe (ret 1) ou existe pas (ret 0)
 */
+
 int		cmd_valididy(char *cmd)
 {
 	struct stat	test;
@@ -40,16 +41,21 @@ int		cmd_valididy(char *cmd)
 ** le check d'erreur se fait au dernier moment dans la fonction cmd_validity
 */
 
-int		dispatch_cmd(t_list *lst, char **env)
+// Je commence par implementer export, le reste des builtins restonront 
+//inchangees pour toi, pour le moment 
+
+int		dispatch_cmd(t_list *lst, t_env *env)
 {
 	int ret;
 
 	ret = 0;
-	if (ft_strcmp("le nom du builtin que tu veux ajouter", lst->builtin) == 0)
-		ft_printf("la fonction builtin que tu apelles\n");
+	if (ft_strcmp("export", lst->builtin) == 0)
+	{
+		ft_export(env, lst->argu);
+	}
 	else if (ft_strcmp("le nom du builtin que tu veux ajouter", lst->builtin) == 0)
 		ft_printf("la fonction builtin que tu apelles\n");
 	else
-		ret = exec_execve(lst, env);	
+		ret = exec_execve(lst, env->tab);	
 	return (ret);
 }
