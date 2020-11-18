@@ -1,4 +1,6 @@
 #include "../includes/minishell.h"
+
+/*
 int		get_backslash(char *str, int i)
 {
 	int nb_backslash;
@@ -110,6 +112,7 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n)
 		i++;
 	return ((int)(ss1[i] - ss2[i]));
 }
+*/
 
 // AU DESSUS LIBFT A DELETE LORS DE L'AJOUT AU MINISHELL
 
@@ -121,6 +124,7 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n)
 ** return 0 -> La var existe dans le tableau
 ** return 1 -> Cette var n'est pas dans le tableau
 */
+
 int     catch_env_var(char *arg, char *env_line)
 {
     int i;

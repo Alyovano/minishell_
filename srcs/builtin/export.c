@@ -151,8 +151,6 @@ char        **arg_to_tab(char *arg, int size)
     return (tab);
 }
 
-//-------------------ARG TO TAB---------------------------
-
 char        *clear_arg(char *str)
 {
     char *tmp;
@@ -304,9 +302,9 @@ int         ft_export(t_env *env, char *arg)
     {
         export_add_new_var(env, arg);
         // debugg
-        while(env->tab[i]) {
-            printf("ENV=[%s]\n",env->tab[i++]);
-        }
+        // while(env->tab[i]) {
+        //     printf("ENV=[%s]\n",env->tab[i++]);
+        // }
     }
     return (ARGS);
 }
