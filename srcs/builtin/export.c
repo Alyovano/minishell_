@@ -239,10 +239,6 @@ int         free_copy(char **arg_tab, t_env *env)
     return (0);
 }
 
-/*
-** Probleme ici -> Les frees ne tiennent pas en fin de fonction
-*/ 
-
 char        **add_arg_to_env(t_env *env, char **arg_tab)
 {
     char **tmp;
