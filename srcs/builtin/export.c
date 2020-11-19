@@ -366,8 +366,7 @@ int         export_add_new_var(t_env *env, char *arg)
 }
 
 /*
-** Reste encore une utilite de la cmd a faire, qui est d'update une valeur
-** si la $VAR existe deja
+** export <nom_de_var_pas_encore_dans_le_tableau> x2 ou x3 provoque une var repetee
 */
 
 int         ft_export(t_env *env, char *arg)
