@@ -237,19 +237,6 @@ int         free_copy(char **arg_tab, t_env *env)
     return (0);
 }
 
-void    free_double_tab(char **tab)
-{
-    int i;
-
-    i = 0;
-    while (tab[i])
-    {
-        free(tab[i]);
-        i++;
-    }
-    free(tab);
-}
-
 int     catch_env_var(char *arg, char *env_line)
 {
     unsigned int            i;
@@ -360,6 +347,7 @@ int         export_add_new_var(t_env *env, char *arg)
     }
     token_init(token);
     arg_tab = parsing_arg(arg);
+    // ici probablement parse encore pr comparer les argu entre eux et virer les doublons
     env->tab = add_arg_to_env(env, arg_tab, token);
     free(token);
     return (ARGS);
@@ -371,18 +359,13 @@ int         export_add_new_var(t_env *env, char *arg)
 
 int         ft_export(t_env *env, char *arg)
 {
-    int i;
-
-    i = 0;
     env->swap_token = 0;
     if (!arg || *arg == '\0')
     {
         env->export = copy_double_tab(env->tab);
         sort_export(env);
         export_without_args(env);
-        while (env->export[i])
-            free(env->export[i++]);
-        free(env->export);
+        free_double_tab(env->export);
         return (NO_ARGS);
     }
     else

@@ -72,6 +72,7 @@ void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstdelone(t_list *lst, void (*del)(void*));
 void				ft_lstclear(t_list **lst, void (*del)(void*));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
+void    			free_double_tab(char **tab);
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *)
 					, void (*del)(void *));
 void				ft_putnbr_unsigned_fd(unsigned int n, int fd);
