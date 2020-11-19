@@ -237,19 +237,38 @@ int         free_copy(char **arg_tab, t_env *env)
     return (0);
 }
 
-int     catch_env_var(char *arg, char *env_line)
+void    free_double_tab(char **tab)
 {
-    unsigned int i;
+    int i;
 
     i = 0;
-    while (arg[i] && env_line[i])
+    while (tab[i])
     {
-        if (arg[i] != env_line[i])
+        free(tab[i]);
+        i++;
+    }
+    free(tab);
+}
+
+int     catch_env_var(char *arg, char *env_line)
+{
+    unsigned int            i;
+    char              **split;
+
+    i = 0;
+    split = ft_split(arg, '=');
+    while (split[0][i] && env_line[i])
+    {
+        if (split[0][i] != env_line[i])
             break ;
         i++;
     }
-    if ((env_line[i] == '\0' || env_line[i] == '=') && i == ft_strlen(arg))
+    if ((env_line[i] == '\0' || env_line[i] == '=') && i == ft_strlen(split[0]))
+    {
+        free_double_tab(split);
         return (0);
+    }
+    free_double_tab(split);
     return (1);
 }
 
@@ -277,11 +296,11 @@ char         *replace_var_value(char *env, char* arg)
         if (arg[i] == '=')
         {
             free(env);
-            return (arg);
+            return (ft_strdup(arg));
         }
         i++;
     }
-    return (env);
+    return (ft_strdup(env));
 }
 
 char        **add_arg_to_env(t_env *env, char **arg_tab, t_token_env *token)
@@ -332,7 +351,7 @@ void        token_init(t_token_env *token)
 int         export_add_new_var(t_env *env, char *arg)
 {
     t_token_env *token;
-    char **arg_tab;
+    char        **arg_tab;
 
     token = malloc(sizeof(t_token_env));
     if (!token)

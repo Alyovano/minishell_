@@ -102,7 +102,7 @@ char        *check_var_in_env(char *var_name, t_env *env)
         if (str_check(env->tab[i], var_name) == 0)
         {
             if (env->tab[i])
-            token_copy = 1;
+                token_copy = 1;
             break ;
         }
         i++;
