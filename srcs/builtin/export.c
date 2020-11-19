@@ -286,7 +286,7 @@ int         check_if_exist(char **tab, char *arg)
     return (-1);
 }
 
-char         *replace_var_value(char *env, char* arg)
+char         *replace_var_value(char *tmp, char* arg)
 {
     int i;
 
@@ -295,12 +295,12 @@ char         *replace_var_value(char *env, char* arg)
     {
         if (arg[i] == '=')
         {
-            free(env);
+            free(tmp);
             return (ft_strdup(arg));
         }
         i++;
     }
-    return (ft_strdup(env));
+    return (ft_strdup(tmp));
 }
 
 char        **add_arg_to_env(t_env *env, char **arg_tab, t_token_env *token)
@@ -322,9 +322,7 @@ char        **add_arg_to_env(t_env *env, char **arg_tab, t_token_env *token)
             token->k = check_if_exist(env->tab, arg_tab[token->j]);
             if (token->k != -1)
             {
-                //free(tmp[token->k]);
                 tmp[token->k] = replace_var_value(tmp[token->k], arg_tab[token->j]);
-                //tmp[token->k] = ft_strdup(arg_tab[token->j]);
                 token->j++;
             }
             else
