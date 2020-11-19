@@ -237,21 +237,35 @@ int         free_copy(char **arg_tab, t_env *env)
     return (0);
 }
 
-// int     catch_env_var(char *arg, char *env_line)
-// {
-//     int i;
+int     catch_env_var(char *arg, char *env_line)
+{
+    unsigned int i;
 
-//     i = 0;
-//     while (arg[i] && env_line[i])
-//     {
-//         if (arg[i] != env_line[i])
-//             break ;
-//         i++;
-//     }
-//     if ((env_line[i] == '\0' || env_line[i] == '=') && i == ft_strlen(arg))
-//         return (0);
-//     return (1);
-// }
+    i = 0;
+    while (arg[i] && env_line[i])
+    {
+        if (arg[i] != env_line[i])
+            break ;
+        i++;
+    }
+    if ((env_line[i] == '\0' || env_line[i] == '=') && i == ft_strlen(arg))
+        return (0);
+    return (1);
+}
+
+int         check_if_exist(t_env *env, char *arg)
+{
+    int i;
+
+    i = 0;
+    while (env->tab[i])
+    {
+        if (catch_env_var(arg, env->tab[i]) == 0)
+            return (i);
+        i++;
+    }
+    return (-1);
+}
 
 char        **add_arg_to_env(t_env *env, char **arg_tab, t_token_env *token)
 {
@@ -268,9 +282,19 @@ char        **add_arg_to_env(t_env *env, char **arg_tab, t_token_env *token)
     {
         if (arg_tab[token->j][0] != '\0') 
         {
-            tmp[token->i] = ft_strdup(arg_tab[token->j]);
-            token->i++;
-            token->j++;
+            token->k = check_if_exist(env, arg_tab[token->j]);
+            if (token->k != -1)
+            {
+                free(tmp[token->k]);
+                tmp[token->k] = ft_strdup(arg_tab[token->j]);
+                token->j++;
+            }
+            else
+            {
+                tmp[token->i] = ft_strdup(arg_tab[token->j]);
+                token->i++;
+                token->j++;
+            }
         }
         else
             token->j++;
