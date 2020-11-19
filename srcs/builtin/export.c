@@ -301,10 +301,6 @@ int         ft_export(t_env *env, char *arg)
     else
     {
         export_add_new_var(env, arg);
-        // debugg
-        // while(env->tab[i]) {
-        //     printf("ENV=[%s]\n",env->tab[i++]);
-        // }
     }
     return (ARGS);
 }

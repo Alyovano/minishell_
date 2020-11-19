@@ -7,7 +7,7 @@ char	*ft_str_n_dup(const char *s1, int size)
 
 	longueur = size + 1;
 	if (!(tab = malloc(sizeof(char) * longueur)))
-		return (NULL);
+		exit(0);
 	ft_strlcpy(tab, s1, longueur);
 	return (tab);
 }
