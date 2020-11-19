@@ -272,14 +272,14 @@ int     catch_env_var(char *arg, char *env_line)
     return (1);
 }
 
-int         check_if_exist(t_env *env, char *arg)
+int         check_if_exist(char **tab, char *arg)
 {
     int i;
 
     i = 0;
-    while (env->tab[i])
+    while (tab[i])
     {
-        if (catch_env_var(arg, env->tab[i]) == 0)
+        if (catch_env_var(arg, tab[i]) == 0)
             return (i);
         i++;
     }
@@ -314,11 +314,12 @@ char        **add_arg_to_env(t_env *env, char **arg_tab, t_token_env *token)
         tmp[token->i] = ft_strdup(env->tab[token->i]);
         token->i++;
     }
+    tmp[token->i] = NULL;
     while (arg_tab[token->j])
     {
         if (arg_tab[token->j][0] != '\0') 
         {
-            token->k = check_if_exist(env, arg_tab[token->j]);
+            token->k = check_if_exist(env->tab, arg_tab[token->j]);
             if (token->k != -1)
             {
                 //free(tmp[token->k]);
@@ -357,7 +358,7 @@ int         export_add_new_var(t_env *env, char *arg)
     if (!token)
     {
         perror("Malloc Failure\n");
-        exit(0);
+        exit(EXIT_FAILURE);
     }
     token_init(token);
     arg_tab = parsing_arg(arg);
