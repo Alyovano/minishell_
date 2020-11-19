@@ -20,6 +20,8 @@
 #define FAIL 1
 #define READ 0
 #define WRITE 1
+#define NO_ARGS 0
+#define ARGS 1
 
 /*
 ** Des librairies
@@ -28,6 +30,7 @@
 #include "../libft/libftprintfgnl.h"
 #include <sys/wait.h>
 #include <signal.h>
+#include <errno.h>
 
 /*
 **               Des structures
@@ -75,6 +78,13 @@ typedef struct      s_env
     char **export;
     int  swap_token;
 }                   t_env;
+
+typedef struct      s_token_env
+{
+    int i;
+    int j;
+    int k;
+}                   t_token_env;
 
 /*
 ** (s_dollar)

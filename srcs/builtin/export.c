@@ -1,6 +1,4 @@
 #include "../includes/minishell.h"
-#define NO_ARGS 0
-#define ARGS 1
 
 /*
 ** Export recoit la structure avec le tableau d'environnement
@@ -232,48 +230,78 @@ int         free_copy(char **arg_tab, t_env *env)
         free(env->tab[i]);
         i++;
     }
-    free(arg_tab);
-    free(env->tab);
+    if (arg_tab)
+        free(arg_tab);
+    if (env->tab)
+        free(env->tab);
     return (0);
 }
 
-char        **add_arg_to_env(t_env *env, char **arg_tab)
+// int     catch_env_var(char *arg, char *env_line)
+// {
+//     int i;
+
+//     i = 0;
+//     while (arg[i] && env_line[i])
+//     {
+//         if (arg[i] != env_line[i])
+//             break ;
+//         i++;
+//     }
+//     if ((env_line[i] == '\0' || env_line[i] == '=') && i == ft_strlen(arg))
+//         return (0);
+//     return (1);
+// }
+
+char        **add_arg_to_env(t_env *env, char **arg_tab, t_token_env *token)
 {
     char **tmp;
-    int i;
-    int j;
 
-    i = 0;
-    j = 0;
     tmp = malloc(sizeof(char**) * 
         (((double_tab_size(env->tab) + double_tab_size(arg_tab)) + 1)));
-    while (env->tab[i])
+    while (env->tab[token->i])
     {
-        tmp[i] = ft_strdup(env->tab[i]);
-        i++;
+        tmp[token->i] = ft_strdup(env->tab[token->i]);
+        token->i++;
     }
-    while (arg_tab[j])
+    while (arg_tab[token->j])
     {
-        if (arg_tab[j][0] != '\0') 
+        if (arg_tab[token->j][0] != '\0') 
         {
-            tmp[i] = ft_strdup(arg_tab[j]);
-            i++;
-            j++;
+            tmp[token->i] = ft_strdup(arg_tab[token->j]);
+            token->i++;
+            token->j++;
         }
         else
-            j++;
+            token->j++;
     }
-    tmp[i] = NULL;
+    tmp[token->i] = NULL;
     free_copy(arg_tab, env);
     return (tmp);
 }
 
+void        token_init(t_token_env *token)
+{
+    token->i = 0;
+    token->j = 0;
+    token->k = 0;
+}
+
 int         export_add_new_var(t_env *env, char *arg)
 {
+    t_token_env *token;
     char **arg_tab;
 
+    token = malloc(sizeof(t_token_env));
+    if (!token)
+    {
+        perror("Malloc Failure\n");
+        exit(0);
+    }
+    token_init(token);
     arg_tab = parsing_arg(arg);
-    env->tab = add_arg_to_env(env, arg_tab);
+    env->tab = add_arg_to_env(env, arg_tab, token);
+    free(token);
     return (ARGS);
 }
 
