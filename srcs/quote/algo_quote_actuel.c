@@ -44,3 +44,21 @@ int quote_get_len_and_validity(t_user *start, t_quote *quote, int i)
     quote->verif = (quote->token_in_dquote % 2) + (quote->token_in_simple_quote % 2);
     return (quote->len - 1);
 }
+
+int         quote_len(char *str)
+{
+    int i;
+    char quote;
+
+    i = 1;
+    quote = *str;
+    while (str[i])
+    {
+        if (str[i] == quote && get_backslash(str, i) == 0)
+        {
+            break ;
+        }
+        i++;
+    }
+    return (i);
+}

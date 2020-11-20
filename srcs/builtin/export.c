@@ -60,24 +60,6 @@ int         sort_export(t_env *env)
     return (1);
 }
 
-int         quote_len(char *str)
-{
-    int i;
-    char quote;
-
-    i = 1;
-    quote = *str;
-    while (str[i])
-    {
-        if (str[i] == quote && get_backslash(str, i) == 0)
-        {
-            break ;
-        }
-        i++;
-    }
-    return (i);
-}
-
 int         check_arg_nb(char *arg)
 {
     int i;
