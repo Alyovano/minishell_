@@ -112,6 +112,7 @@ int         free_all(t_user *start, t_quote *quote);
 int         parsing_input(char *input, t_user *start, t_env *env);
 int         quote_get_len_and_validity(t_user *start, t_quote *quote, int i);
 int         quote_len(char *str);
+char        *delete_quote(char *str);
 int         check_input_start(t_user *start);
 void        error_output_token(int error, char *str);
 void        init_quotes_to_fix(t_quote *quote);

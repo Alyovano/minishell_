@@ -122,43 +122,66 @@
 ** return 1 -> Cette var n'est pas dans le tableau
 */
 
-// int     catch_env_var(char *arg, char *env_line)
-// {
-//     int i;
+int     catch_env_varr(char *arg, char *env_line)
+{
+    unsigned int i;
 
-//     i = 0;
-//     while (arg[i] && env_line[i])
-//     {
-//         if (arg[i] != env_line[i])
-//             break ;
-//         i++;
-//     }
-//     if ((env_line[i] == '\0' || env_line[i] == '=') && i == ft_strlen(arg))
-//         return (0);
-//     return (1);
-// }
+    i = 0;
+    while (arg[i] && env_line[i])
+    {
+        if (arg[i] != env_line[i])
+            break ;
+        i++;
+    }
+    if ((env_line[i] == '\0' || env_line[i] == '=') && i == ft_strlen(arg))
+        return (0);
+    return (1);
+}
 
 int     unset_built(t_env *env, char *arg)
 {
 	(void)env;
-    int i = 0;
-    // int size = double_tab_size(env->tab);
-    // int token = 0;
-	char **tab = ft_split(arg, ' ');
+    int		i;
+	char	**tmp;
 
-	while (tab[i])
-		printf("%s\n", tab[i++]);
+	tmp = ft_split(arg, ' ');
+	i = 0;
+	while (tmp[i])
+	{
+		tmp[i] = delete_quote(tmp[i]);
+		i++;
+	}
+	i = 0;
+	int j = 0;
+
+
+
+
+
+
+	while (tmp[i])
+	{
+		j = 0;
+		while (env->tab[j])
+		{
+			if (catch_env_varr(tmp[i], env->tab[j]) == 0)
+			{
+				env->tab[j] = 0;
+			}
+			j++;
+		}
+		i++;
+	}
+
+
+
+
+
+
+	i = 0;
+	while (tmp[i])
+		printf("%s\n", tmp[i++]);
 	printf("OK\n");
-
-
-	//DEBUGGGGGGGGG
-    // while (env->tab[i])
-    // {
-    //     token = 0;
-    //     token = ft_strncmp(env->tab[i], arg, ft_strlen(arg));
-    //     printf("%d\n", token);
-    //     printf("%s\n", env->tab[i++]);
-    // }
 	return (0);
 }
 

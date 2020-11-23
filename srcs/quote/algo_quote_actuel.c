@@ -62,3 +62,27 @@ int         quote_len(char *str)
     }
     return (i);
 }
+
+char        *delete_quote(char *str)
+{
+    unsigned int i;
+    unsigned int j;
+    char *tmp;
+
+    i = 0;
+    j = 0;
+    tmp = malloc(sizeof(char*) * (ft_strlen(str) + 1));
+    if (tmp == NULL)
+        exit(EXIT_FAILURE);
+    while (str[i])
+    {
+        while (str[i] == '"' || str[i] == '\'')
+            i++;
+        tmp[j] = str[i];
+        j++;
+        i++;
+    }
+    tmp[j] = '\0';
+    free(str);
+    return (tmp);
+}
