@@ -6,8 +6,11 @@ char	*ft_str_n_dup(const char *s1, int size)
 	char	*tab;
 
 	longueur = size + 1;
-	if (!(tab = malloc(sizeof(char) * longueur)))
-		exit(0);
+	tab = malloc(sizeof(char) * longueur);
+    {
+        perror("Malloc Failure\n");
+        exit(EXIT_FAILURE);
+    }
 	ft_strlcpy(tab, s1, longueur);
 	return (tab);
 }
