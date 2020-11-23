@@ -29,7 +29,10 @@ char    **copy_double_tab(char **src)
     size = double_tab_size(src);
     new_Tab = malloc(sizeof(char**) * (size + 1));
     if (!new_Tab)
-        return (NULL);
+    {
+        perror("Malloc Failure\n");
+        exit(EXIT_FAILURE);
+    }
     new_Tab[size] = 0;
     while (src[i])
     {
