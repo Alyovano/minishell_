@@ -7,6 +7,7 @@ char	*ft_str_n_dup(const char *s1, int size)
 
 	longueur = size + 1;
 	tab = malloc(sizeof(char) * longueur);
+    if (tab == NULL)
     {
         perror("Malloc Failure\n");
         exit(EXIT_FAILURE);
