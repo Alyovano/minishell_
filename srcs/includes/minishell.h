@@ -177,6 +177,7 @@ int		    cmd_valididy(char *cmd);
 */
 
 int         ft_export(t_env *env, char *arg);
+int         unset_built(t_env *env, char *arg);
 
 /*
 ** Debug (delete before last push)

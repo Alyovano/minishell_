@@ -107,7 +107,10 @@ char        **arg_to_tab(char *arg, int size)
     tab = malloc(sizeof(char**) * (size));
     tab[size - 1] = NULL;
     if (tab == NULL)
+    {
+        perror("Malloc Failure\n");
         exit(EXIT_FAILURE);
+    }
     while (arg[i])
     {
         while (arg[i] && arg[i] != ' ')
@@ -278,6 +281,11 @@ char        **add_arg_to_env(t_env *env, char **arg_tab, t_token_env *token)
 
     tmp = malloc(sizeof(char**) * 
         (((double_tab_size(env->tab) + double_tab_size(arg_tab)) + 1)));
+    if (tmp == NULL)
+    {
+        perror("Malloc Failure\n");
+        exit(EXIT_FAILURE);
+    }
     while (env->tab[token->i])
     {
         tmp[token->i] = ft_strdup(env->tab[token->i]);
