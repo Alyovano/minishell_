@@ -182,6 +182,7 @@ int     unset_built(t_env *env, char *arg)
 	while (tmp[i])
 		printf("%s\n", tmp[i++]);
 	printf("OK\n");
+	free_double_tab(tmp);
 	return (0);
 }
 
