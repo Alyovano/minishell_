@@ -106,6 +106,14 @@ char	**check_var_name(char **arg)
 	return (tmp);
 }
 
+/*
+** Unset creer un nouveau tableau sans les variables detruire par user
+** Le code "123456789" indique a la fonction quelle var
+** va etre delete dans la creation du suivant
+** ce nom ne porte pas a confusion puisqu'il ne peut pas etre utilise 
+** par user -> check_var_name(tmp); bloque son accessibilite
+*/
+
 int     unset_built(t_env *env, char *arg)
 {
     int		i;
