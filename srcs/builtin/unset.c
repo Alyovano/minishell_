@@ -1,119 +1,5 @@
 #include "../includes/minishell.h"
 
-// int		get_backslash(char *str, int i)
-// {
-// 	int nb_backslash;
-
-// 	nb_backslash = 0;
-// 	while (str[--i] && str[i] == '\\')
-// 		nb_backslash++;
-// 	return (nb_backslash % 2);
-// }
-// size_t	ft_strlen(const char *s)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	if (!s)
-// 		return (0);
-// 	while (s[i] != '\0')
-// 		i++;
-// 	return (i);
-// }
-// size_t		ft_strlcpy(char *dst, const char *src, size_t size)
-// {
-// 	size_t	j;
-// 	size_t	i;
-
-// 	if (!dst || !src)
-// 		return (0);
-// 	i = ft_strlen(src);
-// 	if (size > 0)
-// 	{
-// 		j = 0;
-// 		while (src[j] != '\0' && j < size - 1)
-// 		{
-// 			dst[j] = src[j];
-// 			j++;
-// 		}
-// 		dst[j] = '\0';
-// 	}
-// 	return (i);
-// }
-// char	*ft_strdup(const char *s1)
-// {
-// 	size_t	longueur;
-// 	char	*tab;
-
-// 	longueur = ft_strlen(s1) + 1;
-// 	if (!(tab = malloc(sizeof(char) * longueur)))
-// 		return (NULL);
-// 	ft_strlcpy(tab, s1, longueur);
-// 	return (tab);
-// }
-// int     double_tab_size(char **src)
-// {
-//     int i;
-
-//     i = 0;
-//     while (src[i] != 0)
-//         i++;
-//     return (i);
-// }
-// char    **copy_double_tab(char **src)
-// {
-//     char **new_Tab;
-//     int size;
-//     int i;
-
-//     i = 0;
-//     size = double_tab_size(src);
-//     new_Tab = malloc(sizeof(char**) * (size + 1));
-//     if (!new_Tab)
-//         return (NULL);
-//     new_Tab[size] = 0;
-//     while (src[i])
-//     {
-//         new_Tab[i] = ft_strdup(src[i]);
-//         i++;
-//     }
-//     return (new_Tab);
-// }
-// int		ft_strncmp(const char *s1, const char *s2, size_t n)
-// {
-// 	size_t len_s2;
-// 	size_t len_s1;
-// 	size_t len;
-
-// 	if (!s1 || !s2)
-// 		return (0);
-// 	len_s1 = ft_strlen(s1) + 1;
-// 	len_s2 = ft_strlen(s2) + 1;
-// 	len = len_s1;
-// 	if (len_s1 > len_s2)
-// 		len = len_s2;
-// 	if (len > n)
-// 		return (ft_memcmp(s1, s2, n));
-// 	return (ft_memcmp(s1, s2, len));
-// }
-// int		ft_memcmp(const void *s1, const void *s2, size_t n)
-// {
-// 	size_t			i;
-// 	unsigned char	*ss1;
-// 	unsigned char	*ss2;
-
-// 	ss1 = (unsigned char*)s1;
-// 	ss2 = (unsigned char*)s2;
-// 	i = 0;
-// 	if (n == 0 || (!ss1 || !ss2))
-// 		return (0);
-// 	while ((ss1 || ss2) && ss1[i] == ss2[i] && i < (n - 1))
-// 		i++;
-// 	return ((int)(ss1[i] - ss2[i]));
-// }
-// AU DESSUS LIBFT A DELETE LORS DE L'AJOUT AU MINISHELL
-
-
 /*
 ** s1 = Mon argu a chercher dans le tableau
 ** s2 = la ligne du tableau 
@@ -127,6 +13,8 @@ int     catch_env_varr(char *arg, char *env_line)
     unsigned int i;
 
     i = 0;
+	if (!env_line && !env_line[i])
+		return (-1);
     while (arg[i] && env_line[i])
     {
         if (arg[i] != env_line[i])
@@ -138,14 +26,95 @@ int     catch_env_varr(char *arg, char *env_line)
     return (1);
 }
 
+char    **copy_unset_tab(char **src)
+{
+    char **new_tab;
+    int size;
+    int i;
+	int j;
+
+    i = 0;
+	j = 0;
+    size = double_tab_size(src);
+    new_tab = malloc(sizeof(char**) * (size + 1));
+    if (!new_tab)
+    {
+        perror("Malloc Failure\n");
+        exit(EXIT_FAILURE);
+    }
+    new_tab[size] = 0;
+    while (src[i])
+    {
+		if (ft_strcmp("123456789", src[i]) != 0)
+		{
+        	new_tab[j] = ft_strdup(src[i]);
+			j++;
+		}
+        i++;
+    }
+	new_tab[j] = NULL;
+    return (new_tab);
+}
+
+int		is_valid_var_name(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isalpha(str[i]) == 0)
+		{
+			if (str[i] != '_')
+				return (-1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+char	**check_var_name(char **arg)
+{
+	int i;
+	int j;
+	char **tmp;
+
+	i = 0;
+	j = 0;
+	tmp = malloc(sizeof(char**) * (double_tab_size(arg) + 1));
+	if (!tmp)
+    {
+        perror("Malloc Failure\n");
+        exit(EXIT_FAILURE);
+    }
+	while (arg[i])
+	{
+		if (is_valid_var_name(arg[i]) == -1)
+		{
+			ft_printf("bash: unset: « %s » : identifiant non valable\n", arg[i]);
+			i++;
+		}
+		else
+		{
+			tmp[j] = ft_strdup(arg[i]);
+			i++;
+			j++;
+		}
+	}
+	tmp[j] = NULL;
+	free_double_tab(arg);
+	return (tmp);
+}
+
 int     unset_built(t_env *env, char *arg)
 {
-	(void)env;
     int		i;
 	char	**tmp;
+	char	**new_tab;
 
 	tmp = ft_split(arg, ' ');
 	i = 0;
+	tmp = check_var_name(tmp);
 	while (tmp[i])
 	{
 		tmp[i] = delete_quote(tmp[i]);
@@ -153,12 +122,6 @@ int     unset_built(t_env *env, char *arg)
 	}
 	i = 0;
 	int j = 0;
-
-
-
-
-
-
 	while (tmp[i])
 	{
 		j = 0;
@@ -166,35 +129,17 @@ int     unset_built(t_env *env, char *arg)
 		{
 			if (catch_env_varr(tmp[i], env->tab[j]) == 0)
 			{
-				env->tab[j] = 0;
+				free(env->tab[j]);
+				env->tab[j] = ft_strdup("123456789");
 			}
 			j++;
 		}
 		i++;
 	}
-
-
-
-
-
-
-	i = 0;
-	while (tmp[i])
-		printf("%s\n", tmp[i++]);
-	printf("OK\n");
+	new_tab = copy_unset_tab(env->tab);
+	free_double_tab(env->tab);
+	env->tab = copy_double_tab(new_tab);
+	free_double_tab(new_tab);
 	free_double_tab(tmp);
 	return (0);
 }
-
-// int     main(int ac, char **av, char **environnement)
-// {
-//     t_env   *env;
-
-//     (void)ac;
-//     (void)av;
-//     if (!(env = malloc(sizeof(env))))
-//         return (-1);
-//     env->tab = copy_double_tab(environnement);
-//     unset_built(env, "USER PAGER LESS LS_COLORS USERNAME=aly");
-//     return (0);
-// }
