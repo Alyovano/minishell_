@@ -2,13 +2,12 @@
 
 int         ft_pwd(void)
 {
-    size_t size;
-    size = 90;
-    char    buf[9000];
-    getcwd(buf, size);
-    printf("%s\n", buf);
-    printf("%ld\n", size);
-    return (0);
+	char	*ret;
+
+	ret = getcwd(NULL, 0);
+	ret = ft_strjoin(ret, "\n");
+	printf("%s\n", ret);
+    return (1);
 }
 
 
