@@ -2,16 +2,16 @@
 
 int         ft_pwd(void)
 {
-	char	*ret;
+	char	*tmp;
 
-	ret = getcwd(NULL, 0);
-	ret = ft_strjoin(ret, "\n");
-	printf("%s\n", ret);
-    return (1);
+	tmp = getcwd(NULL, 0);
+	ft_printf("%s\n", tmp);
+	//free(tmp); ? 
+    return (0);
 }
 
 
-int main()
-{
-    ft_pwd();
-}
+// int main()
+// {
+//     ft_pwd();
+// }
