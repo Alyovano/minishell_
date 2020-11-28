@@ -32,7 +32,11 @@ int		cmd_valididy(char *cmd)
 		ft_strcmp(cmd, "$?") == 0)
 		return (1);
 	if (stat(path, &test) != -1)
+	{
+		free(path);
 		return (1);
+	}
+	free(path);
 	return (0);
 }
 
