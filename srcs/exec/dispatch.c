@@ -41,9 +41,6 @@ int		cmd_valididy(char *cmd)
 ** le check d'erreur se fait au dernier moment dans la fonction cmd_validity
 */
 
-// Je commence par implementer export, le reste des builtins restonront 
-//inchangees pour toi, pour le moment 
-
 int		dispatch_cmd(t_list *lst, t_env *env)
 {
 	int ret;
@@ -60,6 +57,10 @@ int		dispatch_cmd(t_list *lst, t_env *env)
 	else if (ft_strcmp("pwd", lst->builtin) == 0)
 	{
 		ft_pwd();
+	}
+	else if (ft_strcmp("echo", lst->builtin) == 0)
+	{
+		ft_echo(env, lst->argu);
 	}
 	else if (ft_strcmp("le nom du builtin que tu veux ajouter", lst->builtin) == 0)
 		ft_printf("la fonction builtin que tu apelles\n");
