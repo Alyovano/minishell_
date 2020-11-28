@@ -45,7 +45,7 @@ int		cmd_valididy(char *cmd)
 ** le check d'erreur se fait au dernier moment dans la fonction cmd_validity
 */
 
-int		dispatch_cmd(t_list *lst, t_env *env)
+int		dispatch_cmd(t_list *lst, t_env *env, t_user *start)
 {
 	int ret;
 
@@ -68,7 +68,7 @@ int		dispatch_cmd(t_list *lst, t_env *env)
 	}
 	else if (ft_strcmp("exit", lst->builtin) == 0)
 	{
-		ft_exit(env, lst);
+		ft_exit(env, lst, start);
 	}
 	else if (ft_strcmp("le nom du builtin que tu veux ajouter", lst->builtin) == 0)
 		ft_printf("la fonction builtin que tu apelles\n");

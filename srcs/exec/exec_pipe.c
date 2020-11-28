@@ -26,7 +26,7 @@ int		ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-int		exec_fork(t_list *lst, t_env *env, int old_fd[2])
+int		exec_fork(t_list *lst, t_env *env, int old_fd[2], t_user *start)
 {
 	pipe(lst->fd);
 	if ((lst->pid = fork()) == -1)
@@ -44,14 +44,14 @@ int		exec_fork(t_list *lst, t_env *env, int old_fd[2])
 			dup2(old_fd[0], STDIN_FILENO);
 			close(old_fd[1]);
 		}
-		dispatch_cmd(lst, env);
+		dispatch_cmd(lst, env, start);
 		exit(0);
 	}
 	close(lst->fd[1]);
 	return (1);
 }
 
-int		exec_pipe(t_list *lst, t_env *env, int size)
+int		exec_pipe(t_list *lst, t_env *env, int size, t_user *start)
 {
 	int		status;
 	void	*ptr;
@@ -61,7 +61,7 @@ int		exec_pipe(t_list *lst, t_env *env, int size)
 	(void)size;
 	while (lst)
 	{
-		exec_fork(lst, env, old_fd);
+		exec_fork(lst, env, old_fd, start);
 		old_fd[0] = lst->fd[0];
 		old_fd[1] = lst->fd[1];
 		lst = lst->next;

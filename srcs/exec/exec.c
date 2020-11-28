@@ -66,7 +66,7 @@ int         exec_execve(t_list *lst, char **env)
 ** Du coup quand on apelle execve le programme ne s'arrète plus (vu qu'on est dans le process enfant)
 */
 
-int		exec_solo(t_list *lst, t_env *env)
+int		exec_solo(t_list *lst, t_env *env, t_user *start)
 {
 	pid_t	pid;
 	int		status;
@@ -75,7 +75,7 @@ int		exec_solo(t_list *lst, t_env *env)
 	if (pid == 0)
 	{
 		// Child process
-		if (dispatch_cmd(lst, env) == -1)
+		if (dispatch_cmd(lst, env, start) == -1)
 		{
 			error_output_token(-6, lst->builtin);
 			return (-1);	//cmd not found in /bin/
@@ -113,9 +113,9 @@ int		 execution(t_user *start, t_env *env)
 		clean_args(lst);
 		//debug(lst);
 		if (ft_lstsize(lst) > 1)
-			exec_pipe(lst, env, ft_lstsize(lst));
+			exec_pipe(lst, env, ft_lstsize(lst), start);
 		else
-			exec_solo(lst, env);
+			exec_solo(lst, env, start);
 		start->line = start->line->next;
 	}
 	start->line = ptr;
