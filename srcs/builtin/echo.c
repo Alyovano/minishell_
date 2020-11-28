@@ -2,6 +2,7 @@
 #define FLAG_OK 0
 #define FLAG_FAILURE 1
 #define NO_FLAG 2
+
 int			check_echo_flag(char *str)
 {
 	unsigned int i;
@@ -37,7 +38,7 @@ int			ft_echo(t_env *env, t_list *lst)
 	else if (flag == FLAG_FAILURE)
 	{
 		if (lst->flag)
-			ft_printf("%s", lst->flag);
+			ft_printf("%s ", lst->flag);
 		ft_printf("%s\n", lst->argu);
 		return (0);
 	}

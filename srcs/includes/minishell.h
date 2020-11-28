@@ -89,6 +89,8 @@ typedef struct      s_token_env
 /*
 ** (s_dollar)
 ** Pcq cet algo requier trop de variable a deplacer pour la norme 42
+** cette strcut n'est utilisee que dans des cas specifiques,
+** elle est donc free independemment des frees de sorties standarts
 */
 
 typedef struct      s_dollar
@@ -123,6 +125,7 @@ void		clean_end_spaces(char **str);
 /*
 **          Split
 */
+
 char	    *ft_str_n_dup(const char *s1, int size);
 void	    clean_spaces(t_user *start, t_quote *quote);
 void        clean_line(t_user *start, t_quote *quote);
@@ -132,6 +135,7 @@ int         first_split_dirty_line(t_user *start, t_quote *quote);
 /*
 **          Pipe '|'
 */
+
 int		    check_pipe(char *str, t_quote *quote);
 void	    split_pipe(t_user *start, t_quote *quote);
 
@@ -178,7 +182,8 @@ int		    cmd_valididy(char *cmd);
 */
 
 int         ft_export(t_env *env, char *arg);
-int         unset_built(t_env *env, char *arg);
+int			ft_exit(t_env *env, t_list *lst);
+int         ft_unset(t_env *env, char *arg);
 int         ft_pwd(void);
 int			ft_echo(t_env *env, t_list *lst);
 

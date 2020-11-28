@@ -52,7 +52,7 @@ int		dispatch_cmd(t_list *lst, t_env *env)
 	}
 	else if (ft_strcmp("unset", lst->builtin) == 0)
 	{
-		unset_built(env, lst->argu);
+		ft_unset(env, lst->argu);
 	}
 	else if (ft_strcmp("pwd", lst->builtin) == 0)
 	{
@@ -61,6 +61,10 @@ int		dispatch_cmd(t_list *lst, t_env *env)
 	else if (ft_strcmp("echo", lst->builtin) == 0)
 	{
 		ft_echo(env, lst);
+	}
+	else if (ft_strcmp("exit", lst->builtin) == 0)
+	{
+		ft_exit(env, lst);
 	}
 	else if (ft_strcmp("le nom du builtin que tu veux ajouter", lst->builtin) == 0)
 		ft_printf("la fonction builtin que tu apelles\n");

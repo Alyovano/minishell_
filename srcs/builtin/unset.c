@@ -114,7 +114,7 @@ char	**check_var_name(char **arg)
 ** par user -> check_var_name(tmp); bloque son accessibilite
 */
 
-int     unset_built(t_env *env, char *arg)
+int     ft_unset(t_env *env, char *arg)
 {
 	char	**tmp;
 	char	**new_tab;
