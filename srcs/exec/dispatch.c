@@ -47,6 +47,7 @@ int		cmd_valididy(char *cmd)
 
 int		dispatch_cmd(t_list *lst, t_env *env, t_user *start)
 {
+	(void)start;
 	int ret;
 
 	ret = 0;
@@ -69,6 +70,7 @@ int		dispatch_cmd(t_list *lst, t_env *env, t_user *start)
 	else if (ft_strcmp("exit", lst->builtin) == 0)
 	{
 		ft_exit(env, lst, start);
+		exit(0);
 	}
 	else if (ft_strcmp("le nom du builtin que tu veux ajouter", lst->builtin) == 0)
 		ft_printf("la fonction builtin que tu apelles\n");
