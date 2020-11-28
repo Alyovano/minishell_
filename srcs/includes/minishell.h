@@ -180,7 +180,7 @@ int		    cmd_valididy(char *cmd);
 int         ft_export(t_env *env, char *arg);
 int         unset_built(t_env *env, char *arg);
 int         ft_pwd(void);
-int			ft_echo(t_env *env, char *arg);
+int			ft_echo(t_env *env, t_list *lst);
 
 /*
 ** Debug (delete before last push)
