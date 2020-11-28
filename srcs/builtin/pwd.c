@@ -9,9 +9,3 @@ int         ft_pwd(void)
 	//free(tmp); ? 
     return (0);
 }
-
-
-// int main()
-// {
-//     ft_pwd();
-// }

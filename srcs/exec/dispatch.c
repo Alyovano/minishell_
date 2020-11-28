@@ -57,6 +57,10 @@ int		dispatch_cmd(t_list *lst, t_env *env)
 	{
 		unset_built(env, lst->argu);
 	}
+	else if (ft_strcmp("pwd", lst->builtin) == 0)
+	{
+		unset_built(env, lst->argu);
+	}
 	else if (ft_strcmp("le nom du builtin que tu veux ajouter", lst->builtin) == 0)
 		ft_printf("la fonction builtin que tu apelles\n");
 	else

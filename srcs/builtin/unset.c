@@ -116,12 +116,14 @@ char	**check_var_name(char **arg)
 
 int     unset_built(t_env *env, char *arg)
 {
-    int		i;
 	char	**tmp;
 	char	**new_tab;
+	int		i;
+	int 	j;
 
 	tmp = ft_split(arg, ' ');
 	i = 0;
+	j = 0;
 	tmp = check_var_name(tmp);
 	while (tmp[i])
 	{
@@ -129,7 +131,6 @@ int     unset_built(t_env *env, char *arg)
 		i++;
 	}
 	i = 0;
-	int j = 0;
 	while (tmp[i])
 	{
 		j = 0;
@@ -151,3 +152,5 @@ int     unset_built(t_env *env, char *arg)
 	free_double_tab(tmp);
 	return (0);
 }
+
+// fonction pour free les mallocs
