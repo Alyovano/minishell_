@@ -152,7 +152,9 @@ int         is_this_redirectable_reverse(t_user *start, t_quote *quote, int i);
 **          Environnement - Variable - $
 */
 
+int         catch_env_varr(char *arg, char *env_line);
 int         add_environnement_var(t_user *start, t_quote *quote, t_env *env);
+char        *check_var_in_env(char *var_name, t_env *env);
 
 /*
 ** Quote multilignes (Bonus ?)
@@ -180,6 +182,7 @@ int		    cmd_valididy(char *cmd);
 **         Built-in
 */
 
+int         ft_cd(t_env *env, char *path);
 int         ft_export(t_env *env, char *arg);
 int			ft_exit(t_env *env, t_list *lst, t_user *start);
 int         ft_unset(t_env *env, char *arg);
