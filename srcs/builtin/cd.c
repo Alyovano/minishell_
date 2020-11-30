@@ -1,8 +1,5 @@
 #include "../includes/minishell.h"
 
-// ici changer la valeur de OLDPWD
-
-
 int     change_pwd(t_env *env)
 {
     int j;
@@ -54,7 +51,6 @@ int     go_home(char *tmp, char *var_name, t_env *env)
     char *var_content;
 
     var_content = check_var_in_env(var_name, env);
-    //printf("ICI [%s]\n", var_content);
     chdir(var_content);
     free(var_content);
     change_old_pwd(tmp, env);
@@ -86,9 +82,7 @@ int     ft_cd(t_env *env, char *path)
         change_pwd(env);
     }
     else
-    {
         dirr_error(path);
-    }
     free(tmp);
     return (0);
 }
