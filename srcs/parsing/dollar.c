@@ -120,7 +120,6 @@ char        *check_var_in_env(char *var_name, t_env *env)
 **Je suis pas sur dans la while pour : start->user_cmd_tab[i][j] != '='
 */
 
-// la fonction dollar_var_name est une source de leaks ultra hard
 // ne pas oublier de placer les free ici
 int        dollar_var_name(t_user *start, int i, int j, t_dollar *dol, t_env *env)
 {

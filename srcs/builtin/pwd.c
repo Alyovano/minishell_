@@ -13,10 +13,7 @@ int         ft_pwd(void)
 
 	tmp = getcwd(NULL, 0);
 	if (!tmp)
-	{
-		perror("Malloc failure\n");
-		exit(EXIT_FAILURE);
-	}
+		malloc_error();
 	ft_printf("%s\n", tmp);
 	free(tmp);
     return (0);

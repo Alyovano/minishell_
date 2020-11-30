@@ -152,5 +152,3 @@ int     ft_unset(t_env *env, char *arg)
 	free_double_tab(tmp);
 	return (0);
 }
-
-// fonction pour free les mallocs

@@ -190,6 +190,12 @@ int         ft_pwd(void);
 int			ft_echo(t_env *env, t_list *lst);
 
 /*
+** malloc error
+*/
+
+void     malloc_error(void);
+
+/*
 ** Debug (delete before last push)
 */
 

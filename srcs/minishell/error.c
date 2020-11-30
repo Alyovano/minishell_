@@ -5,6 +5,12 @@
 ** chaine de caractères pour imprimer une erreur
 */
 
+void     malloc_error(void)
+{
+	perror("Malloc failure\n");
+	exit(EXIT_FAILURE);
+}
+
 void         error_output_token(int error, char *str)
 {
     if (error == -1)
