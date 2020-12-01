@@ -18,10 +18,7 @@ void	*ft_calloc(size_t count, size_t size)
 
 	ptr = malloc(count * size);
 	if (ptr == NULL)
-    {
-        perror("Malloc Failure\n");
-        exit(EXIT_FAILURE);
-    }
+		malloc_error();
 	ft_bzero(ptr, count * size);
 	return (ptr);
 }

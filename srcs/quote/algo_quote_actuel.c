@@ -73,7 +73,7 @@ char        *delete_quote(char *str)
     j = 0;
     tmp = malloc(sizeof(char*) * (ft_strlen(str) + 1));
     if (tmp == NULL)
-        exit(EXIT_FAILURE);
+        malloc_error();
     while (str[i])
     {
         while (str[i] == '"' || str[i] == '\'')

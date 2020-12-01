@@ -54,7 +54,7 @@ static char		*ft_fill_tab(char *tab, char *str, char c)
 	len = ft_size(str, c);
 	i = 0;
 	if (!(tab = (char*)malloc((len + 1) * sizeof(char))))
-		return (NULL);
+		malloc_error();
 	while (i < len)
 	{
 		tab[i] = str[i];
@@ -91,7 +91,7 @@ char			**ft_split(char const *s, char c)
 		return (NULL);
 	len = ft_nbr_elems((char *)s, c);
 	if (!(result = (char**)malloc((len + 1) * sizeof(char*))))
-		return (NULL);
+		malloc_error();
 	while (i < len && s[j] != '\0')
 	{
 		while (s[j] == c && s[j] != '\0')

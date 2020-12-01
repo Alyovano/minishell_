@@ -60,7 +60,7 @@ int     go_home(char *tmp, char *var_name, t_env *env)
 
 int     dirr_error(char *path)
 {
-    ft_printf("bash: cd: %s: Aucun fichier ou dossier de ce type\n", path);
+    ft_printf("bash: cd: %s: %s\n", path, strerror(errno));
     return (0);
 }
 

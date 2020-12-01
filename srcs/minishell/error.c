@@ -7,7 +7,7 @@
 
 void     malloc_error(void)
 {
-	perror("Malloc failure\n");
+	strerror(errno);
 	exit(EXIT_FAILURE);
 }
 

@@ -38,10 +38,7 @@ char    **copy_unset_tab(char **src)
     size = double_tab_size(src);
     new_tab = malloc(sizeof(char**) * (size + 1));
     if (!new_tab)
-    {
-        perror("Malloc Failure\n");
-        exit(EXIT_FAILURE);
-    }
+		malloc_error();
     new_tab[size] = 0;
     while (src[i])
     {
@@ -83,10 +80,7 @@ char	**check_var_name(char **arg)
 	j = 0;
 	tmp = malloc(sizeof(char**) * (double_tab_size(arg) + 1));
 	if (!tmp)
-    {
-        perror("Malloc Failure\n");
-        exit(EXIT_FAILURE);
-    }
+		malloc_error();
 	while (arg[i])
 	{
 		if (is_valid_var_name(arg[i]) == -1)

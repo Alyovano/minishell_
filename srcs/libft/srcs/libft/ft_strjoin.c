@@ -23,10 +23,7 @@ char			*ft_strjoin(char const *s1, char const *s2)
 	size1 = ft_strlen(s1);
 	size2 = ft_strlen(s2);
 	if (!((finalstr = malloc(sizeof(char) * (size1 + size2 + 1)))))
-    {
-        perror("Malloc Failure\n");
-        exit(EXIT_FAILURE);
-    }
+		malloc_error();
 	ft_memcpy(finalstr, s1, size1);
 	ft_memcpy(finalstr + size1, s2, size2);
 	finalstr[size1 + size2] = '\0';

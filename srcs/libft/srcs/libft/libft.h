@@ -88,4 +88,5 @@ char				*ft_utoa(long long unsigned n);
 char				*ft_utoa_p_zero_printf(unsigned long n, int precision);
 int     			double_tab_size(char **src);
 char    			**copy_double_tab(char **src);
+void     			malloc_error(void);
 #endif

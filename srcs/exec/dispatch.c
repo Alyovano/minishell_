@@ -76,8 +76,8 @@ int		dispatch_cmd(t_list *lst, t_env *env, t_user *start)
 	{
 		ft_cd(env, lst->argu);
 	}
-	else if (ft_strcmp("le nom du builtin que tu veux ajouter", lst->builtin) == 0)
-		ft_printf("la fonction builtin que tu apelles\n");
+	// else if (ft_strcmp("le nom du builtin que tu veux ajouter", lst->builtin) == 0)
+	// 	ft_printf("la fonction builtin que tu apelles\n");
 	else
 		ret = exec_execve(lst, env->tab);	
 	return (ret);

@@ -19,7 +19,7 @@ char	*ft_strdup(const char *s1)
 
 	longueur = ft_strlen(s1) + 1;
 	if (!(tab = malloc(sizeof(char) * longueur)))
-		return (NULL);
+		malloc_error();
 	ft_strlcpy(tab, s1, longueur);
 	return (tab);
 }
