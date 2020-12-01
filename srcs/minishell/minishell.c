@@ -5,10 +5,20 @@
 ** On attend l'input, on l'envoie dans le parseur
 */
 
+void	ft_sig(int value)
+{
+    (void)value;
+
+	ft_printf("\nminishell> ");
+}
+
+
 int     minishell_loop(t_user *start, t_env *env)
 {
     char *user_input;
 
+	signal(SIGINT, ft_sig);
+	signal(SIGQUIT, ft_sig);
     while (1)
     {
         ft_printf("minishell> ");
