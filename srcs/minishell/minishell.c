@@ -53,9 +53,9 @@ int     main(int argc, char **argv, char **environnement)
     (void) argc;
     (void) argv;
     if (!(start = malloc(sizeof(start))))
-        return (-1);
+        malloc_error();
     if (!(env = malloc(sizeof(env))))
-        return (-1);
+        malloc_error();
     env->tab = copy_double_tab(environnement);
     minishell_loop(start, env);
     return (0);
