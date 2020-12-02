@@ -70,14 +70,16 @@ int		dispatch_cmd(t_list *lst, t_env *env, t_user *start)
 	else if (ft_strcmp("exit", lst->builtin) == 0)
 	{
 		ft_exit(env, lst, start);
-		//exit(0);
+		//cette fonction doit monter plus haut, ici elle marche pas
 	}
 	else if (ft_strcmp("cd", lst->builtin) == 0)
 	{
 		ft_cd(env, lst->argu);
 	}
-	// else if (ft_strcmp("le nom du builtin que tu veux ajouter", lst->builtin) == 0)
-	// 	ft_printf("la fonction builtin que tu apelles\n");
+	else if (ft_strcmp("env", lst->builtin) == 0)
+	{
+		ft_env(env, lst->argu);
+	}
 	else
 		ret = exec_execve(lst, env->tab);	
 	return (ret);

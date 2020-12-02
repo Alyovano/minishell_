@@ -189,6 +189,7 @@ int			ft_exit(t_env *env, t_list *lst, t_user *start);
 int         ft_unset(t_env *env, char *arg);
 int         ft_pwd(void);
 int			ft_echo(t_env *env, t_list *lst);
+int         ft_env(t_env *env, char *arg);
 
 /*
 ** malloc error

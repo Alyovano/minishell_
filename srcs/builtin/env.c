@@ -1,14 +1,9 @@
 #include "../includes/minishell.h"
 
-int         our_env(t_env *env)
+int         ft_env(t_env *env, char *arg)
 {
-    int i;
-
-    i = 0;
-    while(env->tab[i])
-    {
-        ft_printf("%s\n", env->tab[i]);
-        i++;
-    }
+    (void)env;
+    (void)arg;
+    printf("COUCOU\n");
   	return (0);
 }
