@@ -45,13 +45,11 @@ int         have_value(char *str)
 
 int         ft_env(t_env *env, char *arg)
 {
-    (void)env;
-    (void)arg;
     char **arg_tab;
     int i;
 
     i = 0;
-    //arg_tab = parsing_arg_env(arg);
+    arg_tab = parsing_arg_env(arg);
     while (env->tab[i])
     {
         if (have_value(env->tab[i]) == 1)
@@ -61,12 +59,12 @@ int         ft_env(t_env *env, char *arg)
         i++;
     }
     i = 0;
-    // while (arg_tab[i])
-    // {
-    //     if (have_value(arg_tab[i]))
-    //         ft_printf("%s\n", arg_tab[i]);
-    //     i++;
-    // }
+    while (arg_tab[i])
+    {
+        if (have_value(arg_tab[i]))
+            ft_printf("%s\n", arg_tab[i]);
+        i++;
+    }
     free_double_tab(arg_tab);
   	return (0);
 }

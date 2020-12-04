@@ -192,6 +192,14 @@ int			ft_echo(t_env *env, t_list *lst);
 int         ft_env(t_env *env, char *arg);
 
 /*
+**         Built-in utils
+*/
+
+int         check_arg_nb(char *arg);
+char        **arg_to_tab(char *arg, int size);
+char        *first_clear_arg(char *str);
+
+/*
 ** malloc error
 */
 
