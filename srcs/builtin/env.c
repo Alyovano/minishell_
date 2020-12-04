@@ -12,7 +12,22 @@
 ** Check si la var possede une valeur
 */
 
-char        **parsing_arg(char *arg);
+char        **parsing_arg_env(char *arg)
+{
+    char **arg_tab;
+    int  size;
+    int  i;
+
+    i = 0;
+    size = check_arg_nb(arg) + 1;
+    arg_tab = arg_to_tab(arg, size);
+    while (arg_tab[i])
+    {
+        arg_tab[i] = first_clear_arg(arg_tab[i]);
+        i++;
+    }
+    return (arg_tab);
+}
 
 int         have_value(char *str)
 {
@@ -36,20 +51,22 @@ int         ft_env(t_env *env, char *arg)
     int i;
 
     i = 0;
-    arg_tab = parsing_arg(arg);
-    // while (env->tab[i])
-    // {
-    //     if (have_value(env->tab[i]) == 1)
-    //     {
-    //         ft_printf("%s\n", env->tab[i]);
-    //     }
-    //     i++;
-    // }
-    while (arg_tab[i])
+    //arg_tab = parsing_arg_env(arg);
+    while (env->tab[i])
     {
-        ft_printf("%s\n", arg_tab[i]);
+        if (have_value(env->tab[i]) == 1)
+        {
+            ft_printf("%s\n", env->tab[i]);
+        }
         i++;
     }
-    printf("COUCOU\n");
+    i = 0;
+    // while (arg_tab[i])
+    // {
+    //     if (have_value(arg_tab[i]))
+    //         ft_printf("%s\n", arg_tab[i]);
+    //     i++;
+    // }
+    free_double_tab(arg_tab);
   	return (0);
 }
