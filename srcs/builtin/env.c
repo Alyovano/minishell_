@@ -12,6 +12,8 @@
 ** Check si la var possede une valeur
 */
 
+char        **parsing_arg(char *arg);
+
 int         have_value(char *str)
 {
     int i;
@@ -30,15 +32,22 @@ int         ft_env(t_env *env, char *arg)
 {
     (void)env;
     (void)arg;
+    char **arg_tab;
     int i;
 
     i = 0;
-    while (env->tab[i])
+    arg_tab = parsing_arg(arg);
+    // while (env->tab[i])
+    // {
+    //     if (have_value(env->tab[i]) == 1)
+    //     {
+    //         ft_printf("%s\n", env->tab[i]);
+    //     }
+    //     i++;
+    // }
+    while (arg_tab[i])
     {
-        if (have_value(env->tab[i]) == 1)
-        {
-            ft_printf("%s\n", env->tab[i]);
-        }
+        ft_printf("%s\n", arg_tab[i]);
         i++;
     }
     printf("COUCOU\n");
