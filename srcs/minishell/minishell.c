@@ -5,11 +5,20 @@
 ** On attend l'input, on l'envoie dans le parseur
 */
 
+int     end_loop_free(t_user *start, char *str)
+{
+    free(str);
+    free_double_tab(start->user_cmd_tab);
+    // ici une boucle qui free toute la list t_list ?
+    return (0);
+}
+
 void	ft_sig(int value)
 {
     (void)value;
 
-	ft_printf("\nminishell> ");
+	ft_printf("\n");
+    ft_printf("minishell> ");
 }
 
 
@@ -17,8 +26,8 @@ int     minishell_loop(t_user *start, t_env *env)
 {
     char *user_input;
 
-	// signal(SIGINT, ft_sig);
-	// signal(SIGQUIT, ft_sig);
+	signal(SIGINT, ft_sig);
+	signal(SIGQUIT, ft_sig);
     while (1)
     {
         ft_printf("minishell> ");
@@ -33,7 +42,7 @@ int     minishell_loop(t_user *start, t_env *env)
                 }
             }
         }
-        free(user_input); // Faudra tout free, pas que input
+        end_loop_free(start, user_input);
     }
     return (0);
 }
