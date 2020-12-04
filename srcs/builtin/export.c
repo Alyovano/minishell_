@@ -108,75 +108,6 @@ char        **arg_to_tab(char *arg, int size)
     return (tab);
 }
 
-/*
-** size = check_arg_nb(arg) + 1; compte le nombre de coupe
-** a appliquer a l'argument (combien de ligne va-t-on add au tableau env)
-*/
-
-char        *first_clear_arg(char *str)
-{
-    char *tmp;
-
-    tmp = clear_arg(str);
-    free(str);
-    str = ft_strdup(tmp);
-    free(tmp);
-    return (str);
-}
-
-int     catch_env_var(char *arg, char *env_line)
-{
-    unsigned int            i;
-    char              **split;
-
-    i = 0;
-    split = ft_split(arg, '=');
-    while (split[0][i] && env_line[i])
-    {
-        if (split[0][i] != env_line[i])
-            break ;
-        i++;
-    }
-    if ((env_line[i] == '\0' || env_line[i] == '=') && i == ft_strlen(split[0]))
-    {
-        free_double_tab(split);
-        return (0);
-    }
-    free_double_tab(split);
-    return (1);
-}
-
-int         check_if_exist(char **tab, char *arg)
-{
-    int i;
-
-    i = 0;
-    while (tab[i])
-    {
-        if (catch_env_var(arg, tab[i]) == 0)
-            return (i);
-        i++;
-    }
-    return (-1);
-}
-
-char         *replace_var_value(char *tmp, char* arg)
-{
-    int i;
-
-    i = 0;
-    while (arg[i])
-    {
-        if (arg[i] == '=')
-        {
-            free(tmp);
-            return (ft_strdup(arg));
-        }
-        i++;
-    }
-    return (ft_strdup(tmp));
-}
-
 char        **add_arg_to_env(t_env *env, char **arg_tab, t_token_env *token)
 {
     char **tmp;
@@ -184,10 +115,7 @@ char        **add_arg_to_env(t_env *env, char **arg_tab, t_token_env *token)
     tmp = malloc(sizeof(char**) * 
         (((double_tab_size(env->tab) + double_tab_size(arg_tab)) + 1)));
     if (tmp == NULL)
-    {
-        perror("Malloc Failure\n");
-        exit(EXIT_FAILURE);
-    }
+        malloc_error();
     while (env->tab[token->i])
     {
         tmp[token->i] = ft_strdup(env->tab[token->i]);

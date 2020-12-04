@@ -195,10 +195,15 @@ int         ft_env(t_env *env, char *arg);
 **         Built-in utils
 */
 
+int         check_if_exist(char **tab, char *arg);
 int         check_arg_nb(char *arg);
 char        **arg_to_tab(char *arg, int size);
+char        **parsing_arg(char *arg);
 char        *first_clear_arg(char *str);
-
+int         free_copy(char **arg_tab, t_env *env);
+char        *clear_arg(char *str);
+int         catch_env_var(char *arg, char *env_line);
+char         *replace_var_value(char *tmp, char* arg);
 /*
 ** malloc error
 */

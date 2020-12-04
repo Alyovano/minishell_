@@ -97,3 +97,14 @@ char        **parsing_arg(char *arg)
     }
     return (arg_tab);
 }
+
+char        *first_clear_arg(char *str)
+{
+    char *tmp;
+
+    tmp = clear_arg(str);
+    free(str);
+    str = ft_strdup(tmp);
+    free(tmp);
+    return (str);
+}
