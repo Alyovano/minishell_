@@ -80,7 +80,8 @@ int         parsing_input(char *input, t_user *start, t_env *env)
     first_split_dirty_line(start, quote);
     clean_line(start, quote);
     add_environnement_var(start, quote, env);
-    parsing_redirrect(start);
+    if (parsing_redirrect(start) == -1) 
+        return (-1);
     split_pipe(start, quote);
     if (quote->verif == 0)
     {

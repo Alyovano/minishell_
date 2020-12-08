@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:53:39 by user42            #+#    #+#             */
-/*   Updated: 2020/12/08 13:40:18 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/08 14:04:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,32 @@ char	*remove_redir_pipe(char *elem, t_quote *quote, int nb)
 	return (tmp);
 }
 
+int		syntax_error_redirect(char *elem, t_quote *quote)
+{
+	int i;
+	
+	i = 0;
+	quote->token_in_simple_quote = -1;
+	quote->token_in_dquote = -1;
+	while (elem[i])
+	{
+		if (elem[i] == '\'' && (get_backslash(elem, i) == 0))
+			quote->token_in_simple_quote *= -1;
+		if (elem[i] == '"' && (get_backslash(elem, i) == 0))
+			quote->token_in_dquote *= -1;
+		if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1)
+		{
+			if (elem[i] == '<' && elem[i + 1] == ' ' && elem[i + 2] == '>')
+			{
+				error_output_token(-2, NULL);
+				return (-1);
+			}
+		}
+		i++;
+	}
+	return (0);
+}
+
 int		parsing_redirrect(t_user *start)
 {
 	t_quote	quote;
@@ -85,6 +111,8 @@ int		parsing_redirrect(t_user *start)
 	{
 		//ft_printf("Before: |%s|\n", start->user_cmd_tab[i]);
 		nb_redirr_pipe = get_redir_pipe(start->user_cmd_tab[i], &quote);
+		if (syntax_error_redirect(start->user_cmd_tab[i], &quote) == -1)
+			return (-1);
 		if (nb_redirr_pipe > 0)
 		{
 			tmp = ft_strdup(start->user_cmd_tab[i]);
