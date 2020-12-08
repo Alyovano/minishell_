@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/11/17 10:04:29 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/08 09:37:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int		exec_solo(t_list *lst, t_env *env, t_user *start)
 			error_output_token(-6, lst->builtin);
 			return (-1);	//cmd not found in /bin/
 		}
+		exit(0);
 	}
 	else if (pid < 0)
 	{
@@ -114,9 +115,11 @@ int		 execution(t_user *start, t_env *env)
 		//debug(lst);
 		if (ft_lstsize(lst) > 1)
 			exec_pipe(lst, env, ft_lstsize(lst), start);
-		else
+		else if (ft_strcmp("exit", lst->builtin) != 0)
 			exec_solo(lst, env, start);
-		start->line = start->line->next;
+		else
+			ft_exit(env, lst, start);
+		start->line = start->line->next;		
 	}
 	start->line = ptr;
     return (0);
