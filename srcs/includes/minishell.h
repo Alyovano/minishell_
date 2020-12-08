@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/11/17 10:13:01 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/08 13:40:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,8 @@ int		    get_backslash(char *str, int i);
 int         is_this_splitable(t_user *start, t_quote *quote, int i);
 int         is_this_redirectable(t_user *start, t_quote *quote, int i);
 int         is_this_redirectable_reverse(t_user *start, t_quote *quote, int i);
+//int	    	is_redirrect(t_list *lst);
+int		    parsing_redirrect(t_user *start);
 
 /*
 **          Environnement - Variable - $

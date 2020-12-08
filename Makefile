@@ -4,7 +4,7 @@ MINISHELL = $(addprefix srcs/minishell/, minishell.c error.c conditionning.c)
 PARSING = $(addprefix srcs/parsing/, backslash.c parsing.c \
 			first_split.c clean_line.c semicolon.c chevron.c \
 			clean_spaces.c check_start.c dollar.c \
-			split_pipe.c debug_print_lst.c pipe.c)
+			split_pipe.c debug_print_lst.c pipe.c parsing_redirrect.c)
 QUOTE = $(addprefix srcs/quote/, algo_quote_actuel.c multilines_quote.c)
 EXEC = $(addprefix srcs/exec/, exec.c dispatch.c check_builtin.c \
 			check_flags.c exec_pipe.c clean_args.c)
