@@ -29,8 +29,8 @@ void	ft_sig(int value)
 {
     (void)value;
 
-    write(1, "\n", 1);
-	// ft_printf("\n");
+    write(1, "\nminishell> ", ft_strlen("\nminishell> "));
+	//write(1, "\n", 1);
     // ft_printf("minishell> ");
 }
 
@@ -39,13 +39,13 @@ int     minishell_loop(t_user *start, t_env *env)
     int     used;
     char    *user_input;
 
-	// signal(SIGINT, ft_sig);
-	//signal(SIGQUIT, ft_sig);
-    //signal(SIGINT, SIG_IGN);
+	signal(SIGINT, ft_sig);
+	signal(SIGQUIT, ft_sig);
     while (1)
     {
         used = 0;
-        ft_printf("minishell> ");   
+        //ft_printf("minishell> ");
+        write(1, "minishell> ", ft_strlen("minishell> "));
         get_next_line(0, &user_input);
         if (ft_strcmp(user_input, "") != 0)
         {
