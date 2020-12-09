@@ -9,12 +9,14 @@
     // il ne faut surtout pas free le pointeur *start
     // car il n'est alloue que dans le main 
 
+int g_reg;
+
 int     end_loop_free(t_user *start, char *str, int token_used)
 {
     int i;
 
     i = 0;
-    while (token_used == 1 && start->user_cmd_tab[i]) //segfault ici si start_user_cmd[i] est vide
+    while (token_used == 1 && start->user_cmd_tab[i])
     {
         free(start->user_cmd_tab[i]);
         i++;
@@ -25,29 +27,20 @@ int     end_loop_free(t_user *start, char *str, int token_used)
     return (0);
 }
 
-void	ft_sig(int value)
-{
-    (void)value;
-
-    write(1, "\nminishell> ", ft_strlen("\nminishell> "));
-	//write(1, "\n", 1);
-    // ft_printf("minishell> ");
-}
-
 int     minishell_loop(t_user *start, t_env *env)
 {
     int     used;
+    int     ret;
     char    *user_input;
 
     (void)used;
-	signal(SIGINT, ft_sig);
-	signal(SIGQUIT, ft_sig);
+    catch_signal();
     while (1)
     {
         used = 0;
-        //ft_printf("minishell> ");
-        write(1, "minishell> ", ft_strlen("minishell> "));
-        get_next_line(0, &user_input);
+        prompt();
+        ret = get_next_line(0, &user_input);
+        verif_ret(ret);
         if (ft_strcmp(user_input, "") != 0)
         {
             used = 1;
@@ -59,17 +52,11 @@ int     minishell_loop(t_user *start, t_env *env)
                 }
             }
         }
+        g_reg = 1;
         //end_loop_free(start, user_input, used);
     }
     return (0);
 }
-
-/*
-** LE MAIN : 
-** Malloc notre structure ;
-** Copie le tableau environnemental
-** Appele la boucle infinie du minishell
-*/
 
 int     main(int argc, char **argv, char **environnement)
 {
@@ -84,5 +71,6 @@ int     main(int argc, char **argv, char **environnement)
         malloc_error();
     env->tab = copy_double_tab(environnement);
     minishell_loop(start, env);
+    // ICI un mega free ?
     return (0);
 }

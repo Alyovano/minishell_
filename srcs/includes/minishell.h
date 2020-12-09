@@ -16,6 +16,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#define PATH_CWD_MAX 2048
 #define OK 0
 #define FAIL 1
 #define READ 0
@@ -31,7 +32,9 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <errno.h>
-#include <string.h> // strerror
+#include <string.h>
+
+int     g_reg;
 
 /*
 **               Des structures
@@ -206,11 +209,26 @@ int         free_copy(char **arg_tab, t_env *env);
 char        *clear_arg(char *str);
 int         catch_env_var(char *arg, char *env_line);
 char         *replace_var_value(char *tmp, char* arg);
+
 /*
 ** malloc error
 */
 
-void     malloc_error(void);
+void        malloc_error(void);
+
+/*
+** Signaux
+*/
+
+void        catch_signal(void);
+void        sig_handler(int value);
+
+/*
+** Prompt
+*/
+
+void		prompt(void);
+int			verif_ret(int ret);
 
 /*
 ** Debug (delete before last push)

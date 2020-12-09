@@ -13,7 +13,9 @@ int		is_redirrect(t_list *lst, t_quote *quote)
 	{
 		perror("Malloc Failure\n");
 		exit (EXIT_FAILURE);
-	}
+	} 
+	// ici j'ai fais une fonction malloc_error()
+	// comme ca tu economise 3 lignes
 	while (tmp[i])
 	{
 		if (tmp[i] == '\'' && get_backslash(tmp, i) == 0)
