@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/12/08 09:37:54 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/09 10:52:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int         exec_execve(t_list *lst, char **env)
 ** Du coup quand on apelle execve le programme ne s'arrète plus (vu qu'on est dans le process enfant)
 */
 
-int		exec_solo(t_list *lst, t_env *env, t_user *start)
+void	exec_solo(t_list *lst, t_env *env, t_user *start)
 {
 	pid_t	pid;
 	int		status;
@@ -78,21 +78,20 @@ int		exec_solo(t_list *lst, t_env *env, t_user *start)
 		if (dispatch_cmd(lst, env, start) == -1)
 		{
 			error_output_token(-6, lst->builtin);
-			return (-1);	//cmd not found in /bin/
+			exit(0);
 		}
 		exit(0);
 	}
 	else if (pid < 0)
 	{
 		// Fork error
-		return (-2);
+		return ;
 	}
 	else
 	{
 		// Parent process
 		waitpid(pid, &status, 8 | WUNTRACED); // WCONTINUED vaut en fait 8 sur mon OS
   	}
-	return 1;
 }
 
 /*

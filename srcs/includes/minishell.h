@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/12/08 13:40:53 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/09 10:53:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ int         is_this_redirectable(t_user *start, t_quote *quote, int i);
 int         is_this_redirectable_reverse(t_user *start, t_quote *quote, int i);
 //int	    	is_redirrect(t_list *lst);
 int		    parsing_redirrect(t_user *start);
+//void	    get_redirrect(t_list *lst);
 
 /*
 **          Environnement - Variable - $
@@ -178,7 +179,6 @@ void    	clean_quote(char **str);
 void		clean_args(t_list *lst);
 int		    exec_pipe(t_list *lst, t_env *env, int size, t_user *start);
 int         exec_execve(t_list *lst, char **env);
-int		    exec_solo(t_list *lst, t_env *env, t_user *start);
 int		    cmd_valididy(char *cmd);
 
 /*

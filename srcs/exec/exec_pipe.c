@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 09:40:38 by user42            #+#    #+#             */
-/*   Updated: 2020/11/17 10:22:12 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/09 10:48:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int		ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-int		exec_fork(t_list *lst, t_env *env, int old_fd[2], t_user *start)
+void	exec_fork(t_list *lst, t_env *env, int old_fd[2], t_user *start)
 {
 	pipe(lst->fd);
 	if ((lst->pid = fork()) == -1)
-		return (-1);
+		return ;
 	else if (lst->pid == 0)
 	{
 		//child process
@@ -48,7 +48,6 @@ int		exec_fork(t_list *lst, t_env *env, int old_fd[2], t_user *start)
 		exit(0);
 	}
 	close(lst->fd[1]);
-	return (1);
 }
 
 int		exec_pipe(t_list *lst, t_env *env, int size, t_user *start)
