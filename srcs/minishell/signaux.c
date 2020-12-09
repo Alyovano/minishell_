@@ -79,7 +79,6 @@ int			verif_ret(int ret)
         write(1, "\nStopped: Line reached EOF!\n", ft_strlen("\nStopped: Line reached EOF!\n"));
 		exit(EXIT_SUCCESS);
 		//ICI MEGA FREE SORTIE CTRL-D
-        //return (0);
     }
 	return (0);
 }
@@ -91,7 +90,9 @@ void		prompt(void)
 	g_reg = 0;
 	if (g_reg == 0)
 	{
+		// icii le chemin marche pas a cause du proccesss? 
 		tmp = getcwd(NULL, 0);
+		printf("le chemin = %s\n", tmp);
 		if (tmp)
 		{
 			ft_putstr_color("[", "\033[1;34m\033[47m");
