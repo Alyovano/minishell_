@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 09:40:38 by user42            #+#    #+#             */
-/*   Updated: 2020/12/09 10:48:25 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/09 11:37:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		exec_pipe(t_list *lst, t_env *env, int size, t_user *start)
 	while (lst)
 	{
 		if (cmd_valididy(lst->builtin) == 0)
-			error_output_token(-6, lst->builtin);
+			error_output_token(-6, lst->builtin, '\0');
 		lst = lst->next;
 	}
 	return (1);

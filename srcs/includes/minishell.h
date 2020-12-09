@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/12/09 10:53:42 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/09 11:34:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int         quote_get_len_and_validity(t_user *start, t_quote *quote, int i);
 int         quote_len(char *str);
 char        *delete_quote(char *str);
 int         check_input_start(t_user *start);
-void        error_output_token(int error, char *str);
+void        error_output_token(int error, char *str, char c);
 void        init_quotes_to_fix(t_quote *quote);
 int	    	find_char(char *str, char c);
 int	    	ft_strcmp(char *s1, char *s2);
@@ -148,9 +148,9 @@ int		    get_backslash(char *str, int i);
 int         is_this_splitable(t_user *start, t_quote *quote, int i);
 int         is_this_redirectable(t_user *start, t_quote *quote, int i);
 int         is_this_redirectable_reverse(t_user *start, t_quote *quote, int i);
-//int	    	is_redirrect(t_list *lst);
+int	    	is_redirrect(t_list *lst, t_quote * quote);
 int		    parsing_redirrect(t_user *start);
-//void	    get_redirrect(t_list *lst);
+int         get_redirrect(t_list *lst, t_quote *quote);
 
 /*
 **          Environnement - Variable - $

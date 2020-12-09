@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:53:39 by user42            #+#    #+#             */
-/*   Updated: 2020/12/08 14:04:10 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/09 11:37:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		syntax_error_redirect(char *elem, t_quote *quote)
 		{
 			if (elem[i] == '<' && elem[i + 1] == ' ' && elem[i + 2] == '>')
 			{
-				error_output_token(-2, NULL);
+				error_output_token(-2, NULL, '\0');
 				return (-1);
 			}
 		}

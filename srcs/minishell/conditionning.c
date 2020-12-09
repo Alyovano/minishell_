@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2020/11/17 09:30:18 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/09 11:51:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ void        debug(t_list *lst)
         ft_printf("Builtin: |%s|\n", (char *)lst->builtin);
         ft_printf("Flag: |%s|\n", (char *)lst->flag);
         ft_printf("Argu: |%s|\n\n", (char *)lst->argu);
-        //ft_printf("Stdin ? : |%d|\n\n", lst->stdin_fd);
-        //ft_printf("Stdout ?: |%d|\n\n", lst->stdout_fd);
+        ft_printf("Stdin ? : |%d|\n\n", lst->stdin_fd);
+        ft_printf("Stdout ?: |%d|\n\n", lst->stdout_fd);
         lst = lst->next;
     }
 }
@@ -115,6 +115,7 @@ int         conditionning(t_user *start)
     void    *ptr;
     int     i;
     int     size;
+    t_quote quote;
 
     ptr = start->line;
     if (!start->user_cmd_tab)
@@ -128,6 +129,14 @@ int         conditionning(t_user *start)
             size = ft_lstsize(lst);
             while (lst)
             {
+                //Je bosse ici actuellement sur les redirrections
+                /*
+                if (is_redirrect(lst, &quote) == 1)
+                    ft_printf("Redirrection present in line\n");
+                    */
+                //ft_printf("content from lst: |%s|\n", lst->content);
+                if (get_redirrect(lst, &quote) == -1)
+                    return (-1);
                 last_split(lst, i, size);
                 lst = lst->next;
                 i++;

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/12/09 10:52:10 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/09 11:37:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	exec_solo(t_list *lst, t_env *env, t_user *start)
 		// Child process
 		if (dispatch_cmd(lst, env, start) == -1)
 		{
-			error_output_token(-6, lst->builtin);
+			error_output_token(-6, lst->builtin, '\0');
 			exit(0);
 		}
 		exit(0);

@@ -11,7 +11,7 @@ void     malloc_error(void)
 	exit(EXIT_FAILURE);
 }
 
-void         error_output_token(int error, char *str)
+void         error_output_token(int error, char *str, char c)
 {
     if (error == -1)
         ft_printf("bash: erreur de syntaxe près du symbole inattendu « ; »\n");
@@ -25,5 +25,7 @@ void         error_output_token(int error, char *str)
         ft_printf("Minishell cannot do that: No multilines\n");
     else if (error == -6)
         ft_printf("%s : commande introuvable\n", str);
+    else if (error == -7)
+        ft_printf("bash: erreur de syntaxe près du symbole inattendu « %c »\n", c);
     //Ici ca va free comme jaja  --> free dans minishell avant de reprendre boucle while
 }

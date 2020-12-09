@@ -62,19 +62,19 @@ int         parsing_input(char *input, t_user *start, t_env *env)
     error = check_input_start(start);
     if (error < 0)
     {
-        error_output_token(error, NULL);
+        error_output_token(error, NULL, '\0');
         return (-1);
     }
     error = input_to_tab(start, quote);
     if (error < 0)
     {
-        error_output_token(error, NULL);
+        error_output_token(error, NULL, '\0');
         return (-1);
     }
     error = check_pipe(start->user_input, quote);
     if (error < 0)
     {
-        error_output_token(error, NULL);
+        error_output_token(error, NULL, '\0');
         return (-1);
     }
     first_split_dirty_line(start, quote);
@@ -91,7 +91,7 @@ int         parsing_input(char *input, t_user *start, t_env *env)
     else
     {
         printf("Quote invalides\n");
-        error_output_token(-5, NULL);
+        error_output_token(-5, NULL, '\0');
         return (-1);
     }
 }
