@@ -14,7 +14,7 @@ int     end_loop_free(t_user *start, char *str, int token_used)
     int i;
 
     i = 0;
-    while (token_used == 1 && start->user_cmd_tab[i])
+    while (token_used == 1 && start->user_cmd_tab[i]) //segfault ici si start_user_cmd[i] est vide
     {
         free(start->user_cmd_tab[i]);
         i++;
@@ -39,6 +39,7 @@ int     minishell_loop(t_user *start, t_env *env)
     int     used;
     char    *user_input;
 
+    (void)used;
 	signal(SIGINT, ft_sig);
 	signal(SIGQUIT, ft_sig);
     while (1)
@@ -58,7 +59,7 @@ int     minishell_loop(t_user *start, t_env *env)
                 }
             }
         }
-        end_loop_free(start, user_input, used);
+        //end_loop_free(start, user_input, used);
     }
     return (0);
 }
