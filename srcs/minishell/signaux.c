@@ -49,10 +49,10 @@ void		print_promt(char *cwd)
 		ft_putstr_color(cwd, "\033[1;34m");
 		ft_putstr_color("] ", "\033[1;34m");
 		ft_strcat(cwd, "/");
-		ft_putstr_color(" » ", "\033[1;32m");
+		ft_putstr_color(" » ", "\033[0;31m");
 	}
 	else
-		ft_putstr_color(" » ", "\033[1;32m");
+		ft_putstr_color(" » ", "\033[0;31m");
 }
 
 void		sig_handler(int sig)
