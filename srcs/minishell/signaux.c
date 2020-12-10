@@ -76,7 +76,7 @@ int			verif_ret(int ret)
 {
 	if (ret == 0)
     {
-        write(1, "\nStopped: Line reached EOF!\n", ft_strlen("\nStopped: Line reached EOF!\n"));
+        //write(1, "\nStopped: Line reached EOF!\n", ft_strlen("\nStopped: Line reached EOF!\n"));
 		exit(EXIT_SUCCESS);
 		//ICI MEGA FREE SORTIE CTRL-D
     }
@@ -90,14 +90,12 @@ void		prompt(void)
 	g_reg = 0;
 	if (g_reg == 0)
 	{
-		// icii le chemin marche pas a cause du proccesss? 
 		tmp = getcwd(NULL, 0);
-		printf("le chemin = %s\n", tmp);
 		if (tmp)
 		{
-			ft_putstr_color("[", "\033[1;34m\033[47m");
-			ft_putstr_color(tmp, "\033[1;34m\033[47m");
-			ft_putstr_color("] ", "\033[1;34m\033[47m");
+			ft_putstr_color("[", "\033[1;34m");
+			ft_putstr_color(tmp, "\033[1;34m");
+			ft_putstr_color("] ", "\033[1;34m");
 			ft_strcat(tmp, "/");
 			ft_putstr_color(" » ", "\033[0;31m");
 		}
