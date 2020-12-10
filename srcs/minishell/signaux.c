@@ -76,7 +76,7 @@ int			verif_ret(int ret)
 {
 	if (ret == 0)
     {
-        //write(1, "\nStopped: Line reached EOF!\n", ft_strlen("\nStopped: Line reached EOF!\n"));
+        write(1, "exit\n", 5);
 		exit(EXIT_SUCCESS);
 		//ICI MEGA FREE SORTIE CTRL-D
     }
