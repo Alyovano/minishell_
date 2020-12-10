@@ -85,7 +85,7 @@ int         parsing_input(char *input, t_user *start, t_env *env)
     split_pipe(start, quote);
     if (quote->verif == 0)
     {
-        printf("Quote valides\n");
+        //printf("Quote valides\n");
         return (1);
     }
     else
