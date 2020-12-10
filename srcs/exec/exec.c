@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/12/09 17:53:36 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/10 09:42:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,10 @@ int		 execution(t_user *start, t_env *env)
 			ft_export(env, lst->argu);
 		else if (ft_strcmp("unset", lst->builtin) == 0)
 			ft_unset(env, lst->argu);
+		else if (ft_strcmp("cd", lst->builtin) == 0)
+			ft_cd(env, lst->argu);
+		else if (ft_strcmp("pwd", lst->builtin) == 0)
+			ft_pwd();
 		else if (ft_strcmp("exit", lst->builtin) != 0)
 			exec_solo(lst, env, start);
 		else

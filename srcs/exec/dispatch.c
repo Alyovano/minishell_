@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2020/12/09 17:53:00 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/10 09:51:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		dispatch_cmd(t_list *lst, t_env *env, t_user *start)
 	(void)start;
 	int ret;
 
-	ret = 0;/*
+	ret = 0;
 	if (ft_strcmp("export", lst->builtin) == 0)
 	{
 		ft_export(env, lst->argu);
@@ -58,8 +58,8 @@ int		dispatch_cmd(t_list *lst, t_env *env, t_user *start)
 	else if (ft_strcmp("unset", lst->builtin) == 0)
 	{
 		ft_unset(env, lst->argu);
-	}*/
-	if (ft_strcmp("pwd", lst->builtin) == 0)
+	}
+	else if (ft_strcmp("pwd", lst->builtin) == 0)
 	{
 		ft_pwd();
 	}
@@ -75,7 +75,7 @@ int		dispatch_cmd(t_list *lst, t_env *env, t_user *start)
 	{
 		ft_env(env, lst->argu);
 	}
-	else
+	else if (ft_strcmp("exit", lst->builtin) != 0)
 		ret = exec_execve(lst, env->tab);	
 	return (ret);
 }
