@@ -64,6 +64,11 @@ int     dirr_error(char *path)
     return (0);
 }
 
+// ICI 
+// cd doit recreer la var PWD et/ou OLDPWD lors de l'appel
+// de CD, si elles ont ete unset par user
+// cas d'erreur probable sinon
+
 int     ft_cd(t_env *env, char *path)
 {
     char *tmp;
