@@ -72,8 +72,9 @@ void		catch_signal(void)
 	signal(SIGINT, sig_handler);
 }
 
-int			verif_ret(int ret)
+int			verif_ret(int ret, char *user_input)
 {
+	(void)user_input;
 	if (ret == 0)
     {
         write(1, "exit\n", 5);
@@ -102,5 +103,6 @@ void		prompt(void)
 		else
 			ft_putstr_color(" » ", "\033[0;31m");
 		free(tmp);
+		g_reg = 1;
 	}
 }

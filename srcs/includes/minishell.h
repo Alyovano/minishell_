@@ -241,7 +241,7 @@ void        sig_handler(int value);
 */
 
 void		prompt(void);
-int			verif_ret(int ret);
+int			verif_ret(int ret, char *user_input);
 
 /*
 ** Debug (delete before last push)

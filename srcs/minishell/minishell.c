@@ -40,7 +40,8 @@ int     minishell_loop(t_user *start, t_env *env)
         used = 0;
         prompt();
         ret = get_next_line(0, &user_input);
-        verif_ret(ret);
+        verif_ret(ret, user_input);
+        printf("ret = %d\n", ret);
         if (ft_strcmp(user_input, "") != 0)
         {
             used = 1;
