@@ -41,7 +41,7 @@ int     minishell_loop(t_user *start, t_env *env)
         prompt();
         ret = get_next_line(0, &user_input);
         verif_ret(ret, user_input);
-        printf("ret = %d\n", ret);
+        //printf("ret = %d\n", ret);
         if (ft_strcmp(user_input, "") != 0)
         {
             used = 1;
@@ -53,7 +53,7 @@ int     minishell_loop(t_user *start, t_env *env)
                 }
             }
         }
-        g_reg = 1;
+        //g_reg = 1;
         //end_loop_free(start, user_input, used);
     }
     return (0);
