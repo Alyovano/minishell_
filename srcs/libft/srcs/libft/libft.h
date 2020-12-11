@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 18:23:02 by alyovano          #+#    #+#             */
-/*   Updated: 2020/11/17 08:29:44 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/11 08:06:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ typedef struct		s_list
 	int				stdin_fd;
 	int				stdout_fd;
 	int				pid;
+	char			**out;
+	char			**out_types;
+	char			**in;
+	char			**in_types;
 	struct s_list	*next;
 }					t_list;
 

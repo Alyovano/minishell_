@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/12/09 11:34:13 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/11 08:52:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void        init_quotes_to_fix(t_quote *quote);
 int	    	find_char(char *str, char c);
 int	    	ft_strcmp(char *s1, char *s2);
 void		clean_end_spaces(char **str);
+char	    **add_str_to_tab(char **tab, char *str);
 
 /*
 **          Split
@@ -154,6 +155,7 @@ int         is_this_redirectable_reverse(t_user *start, t_quote *quote, int i);
 int	    	is_redirrect(t_list *lst, t_quote * quote);
 int		    parsing_redirrect(t_user *start);
 int         get_redirrect(t_list *lst, t_quote *quote);
+void		init_redirrect(t_list *lst);
 
 /*
 **          Environnement - Variable - $
@@ -236,5 +238,6 @@ int			verif_ret(int ret);
 
 void	    print_list(t_user *start);
 void        debug(t_list *lst);
+void	    print_double_tab(char **tab);
 
 #endif

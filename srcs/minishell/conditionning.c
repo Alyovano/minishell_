@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2020/12/09 11:51:26 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/11 08:51:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int         conditionning(t_user *start)
             size = ft_lstsize(lst);
             while (lst)
             {
+                init_redirrect(lst);
                 //Je bosse ici actuellement sur les redirrections
                 /*
                 if (is_redirrect(lst, &quote) == 1)
@@ -137,6 +138,7 @@ int         conditionning(t_user *start)
                 //ft_printf("content from lst: |%s|\n", lst->content);
                 if (get_redirrect(lst, &quote) == -1)
                     return (-1);
+                //print_double_tab(lst->out);
                 last_split(lst, i, size);
                 lst = lst->next;
                 i++;
