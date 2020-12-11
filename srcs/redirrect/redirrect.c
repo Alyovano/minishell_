@@ -139,19 +139,44 @@ char	*get_file_path(char *str, int i, t_quote *quote)
 }
 
 //fd = open(file_path, O_RDONLY | O_CREAT, 0664);
-void	write_redirrect(char *str, int i, t_list *lst, t_quote *quote)
+void	write_redirrect(char *str, int i, t_list *lst, char *type)
 {
 	char	*file_path;
 	char	**tmp;
+	t_quote	quote;
 
 	if (str[i] == ' ')
 		i++;
-	file_path = get_file_path(str, i, quote);
+	file_path = get_file_path(str, i, &quote);
 	tmp = add_str_to_tab(lst->out, file_path);
 	free_double_tab(lst->out);
 	lst->out = copy_double_tab(tmp);
 	free_double_tab(tmp);
 	free(file_path);
+	tmp = add_str_to_tab(lst->out_types, type);
+	free_double_tab(lst->out_types);
+	lst->out_types = copy_double_tab(tmp);
+	free_double_tab(tmp);
+}
+
+void	read_redirrect(char *str, int i, t_list *lst, char *type)
+{
+	char	*file_path;
+	char	**tmp;
+	t_quote	quote;
+
+	if (str[i] == ' ')
+		i++;
+	file_path = get_file_path(str, i, &quote);
+	tmp = add_str_to_tab(lst->in, file_path);
+	free_double_tab(lst->in);
+	lst->in = copy_double_tab(tmp);
+	free_double_tab(tmp);
+	free(file_path);
+	tmp = add_str_to_tab(lst->in_types, type);
+	free_double_tab(lst->in_types);
+	lst->in_types = copy_double_tab(tmp);
+	free_double_tab(tmp);
 }
 
 void	next_quote(char *str, int *i)
@@ -187,22 +212,27 @@ int		get_redirrect(t_list *lst, t_quote *quote)
 			{
 				if (check_redirrect(tmp, i + 2) == -1)
 					return (-1);
+				write_redirrect(tmp, i + 2, lst, "APPEND");
+				i++;
 			}
 			else if (tmp[i] == '<' && tmp[i + 1] == '>')
 			{
 				if (check_redirrect(tmp, i + 2) == -1)
 					return (-1);
+				read_redirrect(tmp, i + 2, lst, "READ_CREATE");
+				i++;
 			}
 			else if (tmp[i] == '>')
 			{
 				if (check_redirrect(tmp, i + 1) == -1)
 					return (-1);
-				write_redirrect(tmp, i + 1, lst, quote);
+				write_redirrect(tmp, i + 1, lst, "WRITE");
 			}
 			else if (tmp[i] == '<')
 			{
 				if (check_redirrect(tmp, i + 1) == -1)
 					return (-1);
+				read_redirrect(tmp, i + 1, lst, "READ");
 			}
 		}
 		i++;

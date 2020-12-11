@@ -22,11 +22,22 @@ char	**add_str_to_tab(char **tab, char *str)
 	return (ret);
 }
 
-void	print_double_tab(char **tab)
+void	print_double_tab(t_list *lst)
 {
 	int i;
 
 	i = -1;
-	while (tab[++i])
-		ft_printf("Double tab content: |%s| id: %d\n", tab[i], i);
+	ft_printf("---------FILE PATH OUT-----------\n");
+	while ((lst->out)[++i])
+	{
+		ft_printf("File path OUT: |%s| id: %d\n", (lst->out)[i], i);
+		ft_printf("Type OUT: |%s| id: %d\n\n", (lst->out_types)[i], i);
+	}
+	i = -1;
+	ft_printf("---------FILE PATH IN-----------\n");
+	while ((lst->in)[++i])
+	{
+		ft_printf("File path OUT: |%s| id: %d\n", (lst->in)[i], i);
+		ft_printf("Type OUT: |%s| id: %d\n\n", (lst->in_types)[i], i);
+	}	
 }
