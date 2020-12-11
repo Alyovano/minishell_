@@ -10,7 +10,7 @@ QUOTE = $(addprefix srcs/quote/, algo_quote_actuel.c multilines_quote.c)
 EXEC = $(addprefix srcs/exec/, exec.c dispatch.c check_builtin.c \
 			check_flags.c exec_pipe.c clean_args.c)
 REDIRRECT = $(addprefix srcs/redirrect/, redirrect.c double_tab.c \
-			init_redirrect.c)
+			init_redirrect.c error_redirrect.c path_redirrect.c)
 
 SRCS		= 	$(BUILTIN)					\
 				$(MINISHELL)				\
