@@ -24,6 +24,11 @@ int		exec_redirrect(t_list *lst, t_env *env, int size, t_user *start)
 			{
 				ft_printf("READ\n");
 				fds.fdin = open(lst->in[i], O_RDONLY);
+				if (fds.fdin == -1)
+				{
+					error_output_token(-8, lst->in[i], '\0');
+					return (-1);
+				}
 			}
 			else if (ft_strcmp(lst->in_types[i], "READ_CREATE") == 0)
 			{
@@ -50,6 +55,11 @@ int		exec_redirrect(t_list *lst, t_env *env, int size, t_user *start)
 			{
 				ft_printf("Write\n");
 				fds.fdout = open(lst->out[i], O_WRONLY | O_CREAT | O_TRUNC, 0664);				
+			}
+			else if (ft_strcmp(lst->out_types[i], "APPEND") == 0)
+			{
+				ft_printf("APPEND\n");
+				fds.fdout = open(lst->out[i], O_WRONLY | O_CREAT | O_APPEND, 0664);				
 			}
 			if (lst->out[i + 1] != NULL)
 				close(fds.fdout);

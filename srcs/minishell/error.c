@@ -27,5 +27,7 @@ void         error_output_token(int error, char *str, char c)
         ft_printf("%s : commande introuvable\n", str);
     else if (error == -7)
         ft_printf("bash: erreur de syntaxe près du symbole inattendu « %c »\n", c);
+    else if (error == -8)
+        ft_printf("bash: %s: Aucun fichier ou dossier de ce type\n", str);
     //Ici ca va free comme jaja  --> free dans minishell avant de reprendre boucle while
 }
