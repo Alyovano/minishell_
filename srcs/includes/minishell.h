@@ -241,6 +241,7 @@ void        sig_handler(int value);
 */
 
 void		prompt(void);
+void		print_promt(char *cwd);
 int			verif_ret(int ret, char *user_input);
 
 /*
