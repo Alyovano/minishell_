@@ -6,10 +6,7 @@ char	**add_str_to_tab(char **tab, char *str)
 	int i;
 
 	i = 0;
-	if (double_tab_size(tab) == 0)
-		ret = malloc(sizeof(char *) * (double_tab_size(tab) + 2));
-	else
-		ret = malloc(sizeof(char *) * (double_tab_size(tab) + 1));
+	ret = malloc(sizeof(char *) * (double_tab_size(tab) + 2));
 	if (!ret)
 		malloc_error();
 	while (tab[i] && double_tab_size(tab) > 0)

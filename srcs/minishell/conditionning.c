@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2020/12/11 09:22:46 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/14 10:35:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,112 @@ int         get_len_till_char(int start, char c, char *str, t_quote *quote)
     return (0);
 }
 
+int     next_redirrect(char *str, int i, t_quote *quote)
+{
+	int		j;
+
+	j = 0;
+	quote->token_in_dquote = -1;
+	quote->token_in_simple_quote = -1;
+    while (str[i] && str[i] == ' ')
+    {
+        i++;
+        j++;
+    }        
+	while (str[i])
+	{
+		if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1 \
+			&& (str[i] == '\'' ||  str[i] == '"') && get_backslash(str, i) == 0)
+		{
+			if (str[i] == '\'')
+				quote->token_in_simple_quote *= -1;
+			else
+				quote->token_in_dquote *= -1;
+			i++;
+            j++;
+		}
+		if (quote->token_in_dquote == 1 && str[i] == '"' && get_backslash(str, i) == 0)
+		{
+			quote->token_in_dquote *= -1;
+			i++;
+            j++;
+			if (str[i + 1] == ' ' || str[i + 1] == '\0')
+			{
+				return (j);
+			}
+		}
+		else if (quote->token_in_simple_quote == 1 && str[i] == '\'' && get_backslash(str, i) == 0)
+		{
+			quote->token_in_simple_quote *= -1;
+			i++;
+            j++;
+			if (str[i + 1] == ' ' || str[i + 1] == '\0')
+			{
+				return (j);
+			}
+		}
+		if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1 \
+			&& str[i] == ' ')
+		{
+			return (j);
+		}
+		i++;
+        j++;
+	}
+	return (j);
+}
+
+char    *remove_redirrect(char *str, t_quote *quote)
+{
+    char    *ret;
+    int     i;
+    int     j;
+
+    i = 0;
+    j = 0;
+    ret = malloc(sizeof(char) * ft_strlen(str));
+    if (!ret)
+        malloc_error();
+    ft_printf("STR %s\n", str);
+    while (str[i])
+    {
+        if ((str[i] == '\'' || str[i] == '"') && get_backslash(str, i) == 0)
+        {
+            if (str[i] == '\'' && get_backslash(str, i) == 0)
+                while (str[i] && str[i] != '\'' && get_backslash(str, i) == 0)
+                    ret[j++] = str[i++];
+            else if (str[i] == '"' && get_backslash(str, i) == 0)
+                while (str[i] && str[i] != '"' && get_backslash(str, i) == 0)
+                    ret[j++] = str[i++];
+        }
+        else if (((str[i] == '>' || str[i] == '<') && \
+            (str[i + 1] != '>' && str[i + 1] != '<')) && get_backslash(str, i) == 0)
+		{
+            //ft_printf("Next redirrect %d\n", next_redirrect(str, i + 1, quote));
+            i += next_redirrect(str, i + 1, quote);
+            i += 1; //'>' '<'
+            while (str[i] == ' ')
+                i++;
+            //ft_printf("CHAR C |%c| i: %d len: %d\n", str[i], i, ft_strlen(str));
+        }
+        else if (((str[i] == '>' || str[i] == '<') && \
+            (str[i + 1] == '>' || str[i + 1] == '<')) && get_backslash(str, i) == 0)
+        {
+            
+            i += next_redirrect(str, i + 2, quote);
+            i += 2; //"><" ">>"
+            while (str[i] == ' ')
+                i++;
+        }
+        else 
+        {
+            ret[j++] = str[i++];
+        }
+    }
+    ret[j] = '\0';
+    return (ret);
+}
+
 /*
 ** Last split to store data in t_list
 ** builtin, flags, argu
@@ -50,17 +156,14 @@ void        last_split(t_list *lst, int id, int size)
 {
     int         i;
     int         j;
-    t_quote     *quote;
+    t_quote     quote;
     char        *tmp;
-
-    quote = malloc(sizeof(t_quote));
-    if (!quote)
-        exit(-1);
+    
     tmp = ft_strdup(lst->content);
     j = 0;
     while (tmp[j] && tmp[j] == ' ')
         j++;
-    i = get_len_till_char(j, ' ', tmp, quote);
+    i = get_len_till_char(j, ' ', tmp, &quote);
     lst->builtin = ft_substr(tmp, j, i);
     lst->flag = NULL;
     lst->argu = ft_substr(tmp, i + 1, ft_strlen(tmp));
@@ -115,6 +218,7 @@ int         conditionning(t_user *start)
     void    *ptr;
     int     i;
     int     size;
+    char    *tmp;
     t_quote quote;
 
     ptr = start->line;
@@ -138,7 +242,11 @@ int         conditionning(t_user *start)
                 //ft_printf("content from lst: |%s|\n", lst->content);
                 if (get_redirrect(lst, &quote) == -1)
                     return (-1);
-                //print_double_tab(lst);
+                print_double_tab(lst);
+                tmp = remove_redirrect(lst->content, &quote);
+                free(lst->content);
+                lst->content = ft_strdup(tmp);
+                free(tmp);
                 last_split(lst, i, size);
                 lst = lst->next;
                 i++;

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/12/11 09:44:48 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/14 10:43:05 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,19 @@ typedef struct      s_env
     char **export;
     int  swap_token;
 }                   t_env;
+
+/*
+** (s_fd)
+** contient les fd utilises dans l'execution 
+*/
+
+typedef struct      s_fd
+{
+    int tmpin;
+	int tmpout;
+	int fdin;
+	int fdout;    
+}                   t_fd;
 
 typedef struct      s_token_env
 {
@@ -196,6 +209,7 @@ void		clean_args(t_list *lst);
 int		    exec_pipe(t_list *lst, t_env *env, int size, t_user *start);
 int         exec_execve(t_list *lst, char **env);
 int		    cmd_valididy(char *cmd);
+int	    	exec_redirrect(t_list *lst, t_env *env, int size, t_user *start);
 
 /*
 **         Built-in
@@ -241,7 +255,7 @@ void        sig_handler(int value);
 */
 
 void		prompt(void);
-int			verif_ret(int ret, char *user_input);
+int		    verif_ret(int ret, char *user_input);
 
 /*
 ** Debug (delete before last push)

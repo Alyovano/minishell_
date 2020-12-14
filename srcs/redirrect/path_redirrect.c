@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 09:36:15 by user42            #+#    #+#             */
-/*   Updated: 2020/12/11 09:40:18 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/13 12:12:19 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_file(char *str, int i, t_quote *quote)
 			i++;
 			if (str[i + 1] == ' ' || str[i + 1] == '\0')
 			{
-				tmp[++j] = '\0';
+				tmp[j] = '\0';
 				return (tmp);
 			}
 		}
@@ -50,14 +50,14 @@ char	*get_file(char *str, int i, t_quote *quote)
 			i++;
 			if (str[i + 1] == ' ' || str[i + 1] == '\0')
 			{
-				tmp[++j] = '\0';
+				tmp[j] = '\0';
 				return (tmp);
 			}
 		}
 		if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1 \
 			&& str[i] == ' ')
 		{
-			tmp[++j] = '\0';
+			tmp[j] = '\0';
 			return (tmp);
 		}
 		tmp[j++] = str[i++];
@@ -107,6 +107,7 @@ void	write_redirrect(char *str, int i, t_list *lst, char *type)
 
 	if (str[i] == ' ')
 		i++;
+	tmp = NULL;
 	file_path = get_file_path(str, i, &quote);
 	tmp = add_str_to_tab(lst->out, file_path);
 	free_double_tab(lst->out);

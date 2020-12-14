@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/12/10 09:42:41 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/14 10:34:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,12 @@ int		 execution(t_user *start, t_env *env)
 		parse_flags(lst);
 		clean_args(lst);
 		//debug(lst);
-		if (ft_lstsize(lst) > 1)
-			exec_pipe(lst, env, ft_lstsize(lst), start);
-		else if (ft_strcmp("export", lst->builtin) == 0)
+		//exec_pipe(lst, env, ft_lstsize(lst), start);
+		if (ft_strcmp("exit", lst->builtin) == 0)
+			ft_exit(env, lst, start);
+		exec_redirrect(lst, env, ft_lstsize(lst), start);
+		/*
+		if (ft_strcmp("export", lst->builtin) == 0)
 			ft_export(env, lst->argu);
 		else if (ft_strcmp("unset", lst->builtin) == 0)
 			ft_unset(env, lst->argu);
@@ -126,6 +129,7 @@ int		 execution(t_user *start, t_env *env)
 			exec_solo(lst, env, start);
 		else
 			ft_exit(env, lst, start);
+			*/
 		start->line = start->line->next;		
 	}
 	start->line = ptr;
