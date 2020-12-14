@@ -37,6 +37,7 @@ int     minishell_loop(t_user *start, t_env *env)
     catch_signal();
     while (1)
     {
+        g_reg = 0;
         used = 0;
         prompt();
         ret = get_next_line(0, &user_input);
@@ -53,7 +54,9 @@ int     minishell_loop(t_user *start, t_env *env)
                 }
             }
         }
-        //g_reg = 1;
+        ret = 1;
+        free(user_input);
+        g_reg = 0;
         //end_loop_free(start, user_input, used);
     }
     return (0);
