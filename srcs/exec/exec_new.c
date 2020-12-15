@@ -147,6 +147,7 @@ int		exec_main(t_list *lst, t_env *env)
 	lst = ptr;
 	while (lst)
 	{
+		g_reg = 1;
 		waitpid(lst->pid, &status, 8 | WUNTRACED);
 		lst = lst->next;
 	}
