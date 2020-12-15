@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/12/14 10:43:05 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/15 09:41:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,15 +201,15 @@ char        *verify_quote_integrity(char *input);
 
 int         conditionning(t_user *start);
 int		    execution(t_user *start, t_env *env);
-int		    dispatch_cmd(t_list *lst, t_env *env, t_user *start);
+int		    dispatch_cmd(t_list *lst, t_env *env);
 void	    clean_builtin(t_list *lst);
 void		parse_flags(t_list *lst);
 void    	clean_quote(char **str);
 void		clean_args(t_list *lst);
-int		    exec_pipe(t_list *lst, t_env *env, int size, t_user *start);
+int		    exec_pipe(t_list *lst, t_env *env, int size);
 int         exec_execve(t_list *lst, char **env);
 int		    cmd_valididy(char *cmd);
-int	    	exec_redirrect(t_list *lst, t_env *env, int size, t_user *start);
+int	    	exec_main(t_list *lst, t_env *env);
 
 /*
 **         Built-in

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/12/14 11:30:33 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/15 09:45:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int         exec_execve(t_list *lst, char **env)
 ** Du coup quand on apelle execve le programme ne s'arrète plus (vu qu'on est dans le process enfant)
 */
 
-void	exec_solo(t_list *lst, t_env *env, t_user *start)
+void	exec_solo(t_list *lst, t_env *env)
 {
 	pid_t	pid;
 	int		status;
@@ -75,7 +75,7 @@ void	exec_solo(t_list *lst, t_env *env, t_user *start)
 	if (pid == 0)
 	{
 		// Child process
-		if (dispatch_cmd(lst, env, start) == -1)
+		if (dispatch_cmd(lst, env) == -1)
 		{
 			error_output_token(-6, lst->builtin, '\0');
 			exit(0);
@@ -117,7 +117,7 @@ int		 execution(t_user *start, t_env *env)
 			ft_exit(env, lst, start);
 		else if (ft_strcmp("cd", lst->builtin) == 0)
 			ft_cd(env, lst->argu);
-		if (exec_redirrect(lst, env, ft_lstsize(lst), start) == -1)
+		if (exec_main(lst, env) == -1)
 			return (-1);		
 		/*
 		if (ft_strcmp("export", lst->builtin) == 0)

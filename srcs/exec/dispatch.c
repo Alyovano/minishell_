@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2020/12/10 09:51:17 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/15 09:39:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,8 @@ int		cmd_valididy(char *cmd)
 ** le check d'erreur se fait au dernier moment dans la fonction cmd_validity
 */
 
-int		dispatch_cmd(t_list *lst, t_env *env, t_user *start)
+int		dispatch_cmd(t_list *lst, t_env *env)
 {
-	(void)start;
 	int ret;
 
 	ret = 0;
