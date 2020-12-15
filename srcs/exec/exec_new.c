@@ -65,31 +65,41 @@ int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 		dup2(fds.fdout, 1);
 		close(fds.fdout);
 	}
-	lst->pid = fork();
-	if (lst->pid == 0)
+	if (size == 1 && (ft_strcmp("export", lst->builtin) == 0 || ft_strcmp("cd", lst->builtin) == 0 \
+					|| ft_strcmp("unset", lst->builtin) == 0))
 	{
-		if (size != 1)
-		{
-			//pipe setup for cmd with no file
-			if (lst->stdout_fd && lst->out[0] == NULL)
-			{
-				dup2(lst->fd[1], STDOUT_FILENO);
-				close(lst->fd[0]);
-			}
-			if (lst->stdin_fd && lst->in[0] == NULL)
-			{
-				dup2(old_fd[0], STDIN_FILENO);
-				close(old_fd[1]);
-			}
-		}
-		
-		//fork
-		//lst->pid = fork();
-		
+		//exception solo file no fork
 		dispatch_cmd(lst, env);
-		perror("EXECVP");
-		exit(1);
 	}
+	else
+	{
+		lst->pid = fork();
+		if (lst->pid == 0)
+		{
+			if (size != 1)
+			{
+				//pipe setup for cmd with no file
+				if (lst->stdout_fd && lst->out[0] == NULL)
+				{
+					dup2(lst->fd[1], STDOUT_FILENO);
+					close(lst->fd[0]);
+				}
+				if (lst->stdin_fd && lst->in[0] == NULL)
+				{
+					dup2(old_fd[0], STDIN_FILENO);
+					close(old_fd[1]);
+				}
+			}
+			
+			//fork
+			//lst->pid = fork();
+			
+			dispatch_cmd(lst, env);
+			perror("EXECVP");
+			exit(1);
+		}
+	}
+	
 	if (lst->out[0] == NULL || lst->in[0] == NULL)
 		close(lst->fd[1]);
 	dup2(fds.tmpin, 0);

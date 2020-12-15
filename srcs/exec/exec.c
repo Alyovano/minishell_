@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/12/15 09:45:16 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/15 11:04:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,7 @@ int		 execution(t_user *start, t_env *env)
 		//exec_pipe(lst, env, ft_lstsize(lst), start);
 		if (ft_strcmp("exit", lst->builtin) == 0)
 			ft_exit(env, lst, start);
-		else if (ft_strcmp("cd", lst->builtin) == 0)
-			ft_cd(env, lst->argu);
-		if (exec_main(lst, env) == -1)
+		else if (exec_main(lst, env) == -1)
 			return (-1);		
 		/*
 		if (ft_strcmp("export", lst->builtin) == 0)
