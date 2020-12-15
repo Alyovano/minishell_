@@ -5,11 +5,11 @@
 ** On attend l'input, on l'envoie dans le parseur
 */
 
-    // ici une boucle qui free toute la liste t_list ?
-    // il ne faut surtout pas free le pointeur *start
-    // car il n'est alloue que dans le main 
-
-int g_reg;
+// ici une boucle qui free toute la liste t_list ?
+// il ne faut surtout pas free le pointeur *start
+// car il n'est alloue que dans le main 
+// 2 
+// Cette fonction nous fait actuellement crash
 
 int     end_loop_free(t_user *start, char *str, int token_used)
 {
@@ -37,12 +37,11 @@ int     minishell_loop(t_user *start, t_env *env)
     catch_signal();
     while (1)
     {
-        g_reg = 0;
+        // g_reg = 0;
         used = 0;
         prompt();
         ret = get_next_line(0, &user_input);
         verif_ret(ret, user_input);
-        //printf("ret = %d\n", ret);
         if (ft_strcmp(user_input, "") != 0)
         {
             used = 1;
@@ -75,6 +74,5 @@ int     main(int argc, char **argv, char **environnement)
         malloc_error();
     env->tab = copy_double_tab(environnement);
     minishell_loop(start, env);
-    // ICI un mega free ?
     return (0);
 }
