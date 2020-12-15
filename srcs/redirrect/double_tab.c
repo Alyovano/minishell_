@@ -19,7 +19,7 @@ char	**add_str_to_tab(char **tab, char *str)
 	return (ret);
 }
 
-void	print_double_tab(t_list *lst)
+void	print_in_out(t_list *lst)
 {
 	int i;
 

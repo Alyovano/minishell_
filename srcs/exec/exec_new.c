@@ -109,8 +109,7 @@ int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 				}
 			}			
 			dispatch_cmd(lst, env);
-			perror("EXECVP");
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 	}
 	if (lst->out[0] == NULL || lst->in[0] == NULL)
@@ -149,6 +148,13 @@ int		exec_main(t_list *lst, t_env *env)
 	while (lst)
 	{
 		waitpid(lst->pid, &status, 8 | WUNTRACED);
+		lst = lst->next;
+	}
+	lst = ptr;
+	while (lst)
+	{
+		if (cmd_valididy(lst->builtin) == 0)
+			error_output_token(-6, lst->builtin, '\0');
 		lst = lst->next;
 	}
 	return (0);

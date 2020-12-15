@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2020/12/14 10:35:42 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/15 12:43:06 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ char    *remove_redirrect(char *str, t_quote *quote)
     ret = malloc(sizeof(char) * ft_strlen(str));
     if (!ret)
         malloc_error();
-    ft_printf("STR %s\n", str);
     while (str[i])
     {
         if ((str[i] == '\'' || str[i] == '"') && get_backslash(str, i) == 0)
@@ -242,7 +241,7 @@ int         conditionning(t_user *start)
                 //ft_printf("content from lst: |%s|\n", lst->content);
                 if (get_redirrect(lst, &quote) == -1)
                     return (-1);
-                print_double_tab(lst);
+                //print_in_out(lst);
                 tmp = remove_redirrect(lst->content, &quote);
                 free(lst->content);
                 lst->content = ft_strdup(tmp);

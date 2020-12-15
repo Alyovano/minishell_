@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/12/15 09:41:00 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/15 12:42:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,6 @@ int		    verif_ret(int ret, char *user_input);
 
 void	    print_list(t_user *start);
 void        debug(t_list *lst);
-void	    print_double_tab(t_list *lst);
+void	    print_in_out(t_list *lst);
 
 #endif
