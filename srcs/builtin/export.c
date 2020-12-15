@@ -81,10 +81,7 @@ char        **arg_to_tab(char *arg, int size)
     tab = malloc(sizeof(char**) * (size));
     tab[size - 1] = NULL;
     if (tab == NULL)
-    {
-        perror("Malloc Failure\n");
-        exit(EXIT_FAILURE);
-    }
+        malloc_error();
     while (arg[i])
     {
         while (arg[i] && arg[i] != ' ')
@@ -154,6 +151,13 @@ void        token_init(t_token_env *token)
     token->k = 0;
 }
 
+// char        **doublon_check(char **doublon_check)
+// {
+//     char **new;
+//     return (new);
+
+// }
+
 int         export_add_new_var(t_env *env, char *arg)
 {
     t_token_env *token;
@@ -161,12 +165,10 @@ int         export_add_new_var(t_env *env, char *arg)
 
     token = malloc(sizeof(t_token_env));
     if (!token)
-    {
-        perror("Malloc Failure\n");
-        exit(EXIT_FAILURE);
-    }
+        malloc_error();
     token_init(token);
     arg_tab = parsing_arg(arg);
+    //doublon_check(arg_tab);
     // ici probablement parse encore pr comparer les argu entre eux et virer les doublons
     env->tab = add_arg_to_env(env, arg_tab, token);
     free(token);
