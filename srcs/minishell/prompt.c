@@ -63,6 +63,7 @@ void		prompt(void)
 	if (g_reg == 0)
 	{
 		tmp = getcwd(NULL, 0);
+		//printf("SALUT");
 		if (tmp)
 		{
 			ft_putstr_color("[", "\033[1;34m");
@@ -70,10 +71,12 @@ void		prompt(void)
 			ft_putstr_color("] ", "\033[1;34m");
 			ft_strcat(tmp, "/");
 			ft_putstr_color(" » ", "\033[0;31m");
+			//(void)tmp;
+			//printf("Coucou");
 		}
 		else
 			ft_putstr_color(" » ", "\033[0;31m");
 		free(tmp);
-		g_reg = 1;
+		//g_reg = 1;
 	}
 }
