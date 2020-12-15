@@ -5,11 +5,11 @@
 ** On attend l'input, on l'envoie dans le parseur
 */
 
-    // ici une boucle qui free toute la liste t_list ?
-    // il ne faut surtout pas free le pointeur *start
-    // car il n'est alloue que dans le main 
-
-int g_reg;
+// ici une boucle qui free toute la liste t_list ?
+// il ne faut surtout pas free le pointeur *start
+// car il n'est alloue que dans le main 
+// 2 
+// Cette fonction nous fait actuellement crash
 
 int     end_loop_free(t_user *start, char *str, int token_used)
 {
