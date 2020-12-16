@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/12/16 11:01:18 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/16 12:37:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ void		parse_flags(t_list *lst);
 void    	clean_quote(char **str);
 void		clean_args(t_list *lst);
 int		    exec_pipe(t_list *lst, t_env *env, int size);
-int         exec_execve(t_list *lst, char **env);
+int         exec_execve(t_list *lst, t_env *env);
 int		    cmd_valididy(char *cmd, t_env *env);
 int	    	exec_main(t_list *lst, t_env *env);
 char		**get_path(char **env, char *builtin);

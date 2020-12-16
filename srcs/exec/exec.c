@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/12/16 11:08:52 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/16 15:51:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,41 +64,38 @@ char		*check_path(char **paths)
 ** Ajout du flag dans execve pour tester le comportement
 */
 
-int         exec_execve(t_list *lst, char **env)
+int         exec_execve(t_list *lst, t_env *env)
 {
-	char			*path;
-	char 			*exec_arg[4];
+	char	*path;
+	char 	*exec_arg[4];
 
-	path = check_path(get_path(env, lst->builtin));
-	if (path != NULL)
+	path = check_path(get_path(env->tab, lst->builtin));
+	if (path == NULL)
+		return (-1);	//cmd not found in /bin/
+	exec_arg[0] = lst->builtin;
+	if (lst->argu == NULL || ft_strncmp(lst->argu, "", 1) == 0) //temp fix
 	{
-		exec_arg[0] = lst->builtin;
-		if (lst->argu == NULL || ft_strncmp(lst->argu, "", 1) == 0) //temp fix
-		{
-			if (lst->flag)
-			{
-				exec_arg[1] = lst->flag;
-				exec_arg[2] = NULL;
-			}
-			else
-				exec_arg[1] = NULL;
-		}
-		else if (lst->flag)
+		if (lst->flag)
 		{
 			exec_arg[1] = lst->flag;
-			exec_arg[2] = lst->argu;
-			exec_arg[3] = NULL;
-		}
-		else 
-		{
-			exec_arg[1] = lst->argu;
 			exec_arg[2] = NULL;
 		}
-		if (execve(path, exec_arg, env) == -1)
-			return (-2);		//error with execve
+		else
+			exec_arg[1] = NULL;
 	}
-	else
-		return (-1);	//cmd not found in /bin/
+	else if (lst->flag)
+	{
+		exec_arg[1] = lst->flag;
+		exec_arg[2] = lst->argu;
+		exec_arg[3] = NULL;
+	}
+	else 
+	{
+		exec_arg[1] = lst->argu;
+		exec_arg[2] = NULL;
+	}
+	if (execve(path, exec_arg, env->tab) == -1)
+		return (-2); //error with execve
 	return (0);
 }
 

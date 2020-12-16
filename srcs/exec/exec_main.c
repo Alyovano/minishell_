@@ -77,12 +77,27 @@ int		in_out_setup(t_fd *fds, t_list *lst)
 	return (0);
 }
 
+int		is_builtin(char *cmd)
+{
+	if (ft_strcmp(cmd, "echo") == 0 || \
+		ft_strcmp(cmd, "cd") == 0 || \
+		ft_strcmp(cmd, "pwd") == 0 || \
+		ft_strcmp(cmd, "export") == 0 || \
+		ft_strcmp(cmd, "unset") == 0 || \
+		ft_strcmp(cmd, "env") == 0 || \
+		ft_strcmp(cmd, "exit") == 0 || \
+		ft_strcmp(cmd, "$?") == 0)
+		return(1);
+	return (0);
+}
+
 int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 {	
 	t_fd	fds;
 
 	if (in_out_setup(&fds, lst) == -1)
 		return (-1);
+		
 	if (size == 1 && (ft_strcmp("export", lst->builtin) == 0 || ft_strcmp("cd", lst->builtin) == 0 \
 					|| ft_strcmp("unset", lst->builtin) == 0))
 	{
@@ -109,6 +124,8 @@ int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 				}
 			}
 			dispatch_cmd(lst, env);
+			if (cmd_valididy(lst->builtin, env) == 0)
+				error_output_token(-6, lst->builtin, '\0');
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -149,17 +166,7 @@ int		exec_main(t_list *lst, t_env *env)
 	{
 		g_reg = 1;
 		waitpid(lst->pid, &status, 8 | WUNTRACED);
-		//check is cmd exist
-		if (cmd_valididy(lst->builtin, env) == 0)
-			error_output_token(-6, lst->builtin, '\0');
 		lst = lst->next;
-	}/*
-	lst = ptr;
-	while (lst)
-	{
-		if (cmd_valididy(lst->builtin) == 0)
-			error_output_token(-6, lst->builtin, '\0');
-		lst = lst->next;
-	}*/
+	}
 	return (0);
 }
