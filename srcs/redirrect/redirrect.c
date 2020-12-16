@@ -47,6 +47,7 @@ int		get_redirrect(t_list *lst, t_quote *quote)
 		return (-1); 
 	while (tmp[i])
 	{
+		int test = 0; printf("%d\n", test++);
 		if ((tmp[i] == '\'' || tmp[i] == '"') && get_backslash(tmp, i) == 0)
 			next_quote(tmp, &i);
 		else if ((tmp[i] == '>' || tmp[i] == '<') && get_backslash(tmp, i) == 0)

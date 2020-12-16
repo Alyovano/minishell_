@@ -84,6 +84,9 @@ int         parsing_input(char *input, t_user *start, t_env *env)
         return (-1);
     split_pipe(start, quote);
     if (quote->verif != 0)
+    {
         error_output_token(-5, NULL, '\0');
+        return (-1);
+    }
     return (0);
 }
