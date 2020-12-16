@@ -150,7 +150,7 @@ int		exec_main(t_list *lst, t_env *env)
 		g_reg = 1;
 		waitpid(lst->pid, &status, 8 | WUNTRACED);
 		//check is cmd exist
-		if (cmd_valididy(lst->builtin) == 0)
+		if (cmd_valididy(lst->builtin, env) == 0)
 			error_output_token(-6, lst->builtin, '\0');
 		lst = lst->next;
 	}/*

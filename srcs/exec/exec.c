@@ -6,11 +6,59 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/12/16 09:24:11 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/16 11:08:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char		**get_path(char **env, char *builtin)
+{
+	char	**paths;
+	char	*path;
+	char	*temp;
+	int		i;
+
+	i = 0;
+	path = NULL;
+	while (env[i] && path == NULL)
+	{
+		if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T' \
+									&& env[i][3] == 'H' && env[i][4] == '=')
+			path = ft_strdup(env[i]);
+		i++;
+	}
+	paths = ft_split(path + 5, ':');
+	free(path);
+	i = 0;
+	while (paths[i])
+	{
+		if (paths[i][ft_strlen(paths[i]) - 1] != '/')
+			temp = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(temp, builtin);
+		free(temp);
+		free(paths[i]);
+		paths[i] = ft_strdup(path);
+		free(path);
+		i++;
+	}
+	return (paths);
+}
+
+char		*check_path(char **paths)
+{
+	struct stat		test;
+	int				i;
+
+	i = 0;
+	while (paths[i])
+	{
+		if (stat(paths[i], &test) != -1)
+			return (paths[i]);
+		i++;
+	}
+	return (NULL);
+}
 
 /*
 ** Ajout du flag dans execve pour tester le comportement
@@ -18,12 +66,11 @@
 
 int         exec_execve(t_list *lst, char **env)
 {
-	struct stat		test;
 	char			*path;
 	char 			*exec_arg[4];
 
-	path = ft_strjoin("/bin/", lst->builtin);
-	if (stat(path, &test) != -1)
+	path = check_path(get_path(env, lst->builtin));
+	if (path != NULL)
 	{
 		exec_arg[0] = lst->builtin;
 		if (lst->argu == NULL || ft_strncmp(lst->argu, "", 1) == 0) //temp fix

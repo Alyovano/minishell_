@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2020/12/15 09:39:54 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/16 11:09:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@
 ** Function pour savoir si la commande existe (ret 1) ou existe pas (ret 0)
 */
 
-int		cmd_valididy(char *cmd)
+int		cmd_valididy(char *cmd, t_env *env)
 {
-	struct stat	test;
 	char		*path;
 
-	path = ft_strjoin("/bin/", cmd);
+	path = check_path(get_path(env->tab, cmd));
 	if (ft_strcmp(cmd, "echo") == 0 || \
 		ft_strcmp(cmd, "cd") == 0 || \
 		ft_strcmp(cmd, "pwd") == 0 || \
@@ -31,7 +30,7 @@ int		cmd_valididy(char *cmd)
 		ft_strcmp(cmd, "exit") == 0 || \
 		ft_strcmp(cmd, "$?") == 0)
 		return (1);
-	if (stat(path, &test) != -1)
+	if (path != NULL)
 	{
 		free(path);
 		return (1);
