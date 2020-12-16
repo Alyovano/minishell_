@@ -107,7 +107,7 @@ int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 					dup2(old_fd[0], STDIN_FILENO);
 					close(old_fd[1]);
 				}
-			}			
+			}
 			dispatch_cmd(lst, env);
 			exit(EXIT_FAILURE);
 		}
@@ -149,14 +149,17 @@ int		exec_main(t_list *lst, t_env *env)
 	{
 		g_reg = 1;
 		waitpid(lst->pid, &status, 8 | WUNTRACED);
+		//check is cmd exist
+		if (cmd_valididy(lst->builtin) == 0)
+			error_output_token(-6, lst->builtin, '\0');
 		lst = lst->next;
-	}
+	}/*
 	lst = ptr;
 	while (lst)
 	{
 		if (cmd_valididy(lst->builtin) == 0)
 			error_output_token(-6, lst->builtin, '\0');
 		lst = lst->next;
-	}
+	}*/
 	return (0);
 }

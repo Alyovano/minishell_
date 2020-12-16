@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 18:23:02 by alyovano          #+#    #+#             */
-/*   Updated: 2020/12/11 08:06:22 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/16 09:21:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ char				*ft_itoa_base_two(unsigned int n);
 char				*ft_itoa_unsigned(unsigned int n);
 char				*ft_utoa(long long unsigned n);
 char				*ft_utoa_p_zero_printf(unsigned long n, int precision);
+int					ft_strcmp(char *s1, char *s2);
 int     			double_tab_size(char **src);
 char    			**copy_double_tab(char **src);
 void     			malloc_error(void);
