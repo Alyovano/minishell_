@@ -105,8 +105,10 @@ char    *remove_redirrect(char *str, t_quote *quote)
     ret = malloc(sizeof(char) * ft_strlen(str));
     if (!ret)
         malloc_error();
+    int test = 0;
     while (str[i])
     {
+        printf("%d\n", test++);
         if ((str[i] == '\'' || str[i] == '"') && get_backslash(str, i) == 0)
         {
             if (str[i] == '\'' && get_backslash(str, i) == 0)

@@ -21,6 +21,7 @@ int		cmd_valididy(char *cmd, t_env *env)
 	char		*path;
 
 	path = check_path(get_path(env->tab, cmd));
+	printf("DEBUGG = %s\n", path);
 	if (ft_strcmp(cmd, "echo") == 0 || \
 		ft_strcmp(cmd, "cd") == 0 || \
 		ft_strcmp(cmd, "pwd") == 0 || \

@@ -40,7 +40,6 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
         //TESTEUR bash -c
         used = 0;
         user_input = ft_strdup(argv);
-        //printf("ret = %d\n", ret);
         if (ft_strcmp(user_input, "") != 0)
         {
             used = 1;
