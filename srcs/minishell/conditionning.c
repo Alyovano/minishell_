@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2020/12/15 12:43:06 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/16 15:03:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,8 @@ char    *remove_redirrect(char *str, t_quote *quote)
     ret = malloc(sizeof(char) * ft_strlen(str));
     if (!ret)
         malloc_error();
-    int test = 0;
     while (str[i])
     {
-        printf("%d\n", test++);
         if ((str[i] == '\'' || str[i] == '"') && get_backslash(str, i) == 0)
         {
             if (str[i] == '\'' && get_backslash(str, i) == 0)
@@ -117,6 +115,7 @@ char    *remove_redirrect(char *str, t_quote *quote)
             else if (str[i] == '"' && get_backslash(str, i) == 0)
                 while (str[i] && str[i] != '"' && get_backslash(str, i) == 0)
                     ret[j++] = str[i++];
+            i++;
         }
         else if (((str[i] == '>' || str[i] == '<') && \
             (str[i + 1] != '>' && str[i + 1] != '<')) && get_backslash(str, i) == 0)
