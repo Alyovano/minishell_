@@ -46,5 +46,7 @@ void         error_output_token(int error, char *str, char c)
         ft_putstr_fd(str, STDERR_FILENO);
         ft_putstr_fd(": Permission non accordée\n", STDERR_FILENO);
     }
+    else if (error == -10)
+        ft_putstr_fd("Minishell cannot do that: only absolute path (ex. /bin/echo)\n", STDERR_FILENO);
     //Ici ca va free comme jaja  --> free dans minishell avant de reprendre boucle while
 }
