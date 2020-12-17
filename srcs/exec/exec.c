@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/12/17 11:11:18 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/17 11:38:57 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char		**get_path(char **env, char *builtin)
 
 	i = 0;
 	path = NULL;
-	while (env[i] && path == NULL)
+	while (env[i] && path == NULL) //find path env var
 	{
 		if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T' \
 									&& env[i][3] == 'H' && env[i][4] == '=')
@@ -34,9 +34,17 @@ char		**get_path(char **env, char *builtin)
 	while (paths[i])
 	{
 		if (paths[i][ft_strlen(paths[i]) - 1] != '/')
+		{
 			temp = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(temp, builtin);
-		free(temp);
+			path = ft_strjoin(temp, builtin);
+			free(temp);
+		}
+		else
+		{
+			temp = ft_strdup(paths[i]);
+			path = ft_strjoin(temp, builtin);
+			free(temp);
+		}	
 		free(paths[i]);
 		paths[i] = ft_strdup(path);
 		free(path);
