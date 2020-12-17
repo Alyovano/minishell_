@@ -40,5 +40,11 @@ void         error_output_token(int error, char *str, char c)
         ft_putstr_fd(str, STDERR_FILENO);
         ft_putstr_fd(": Aucun fichier ou dossier de ce type\n", STDERR_FILENO);
     }
+    else if (error == -9)
+    {
+        ft_putstr_fd("bash: ", STDERR_FILENO);
+        ft_putstr_fd(str, STDERR_FILENO);
+        ft_putstr_fd(": Permission non accordée\n", STDERR_FILENO);
+    }
     //Ici ca va free comme jaja  --> free dans minishell avant de reprendre boucle while
 }
