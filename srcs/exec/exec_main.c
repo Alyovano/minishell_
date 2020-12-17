@@ -124,31 +124,31 @@ int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 					close(old_fd[1]);
 				}
 			}
-			if (find_char(lst->builtin, '/'))
+			if (find_char(lst->builtin, '/') == 1)
 			{
 				//find exec with path
 				path = check_path(NULL, lst->builtin);
 				if (exec_execve(lst, env, path) != 0)
 				{
 					error = errno;
-					if (error == 2)
-						error_output_token(-8, lst->builtin, '\0');
 					if (error == 13)
 						error_output_token(-9, path, '\0');
+					else
+						error_output_token(-8, lst->builtin, '\0');								
 					exit(EXIT_FAILURE);
 				}
 				exit(EXIT_SUCCESS);
 			}
 			else //find cmd in builtin or $PATH
-			{
+			{	
 				if (dispatch_cmd(lst, env) != 0)
 				{
 					path = check_path(get_path(env->tab, lst->builtin), NULL);
 					error = errno;
-					if (error == 2)
-						error_output_token(-6, lst->builtin, '\0');
 					if (error == 13)
 						error_output_token(-9, path, '\0');
+					else
+						error_output_token(-6, lst->builtin, '\0');
 					exit(EXIT_FAILURE);
 				}
 				exit(EXIT_SUCCESS);		

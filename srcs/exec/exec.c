@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/12/17 11:38:57 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/17 14:02:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ char		**get_path(char **env, char *builtin)
 			path = ft_strdup(env[i]);
 		i++;
 	}
+	if (path == NULL)
+		return (NULL);
 	paths = ft_split(path + 5, ':');
 	free(path);
-	i = 0;
+	i = 0;	
 	while (paths[i])
 	{
 		if (paths[i][ft_strlen(paths[i]) - 1] != '/')
@@ -44,7 +46,7 @@ char		**get_path(char **env, char *builtin)
 			temp = ft_strdup(paths[i]);
 			path = ft_strjoin(temp, builtin);
 			free(temp);
-		}	
+		}
 		free(paths[i]);
 		paths[i] = ft_strdup(path);
 		free(path);
@@ -63,7 +65,9 @@ char		*check_path(char **paths, char *path)
 		if (stat(path, &test) != -1)
 			return (path);
 		return (NULL);
-	}		
+	}
+	if (paths == NULL)
+		return (NULL);	
 	i = 0;
 	while (paths[i])
 	{
@@ -82,8 +86,6 @@ int         exec_execve(t_list *lst, t_env *env, char *path)
 {
 	char 	*exec_arg[4];
 
-	if (path == NULL)
-		return (-1);	//cmd not found in /bin/
 	exec_arg[0] = lst->builtin;
 	if (lst->argu == NULL || ft_strncmp(lst->argu, "", 1) == 0) //temp fix
 	{
