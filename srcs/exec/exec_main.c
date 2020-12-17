@@ -94,10 +94,10 @@ int		is_builtin(char *cmd)
 int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 {	
 	t_fd	fds;
+	char	*tmp;
 
 	if (in_out_setup(&fds, lst) == -1)
 		return (-1);
-		
 	if (size == 1 && (ft_strcmp("export", lst->builtin) == 0 || ft_strcmp("cd", lst->builtin) == 0 \
 					|| ft_strcmp("unset", lst->builtin) == 0))
 	{
@@ -123,10 +123,27 @@ int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 					close(old_fd[1]);
 				}
 			}
-			dispatch_cmd(lst, env);
-			if (cmd_valididy(lst->builtin, env) == 0)
-				error_output_token(-6, lst->builtin, '\0');
-			exit(EXIT_FAILURE);
+			if (find_char(lst->builtin, '/'))
+			{
+				//find exec with path
+				if (lst->builtin[0] != '/') //add slash
+				{
+					tmp = ft_strjoin("/", lst->builtin);
+					free(lst->builtin);
+					lst->builtin = ft_strdup(tmp);
+					free(tmp);
+				}
+				if (exec_execve(lst, env, check_path(NULL, lst->builtin)) == -1)
+					error_output_token(-8, lst->builtin, '\0');
+				exit(EXIT_FAILURE);
+			}
+			else //find cmd in builtin or $PATH
+			{
+				dispatch_cmd(lst, env);
+				if (cmd_valididy(lst->builtin, env) == 0)
+					error_output_token(-6, lst->builtin, '\0');
+				exit(EXIT_FAILURE);
+			}		
 		}
 	}
 	if (lst->out[0] == NULL || lst->in[0] == NULL)

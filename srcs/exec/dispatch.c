@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2020/12/16 15:08:05 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/17 09:04:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		cmd_valididy(char *cmd, t_env *env)
 {
 	char		*path;
 
-	path = check_path(get_path(env->tab, cmd));
+	path = check_path(get_path(env->tab, cmd), NULL);
 	if (ft_strcmp(cmd, "echo") == 0 || \
 		ft_strcmp(cmd, "cd") == 0 || \
 		ft_strcmp(cmd, "pwd") == 0 || \
@@ -46,7 +46,8 @@ int		cmd_valididy(char *cmd, t_env *env)
 
 int		dispatch_cmd(t_list *lst, t_env *env)
 {
-	int ret;
+	int		ret;
+	char	*path;
 
 	ret = 0;
 	if (ft_strcmp("export", lst->builtin) == 0)
@@ -74,6 +75,9 @@ int		dispatch_cmd(t_list *lst, t_env *env)
 		ft_env(env, lst->argu);
 	}
 	else if (ft_strcmp("exit", lst->builtin) != 0)
-		ret = exec_execve(lst, env);	
+	{
+		path = check_path(get_path(env->tab, lst->builtin), NULL);
+		ret = exec_execve(lst, env, path);
+	}
 	return (ret);
 }
