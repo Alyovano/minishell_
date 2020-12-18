@@ -134,7 +134,7 @@ int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 					if (error == 13)
 						error_output_token(-9, path, '\0');
 					else
-						error_output_token(-8, lst->builtin, '\0');								
+						error_output_token(-8, lst->builtin, '\0');
 					exit(EXIT_FAILURE);
 				}
 				exit(EXIT_SUCCESS);
@@ -147,6 +147,8 @@ int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 					error = errno;
 					if (error == 13)
 						error_output_token(-9, path, '\0');
+					else if (get_path(env->tab, lst->builtin) == NULL)
+						error_output_token(-8, lst->builtin, '\0');
 					else
 						error_output_token(-6, lst->builtin, '\0');
 					exit(EXIT_FAILURE);

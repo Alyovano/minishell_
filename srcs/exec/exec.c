@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2020/12/17 14:02:13 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/18 09:09:56 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ char		**get_path(char **env, char *builtin)
 		return (NULL);
 	paths = ft_split(path + 5, ':');
 	free(path);
+	if (paths[0] == NULL)
+	{
+		free(paths);
+		return (NULL);
+	}		
 	i = 0;	
 	while (paths[i])
 	{
