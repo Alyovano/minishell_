@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 09:36:15 by user42            #+#    #+#             */
-/*   Updated: 2020/12/14 11:24:36 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/18 11:09:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_file(char *str, int i, t_quote *quote)
 				quote->token_in_dquote *= -1;
 			i++;
 		}
-		if (quote->token_in_dquote == 1 && str[i] == '"' && get_backslash(str, i) == 0)
+		else if (quote->token_in_dquote == 1 && str[i] == '"' && get_backslash(str, i) == 0)
 		{
 			quote->token_in_dquote *= -1;
 			i++;
@@ -54,13 +54,14 @@ char	*get_file(char *str, int i, t_quote *quote)
 				return (tmp);
 			}
 		}
-		if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1 \
+		else if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1 \
 			&& str[i] == ' ')
 		{
 			tmp[j] = '\0';
 			return (tmp);
 		}
-		tmp[j++] = str[i++];
+		else
+			tmp[j++] = str[i++];
 	}
 	tmp[j] = '\0';
 	return (tmp);

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2020/12/16 15:03:47 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/18 11:20:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int     next_redirrect(char *str, int i, t_quote *quote)
 			i++;
             j++;
 		}
-		if (quote->token_in_dquote == 1 && str[i] == '"' && get_backslash(str, i) == 0)
+		else if (quote->token_in_dquote == 1 && str[i] == '"' && get_backslash(str, i) == 0)
 		{
 			quote->token_in_dquote *= -1;
 			i++;
@@ -83,13 +83,16 @@ int     next_redirrect(char *str, int i, t_quote *quote)
 				return (j);
 			}
 		}
-		if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1 \
+		else if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1 \
 			&& str[i] == ' ')
 		{
 			return (j);
 		}
-		i++;
-        j++;
+        else
+        {
+            i++;
+            j++;
+        }
 	}
 	return (j);
 }
@@ -109,18 +112,18 @@ char    *remove_redirrect(char *str, t_quote *quote)
     {
         if ((str[i] == '\'' || str[i] == '"') && get_backslash(str, i) == 0)
         {
+            ret[j++] = str[i++];
             if (str[i] == '\'' && get_backslash(str, i) == 0)
                 while (str[i] && str[i] != '\'' && get_backslash(str, i) == 0)
                     ret[j++] = str[i++];
             else if (str[i] == '"' && get_backslash(str, i) == 0)
                 while (str[i] && str[i] != '"' && get_backslash(str, i) == 0)
                     ret[j++] = str[i++];
-            i++;
         }
         else if (((str[i] == '>' || str[i] == '<') && \
             (str[i + 1] != '>' && str[i + 1] != '<')) && get_backslash(str, i) == 0)
 		{
-            //ft_printf("Next redirrect %d\n", next_redirrect(str, i + 1, quote));
+            //ft_printf("Next redirrect %d %d\n", i, next_redirrect(str, i + 1, quote));
             i += next_redirrect(str, i + 1, quote);
             i += 1; //'>' '<'
             while (str[i] == ' ')
