@@ -76,22 +76,18 @@ char        *clear_arg(char *str)
 ** Si un arg a un = mais pas de valeur ensuite
 */
 
-char        **parsing_arg(char *arg)
+char        **parsing_arg(char **arg_tab)
 {
-    char **arg_tab;
-    int  size;
+    char *tmp;
     int  i;
 
     i = 0;
-    size = check_arg_nb(arg) + 1;
-    arg_tab = arg_to_tab(arg, size);
     while (arg_tab[i])
     {
         arg_tab[i] = first_clear_arg(arg_tab[i]);
         if (arg_tab[i][ft_strlen(arg_tab[i]) - 1] == '=' 
         && arg_tab[i][ft_strlen(arg_tab[i])] == '\0')
         {
-            char *tmp;
             tmp = ft_strjoin(arg_tab[i], "\"\"");
             free(arg_tab[i]);
             arg_tab[i] = ft_strdup(tmp);

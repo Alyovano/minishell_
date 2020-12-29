@@ -103,12 +103,15 @@ int         export_add_new_var(t_env *env, char *arg)
 {
     t_token_env *token;
     char        **arg_tab;
+    int         size;
 
+    size = check_arg_nb(arg) + 1;
+    arg_tab = arg_to_tab(arg, size);
     token = malloc(sizeof(t_token_env));
     if (!token)
         malloc_error();
     token_init(token);
-    arg_tab = parsing_arg(arg);
+    arg_tab = parsing_arg(arg_tab);
     env->tab = add_arg_to_env(env, arg_tab, token);
     free(token);
     return (ARGS);

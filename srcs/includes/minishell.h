@@ -231,7 +231,7 @@ int         ft_env(t_env *env, char *arg);
 int         check_if_exist(char **tab, char *arg);
 int         check_arg_nb(char *arg);
 char        **arg_to_tab(char *arg, int size);
-char        **parsing_arg(char *arg);
+char        **parsing_arg(char **arg_tab);
 char        *first_clear_arg(char *str);
 int         free_copy(char **arg_tab, t_env *env);
 char        *clear_arg(char *str);
