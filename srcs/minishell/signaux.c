@@ -5,7 +5,7 @@ void		sig_handler(int sig)
     (void)sig;
 	char buf[PATH_CWD_MAX + 1];
 
-	//wait(NULL);
+	wait(NULL);
 	ft_putchar_fd('\n', 1);
 	if (g_reg != 1)
 		print_promt(getcwd(buf, sizeof(buf)));

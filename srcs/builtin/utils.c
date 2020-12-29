@@ -72,6 +72,10 @@ char        *clear_arg(char *str)
     return (tmp);
 }
 
+/*
+** Si un arg a un = mais pas de valeur ensuite
+*/
+
 char        **parsing_arg(char *arg)
 {
     char **arg_tab;

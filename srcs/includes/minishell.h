@@ -237,6 +237,8 @@ int         free_copy(char **arg_tab, t_env *env);
 char        *clear_arg(char *str);
 int         catch_env_var(char *arg, char *env_line);
 char         *replace_var_value(char *tmp, char* arg);
+int         sort_export(t_env *env);
+int         export_without_args(t_env *env);
 
 /*
 ** malloc error

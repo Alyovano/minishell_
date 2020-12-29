@@ -8,58 +8,6 @@
 ** dans un cas invalide il retourne une erreur
 **/
 
-int         export_without_args(t_env *env)
-{
-    int i;
-    
-    i = 0;
-    while (env->export[i])
-    {
-        ft_printf("%s %s\n", "declare -x", env->export[i++]);
-    }
-    return (NO_ARGS);
-}
-
-int         sort_export_swap(t_env *env, int i)
-{
-    char *tmp;
-
-    tmp = ft_strdup(env->export[i]);
-    free(env->export[i]);
-    env->export[i] = ft_strdup(env->export[i + 1]);
-    free(env->export[i + 1]);
-    env->export[i + 1] = ft_strdup(tmp);
-    free(tmp);
-    env->swap_token = -1;
-    return (0);
-}
-
-int         sort_export(t_env *env)
-{
-    int i;
-    int j;
-
-    i = 0;
-    j = 0;
-    while (env->export[i])
-    {
-        env->swap_token = 0;
-        j = 0;
-        if (env->export[i + 1] && ft_strcmp(env->export[i], env->export[i + 1]) != 0)
-        {
-            while (env->export[i] && env->export[i + 1] 
-            && env->export[i][j] == env->export[i + 1][j])
-                j++;
-            if (env->export[i][j] > env->export[i + 1][j])
-                sort_export_swap(env, i);
-        }
-        i++;
-        if (env->swap_token == -1)
-            i = 0;
-    }
-    return (1);
-}
-
 /*
 ** Prend l'argument, la nombre de de coupe (size) et
 ** le tableau fournit par la fonction precedente, renvoie
@@ -151,13 +99,6 @@ void        token_init(t_token_env *token)
     token->k = 0;
 }
 
-// char        **doublon_check(char **doublon_check)
-// {
-//     char **new;
-//     return (new);
-
-// }
-
 int         export_add_new_var(t_env *env, char *arg)
 {
     t_token_env *token;
@@ -168,19 +109,14 @@ int         export_add_new_var(t_env *env, char *arg)
         malloc_error();
     token_init(token);
     arg_tab = parsing_arg(arg);
-    //doublon_check(arg_tab);
-    // ici probablement parse encore pr comparer les argu entre eux et virer les doublons
     env->tab = add_arg_to_env(env, arg_tab, token);
     free(token);
     return (ARGS);
 }
 
-/*
-** export <nom_de_var_pas_encore_dans_le_tableau> x2 ou x3 provoque une var repetee
-*/
-
 int         ft_export(t_env *env, char *arg)
 {
+    printf("ARG = %s\n", arg);
     env->swap_token = 0;
     if (!arg || *arg == '\0')
     {
@@ -191,8 +127,6 @@ int         ft_export(t_env *env, char *arg)
         return (NO_ARGS);
     }
     else
-    {
         export_add_new_var(env, arg);
-    }
     return (ARGS);
 }

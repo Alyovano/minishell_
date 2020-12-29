@@ -1,5 +1,5 @@
 BUILTIN = $(addprefix srcs/builtin/, export.c unset.c pwd.c echo.c exit.c \
-			cd.c env.c utils.c utils_environnement.c)
+			cd.c env.c utils.c utils_environnement.c export_whitout_argument.c)
 MINISHELL = $(addprefix srcs/minishell/, minishell.c error.c conditionning.c \
 			signaux.c prompt.c)
 PARSING = $(addprefix srcs/parsing/, backslash.c parsing.c \
