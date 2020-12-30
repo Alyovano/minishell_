@@ -13,9 +13,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <sys/types.h>
-#include <sys/stat.h>
-
 #define PATH_CWD_MAX 2048
 #define OK 0
 #define FAIL 1
@@ -28,6 +25,8 @@
 ** Des librairies
 */
 
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "../libft/libftprintfgnl.h"
 #include <sys/wait.h>
 #include <signal.h>
