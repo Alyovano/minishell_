@@ -82,9 +82,13 @@ char        **parsing_arg(char **arg_tab)
     int  i;
 
     i = 0;
+    // for (int j ; arg_tab[j] ; j++)
+    //     printf("APRES = %s\n", arg_tab[j]);
     while (arg_tab[i])
     {
         arg_tab[i] = first_clear_arg(arg_tab[i]);
+        //printf("APRES  = %s\n", arg_tab[i]);
+        // ici
         if (arg_tab[i][ft_strlen(arg_tab[i]) - 1] == '=' 
         && arg_tab[i][ft_strlen(arg_tab[i])] == '\0')
         {

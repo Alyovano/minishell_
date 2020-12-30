@@ -49,6 +49,8 @@ char        **arg_to_tab(char *arg, int size)
             j = i;
         }
         i++;
+        if (!tab[k] || tab[k][0] == '\0')
+            break ;
     }
     return (tab);
 }
@@ -105,21 +107,23 @@ int         export_add_new_var(t_env *env, char *arg)
     char        **arg_tab;
     int         size;
 
+    (void)env;
     size = check_arg_nb(arg) + 1;
     arg_tab = arg_to_tab(arg, size);
+    for (int i = 0 ; arg_tab[i] ; i++)
+        printf("AVANT %s\n", arg_tab[i]);
     token = malloc(sizeof(t_token_env));
     if (!token)
         malloc_error();
     token_init(token);
     arg_tab = parsing_arg(arg_tab);
-    env->tab = add_arg_to_env(env, arg_tab, token);
+    //env->tab = add_arg_to_env(env, arg_tab, token);
     free(token);
     return (ARGS);
 }
 
 int         ft_export(t_env *env, char *arg)
 {
-    printf("ARG = %s\n", arg);
     env->swap_token = 0;
     if (!arg || *arg == '\0')
     {
