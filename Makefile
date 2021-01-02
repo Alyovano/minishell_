@@ -42,6 +42,11 @@ ${NAME}:	${OBJS}
 
 all:		${NAME}
 
+
+debug:
+			echo CREATION DE L'EXECUTABLE "debug"
+			gcc -fsanitize=address -o debug ${OBJS} ${LIBFTPRINTF}
+
 clean:
 			${RM} ${OBJS}
 			make clean -C srcs/libft
