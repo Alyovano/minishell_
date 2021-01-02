@@ -1,1 +1,0 @@
-gcc -fsanitize=address ./quote/*.o ./parsing/*.o ./minishell/*.o ./builtin/*.o ./libft/libftprintfgnl.a

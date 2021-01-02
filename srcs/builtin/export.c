@@ -14,43 +14,35 @@
 ** le tableau remplit par chaque morceau de l'argument
 */
 
-char        **arg_to_tab(char *arg, int size)
+char        **arg_to_tab(char *arg, int size, t_token_env *token)
 {
-    int i;
-    int j;
-    int k;
-    int token;
+    int var_token;
     char **tab;
 
-    i = 0;
-    j = 0;
-    k = 0;
-    token = 0;
+    var_token = 0;
     tab = malloc(sizeof(char**) * (size));
-    tab[size - 1] = NULL;
+    // tab[size - 1] = NULL;
     if (tab == NULL)
         malloc_error();
-    while (arg[i])
+    while (arg[token->i])
     {
-        while (arg[i] && arg[i] != ' ')
+        while (arg[token->i] && arg[token->i] != ' ')
         {
-            if ((arg[i] == '"' || arg[i] == '\'') && get_backslash(arg, i) == 0)
-            {
-                i += quote_len(arg + i);
-            }
-            token = 1;
-            i++;
+            if ((arg[token->i] == '"' || arg[token->i] == '\'') && get_backslash(arg, token->i) == 0)
+                token->i += quote_len(arg + token->i);
+            var_token = 1;
+            token->i++;
         }
-        if (token == 1)
+        if (var_token == 1)
         {
-            tab[k] = ft_str_n_dup(arg + j, i - j);
-            k++;
-            token = 0;
-            j = i;
+            tab[token->k] = ft_str_n_dup(arg + token->j, token->i - token->j);
+            token->k++;
+            var_token = 0;
+            token->j = token->i;
         }
-        i++;
-        if (!tab[k] || tab[k][0] == '\0')
-            break ;
+        token->i++;
+        // if (!tab[token->k] || tab[token->k][0] == '\0')
+        //     break ;
     }
     return (tab);
 }
@@ -107,19 +99,92 @@ int         export_add_new_var(t_env *env, char *arg)
     char        **arg_tab;
     int         size;
 
-    (void)env;
-    size = check_arg_nb(arg) + 1;
-    arg_tab = arg_to_tab(arg, size);
-    for (int i = 0 ; arg_tab[i] ; i++)
-        printf("AVANT %s\n", arg_tab[i]);
     token = malloc(sizeof(t_token_env));
     if (!token)
         malloc_error();
+    (void)env; // a delete
+    // go 
+    size = check_arg_nb(arg) + 1;
+    token_init(token);
+    arg_tab = arg_to_tab(arg, size, token);
+    for (int i = 0 ; arg_tab[i] ; i++)
+        printf("AVANT %s\n", arg_tab[i]);
     token_init(token);
     arg_tab = parsing_arg(arg_tab);
     //env->tab = add_arg_to_env(env, arg_tab, token);
     free(token);
     return (ARGS);
+}
+
+int        handle_var_in_arg(char *arg)
+{
+    //char *tmp;
+    int i;
+    int jump_space;
+
+    i = 0;
+    jump_space = 0;
+    while (arg && arg[jump_space] == ' ')
+        jump_space++;
+    while (arg[jump_space + i] && arg[jump_space + i] != ' ')
+    {
+        if ((arg[jump_space + i] == '"' || arg[jump_space + i] == '\'') && get_backslash(arg, jump_space + i) == 0)
+                i += quote_len(arg + (jump_space + i));
+        i++;
+    }
+    // tmp = ft_substr(arg, (unsigned int)jump_space, (unsigned int)i);
+    // printf("MATEMP = %s\n", tmp);
+    return (jump_space + i);
+}
+
+char         **new(t_env *env, char *arg)
+{
+    int var_position = 0;
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    char *tmp;
+    char **new_tab;
+
+    printf("Go pour expoter\n");
+    new_tab = malloc(sizeof(char**) * 
+        (((double_tab_size(env->tab) + check_arg_nb(arg) + 1))) + 1);
+    while (env->tab[i])
+    {
+        new_tab[i] = ft_strdup(env->tab[i]);
+        i++;
+    }
+    new_tab[i + 1] = NULL;
+    while (arg[j])
+    {
+        j += handle_var_in_arg(arg + k);
+        tmp = ft_str_n_dup(arg + k, j);
+        tmp = clear_arg(tmp);
+        //printf("Ma nouvelles temp = %s\n", tmp);
+        // jump
+
+        var_position = check_if_exist(new_tab, tmp);
+        if (var_position == -1)
+        {
+            new_tab[i] = ft_strdup(tmp);
+            free(tmp);
+            i++;
+            new_tab[i] = NULL;
+        }
+        else
+        {
+            // ici elle existe deja
+            // je crois que ca leak ici a cause de replace_var_value
+            new_tab[var_position] = replace_var_value(new_tab[var_position], tmp);
+        }
+        k = j + 1;
+        //j++;
+    }
+    new_tab[i] = NULL;
+    //free_double_tab(env->tab);
+    // for (int test = 0; new_tab[test] ; test++)
+    //     printf("Mon nouveau tableau :%s\n", new_tab[test]);
+    return (new_tab);
 }
 
 int         ft_export(t_env *env, char *arg)
@@ -134,6 +199,11 @@ int         ft_export(t_env *env, char *arg)
         return (NO_ARGS);
     }
     else
-        export_add_new_var(env, arg);
+    {
+       // export_add_new_var(env, arg);
+       env->tab = new(env, arg);
+        // for (int test = 0; env->tab[test] ; test++)
+        //     printf("Mon nouveau tableau :%s\n", env->tab[test]);
+    }
     return (ARGS);
 }

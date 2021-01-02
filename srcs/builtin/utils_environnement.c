@@ -29,6 +29,8 @@ int     catch_env_var(char *arg, char *env_line)
 
 /*
 ** Pour savoir si une var existe dans le tableau env
+** Si -1 alors la var n'existe pas
+** si i > -1 alors i represente la position de la var dans le tableau
 */
 
 int         check_if_exist(char **tab, char *arg)

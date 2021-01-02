@@ -23,10 +23,7 @@ char		*ft_substr(char const *s, unsigned int start, size_t len)
 	if (start > str_len)
 		return (ft_strdup(""));
 	if (!(str = malloc(sizeof(char) * (len + 1))))
-    {
-        perror("Malloc Failure\n");
-        exit(EXIT_FAILURE);
-    }
+		malloc_error();
 	ft_strlcpy(str, s + start, len + 1);
 	return (str);
 }

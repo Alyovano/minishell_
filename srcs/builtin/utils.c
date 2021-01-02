@@ -69,6 +69,7 @@ char        *clear_arg(char *str)
         j++;
     }
     tmp[j] = 0;
+    free(str);
     return (tmp);
 }
 
