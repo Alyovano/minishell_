@@ -163,7 +163,10 @@ int         check_dollar_or_not_dollar(t_user *start,
     {
         j = check_simple_quote(start, quote, j, i);
         if (start->user_cmd_tab[i][j] == '$' && 
-                    (get_backslash(start->user_cmd_tab[i], j) == 0))
+                    (get_backslash(start->user_cmd_tab[i], j) == 0) 
+                    && (start->user_cmd_tab[i][j + 1]) 
+                    && (start->user_cmd_tab[i][j + 1] != ' ') 
+                    && (start->user_cmd_tab[i][j + 1] != '"'))
         {
             j = dollar_var_name(start, i, j, dol, env);
         }
