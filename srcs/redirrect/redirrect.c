@@ -27,11 +27,17 @@ int		is_redirrect(t_list *lst, t_quote *quote)
 void	next_quote(char *str, int *i)
 {
 	if (str[*i] == '\'' && get_backslash(str, *i) == 0)
+	{
+		(*i)++;
 		while (str[*i] && str[*i] != '\'' && get_backslash(str, *i) == 0)
 			(*i)++;
+	}
 	else if (str[*i] == '"' && get_backslash(str, *i) == 0)
+	{
+		(*i)++;
 		while (str[*i] && str[*i] != '"' && get_backslash(str, *i) == 0)
 			(*i)++;
+	}
 }
 
 int		get_redirrect(t_list *lst, t_quote *quote)
@@ -48,7 +54,9 @@ int		get_redirrect(t_list *lst, t_quote *quote)
 	while (tmp[i])
 	{
 		if ((tmp[i] == '\'' || tmp[i] == '"') && get_backslash(tmp, i) == 0)
+		{
 			next_quote(tmp, &i);
+		}
 		else if ((tmp[i] == '>' || tmp[i] == '<') && get_backslash(tmp, i) == 0)
 		{
 			//algo redirrections

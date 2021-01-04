@@ -146,7 +146,7 @@ char         **new(t_env *env, char *arg)
     char *tmp;
     char **new_tab;
 
-    printf("Go pour expoter\n");
+    //printf("Go pour expoter\n");
     new_tab = malloc(sizeof(char**) * 
         (((double_tab_size(env->tab) + check_arg_nb(arg) + 1))) + 1);
     while (env->tab[i])
