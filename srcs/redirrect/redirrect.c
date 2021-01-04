@@ -64,27 +64,27 @@ int		get_redirrect(t_list *lst, t_quote *quote)
 			{
 				if (check_redirrect(tmp, i + 2) == -1)
 					return (-1);
-				write_redirrect(tmp, i + 2, lst, "APPEND");
+				i += write_redirrect(tmp, i + 2, lst, "APPEND");
 				i++;
 			}
 			else if (tmp[i] == '<' && tmp[i + 1] == '>')
 			{
 				if (check_redirrect(tmp, i + 2) == -1)
 					return (-1);
-				read_redirrect(tmp, i + 2, lst, "READ_CREATE");
+				i += read_redirrect(tmp, i + 2, lst, "READ_CREATE");
 				i++;
 			}
 			else if (tmp[i] == '>')
 			{
 				if (check_redirrect(tmp, i + 1) == -1)
 					return (-1);
-				write_redirrect(tmp, i + 1, lst, "WRITE");
+				i += write_redirrect(tmp, i + 1, lst, "WRITE");
 			}
 			else if (tmp[i] == '<')
 			{
 				if (check_redirrect(tmp, i + 1) == -1)
 					return (-1);
-				read_redirrect(tmp, i + 1, lst, "READ");
+				i += read_redirrect(tmp, i + 1, lst, "READ");
 			}
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 09:36:15 by user42            #+#    #+#             */
-/*   Updated: 2020/12/18 11:09:23 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/04 09:56:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*get_file(char *str, int i, t_quote *quote)
 			}
 		}
 		else if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1 \
-			&& str[i] == ' ')
+			&& (str[i] == ' ' || str[i] == '>' || str[i] == '<'))
 		{
 			tmp[j] = '\0';
 			return (tmp);
@@ -73,10 +73,11 @@ char	*get_file(char *str, int i, t_quote *quote)
 ** add type to lst->out_type
 */
 
-void	write_redirrect(char *str, int i, t_list *lst, char *type)
+int		write_redirrect(char *str, int i, t_list *lst, char *type)
 {
 	char	*file_name;
 	char	**tmp;
+	int		len;
 	t_quote	quote;
 
 	if (str[i] == ' ')
@@ -87,11 +88,13 @@ void	write_redirrect(char *str, int i, t_list *lst, char *type)
 	free_double_tab(lst->out);
 	lst->out = copy_double_tab(tmp);
 	free_double_tab(tmp);
+	len = ft_strlen(file_name);
 	free(file_name);
 	tmp = add_str_to_tab(lst->out_types, type);
 	free_double_tab(lst->out_types);
 	lst->out_types = copy_double_tab(tmp);
 	free_double_tab(tmp);
+	return (len);
 }
 
 /*
@@ -100,10 +103,11 @@ void	write_redirrect(char *str, int i, t_list *lst, char *type)
 ** add type to lst->in_type
 */
 
-void	read_redirrect(char *str, int i, t_list *lst, char *type)
+int		read_redirrect(char *str, int i, t_list *lst, char *type)
 {
 	char	*file_name;
 	char	**tmp;
+	int		len;
 	t_quote	quote;
 
 	if (str[i] == ' ')
@@ -113,9 +117,11 @@ void	read_redirrect(char *str, int i, t_list *lst, char *type)
 	free_double_tab(lst->in);
 	lst->in = copy_double_tab(tmp);
 	free_double_tab(tmp);
+	len = ft_strlen(file_name);
 	free(file_name);
 	tmp = add_str_to_tab(lst->in_types, type);
 	free_double_tab(lst->in_types);
 	lst->in_types = copy_double_tab(tmp);
 	free_double_tab(tmp);
+	return (len);
 }

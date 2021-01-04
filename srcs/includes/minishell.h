@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2020/12/17 09:03:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/04 09:52:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,8 +174,8 @@ int	    	is_redirrect(t_list *lst, t_quote *quote);
 int		    parsing_redirrect(t_user *start);
 int	    	check_redirrect(char *str, int i);
 int	    	redirrect_error(char *elem);
-void	    read_redirrect(char *str, int i, t_list *lst, char *type);
-void	    write_redirrect(char *str, int i, t_list *lst, char *type);
+int 	    read_redirrect(char *str, int i, t_list *lst, char *type);
+int 	    write_redirrect(char *str, int i, t_list *lst, char *type);
 char	    *get_file_path(char *str, int i, t_quote *quote);
 char    	*get_file(char *str, int i, t_quote *quote);
 
