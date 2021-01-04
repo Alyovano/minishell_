@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:51:22 by user42            #+#    #+#             */
-/*   Updated: 2021/01/04 13:35:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/04 13:59:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,16 @@ int		is_redirrect(t_list *lst, t_quote *quote)
 
 	i = 0;
 	tmp = ft_strdup(lst->content);
-	quote->token_in_dquote = -1;
-	quote->token_in_simple_quote = -1;
+	quote->t_in_dquote = -1;
+	quote->t_in_squote = -1;
 	while (tmp[i])
 	{
 		if (tmp[i] == '\'' && get_backslash(tmp, i) == 0)
-			quote->token_in_simple_quote *= -1;
+			quote->t_in_squote *= -1;
 		else if (tmp[i] == '"' && get_backslash(tmp, i) == 0)
-			quote->token_in_dquote *= -1;
+			quote->t_in_dquote *= -1;
 		else if ((tmp[i] == '>' || tmp[i] == '<') && get_backslash(tmp, i) == 0
-			&& quote->token_in_dquote == -1 &&\
-					quote->token_in_simple_quote == -1)
+			&& quote->t_in_dquote == -1 && quote->t_in_squote == -1)
 			return (1);
 		i++;
 	}
@@ -110,8 +109,8 @@ int		get_redirrect(t_list *lst, t_quote *quote)
 
 	i = 0;
 	tmp = ft_strdup(lst->content);
-	quote->token_in_dquote = -1;
-	quote->token_in_simple_quote = -1;
+	quote->t_in_dquote = -1;
+	quote->t_in_squote = -1;
 	if (redirrect_error(tmp) == -1)
 		return (-1);
 	while (tmp[i])

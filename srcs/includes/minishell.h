@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/04 09:52:10 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/04 14:24:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ typedef struct      s_user
 
 typedef struct      s_quote
 {
-    int     token_in_dquote;
-    int     token_in_simple_quote;
+    int     t_in_dquote;
+    int     t_in_squote;
     int     verif;
     int     len;
     int     dollar_quote;

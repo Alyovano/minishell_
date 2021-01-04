@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:53:39 by user42            #+#    #+#             */
-/*   Updated: 2020/12/09 11:37:29 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/04 13:57:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ int		get_redir_pipe(char *elem, t_quote *quote)
 	
 	i = 0;
 	nb = 0;	
-	quote->token_in_simple_quote = -1;
-	quote->token_in_dquote = -1;
+	quote->t_in_squote = -1;
+	quote->t_in_dquote = -1;
 	while (elem[i])
 	{
 		if (elem[i] == '\'' && (get_backslash(elem, i) == 0))
-			quote->token_in_simple_quote *= -1;
+			quote->t_in_squote *= -1;
 		if (elem[i] == '"' && (get_backslash(elem, i) == 0))
-			quote->token_in_dquote *= -1;
-		if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1)
+			quote->t_in_dquote *= -1;
+		if (quote->t_in_dquote == -1 && quote->t_in_squote == -1)
 		{
 			if (elem[i] == '>' && elem[i + 1] == '|')
 				nb++;
@@ -52,16 +52,16 @@ char	*remove_redir_pipe(char *elem, t_quote *quote, int nb)
 	i = 0;
 	j = 0;
 	tmp = malloc(sizeof(char) * (ft_strlen(elem) - nb));
-	quote->token_in_simple_quote = -1;
-	quote->token_in_dquote = -1;
+	quote->t_in_squote = -1;
+	quote->t_in_dquote = -1;
 	while (elem[j])
 	{
 		tmp[i] = elem[j];
 		if (elem[j] == '\'' && (get_backslash(elem, j) == 0))
-			quote->token_in_simple_quote *= -1;
+			quote->t_in_squote *= -1;
 		if (elem[j] == '"' && (get_backslash(elem, j) == 0))
-			quote->token_in_dquote *= -1;
-		if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1)
+			quote->t_in_dquote *= -1;
+		if (quote->t_in_dquote == -1 && quote->t_in_squote == -1)
 		{
 			if (elem[j] == '>' && elem[j + 1] == '|')
 				j++;
@@ -78,15 +78,15 @@ int		syntax_error_redirect(char *elem, t_quote *quote)
 	int i;
 	
 	i = 0;
-	quote->token_in_simple_quote = -1;
-	quote->token_in_dquote = -1;
+	quote->t_in_squote = -1;
+	quote->t_in_dquote = -1;
 	while (elem[i])
 	{
 		if (elem[i] == '\'' && (get_backslash(elem, i) == 0))
-			quote->token_in_simple_quote *= -1;
+			quote->t_in_squote *= -1;
 		if (elem[i] == '"' && (get_backslash(elem, i) == 0))
-			quote->token_in_dquote *= -1;
-		if (quote->token_in_dquote == -1 && quote->token_in_simple_quote == -1)
+			quote->t_in_dquote *= -1;
+		if (quote->t_in_dquote == -1 && quote->t_in_squote == -1)
 		{
 			if (elem[i] == '<' && elem[i + 1] == ' ' && elem[i + 2] == '>')
 			{
