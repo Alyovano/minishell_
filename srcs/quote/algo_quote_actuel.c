@@ -21,27 +21,27 @@ int quote_get_len_and_validity(t_user *start, t_quote *quote, int i)
 {
     init_quote_len_validity(quote);
     while (start->user_input[i] 
-    && (quote->token_in_simple_quote % 2 != 0 || quote->token_in_dquote % 2 != 0))
+    && (quote->t_in_squote % 2 != 0 || quote->t_in_dquote % 2 != 0))
     {
         if (start->user_input[i] == '"')
         {
-            if (get_backslash(start->user_input, i) == 0 && quote->token_in_simple_quote % 2 == 0)
-                quote->token_in_dquote++;
+            if (get_backslash(start->user_input, i) == 0 && quote->t_in_squote % 2 == 0)
+                quote->t_in_dquote++;
         }
         else if (start->user_input[i] == '\'')
         {
-            if (quote->token_in_simple_quote % 2 == 0 && quote->token_in_dquote % 2 == 0)
+            if (quote->t_in_squote % 2 == 0 && quote->t_in_dquote % 2 == 0)
             {
                 if (get_backslash(start->user_input, i) == 0)
-                    quote->token_in_simple_quote++;
+                    quote->t_in_squote++;
             }
-            else if (quote->token_in_simple_quote % 1 == 0 && quote->token_in_dquote % 2 == 0)
-                quote->token_in_simple_quote++;
+            else if (quote->t_in_squote % 1 == 0 && quote->t_in_dquote % 2 == 0)
+                quote->t_in_squote++;
         }
         i++;
         quote->len++;
     }
-    quote->verif = (quote->token_in_dquote % 2) + (quote->token_in_simple_quote % 2);
+    quote->verif = (quote->t_in_dquote % 2) + (quote->t_in_squote % 2);
     return (quote->len - 1);
 }
 
