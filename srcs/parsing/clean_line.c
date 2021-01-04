@@ -12,12 +12,12 @@
 
 #include "../includes/minishell.h"
 
-int		get_clean_index(char *str)
+int			get_clean_index(char *str)
 {
 	int i;
 
 	i = 0;
-	while (str[i] && (str[i] ==  ' ' || str[i] == ';'))
+	while (str[i] && (str[i] == ' ' || str[i] == ';'))
 		i++;
 	return (i);
 }
@@ -27,11 +27,11 @@ int		get_clean_index(char *str)
 ** Remove also empty string "echo ;" ==> [echo] [] ==> [echo]
 */
 
-void	clean_line(t_user *start, t_quote *quote)
+void		clean_line(t_user *start, t_quote *quote)
 {
-	int i;
-	char *tmp;
-	
+	int		i;
+	char	*tmp;
+
 	i = 1;
 	while (start->user_cmd_tab[i])
 	{

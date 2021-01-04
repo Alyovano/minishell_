@@ -12,14 +12,15 @@
 
 #include "../includes/minishell.h"
 
-void print2(void *str)
+void		print2(void *str)
 {
 	ft_printf("[%s]\n", (char *)str);
 }
 
-void print(void *line)
+void		print(void *line)
 {
 	t_list *lst;
+
 	lst = (t_list *)line;
 	ft_printf("Line: \n");
 	ft_lstiter(lst, &print2);
@@ -29,7 +30,7 @@ void print(void *line)
 ** Fonction pour afficher la liste chainée contenue dans t_user
 */
 
-void	print_list(t_user *start)
+void		print_list(t_user *start)
 {
 	ft_lstiter(start->line, &print);
 }

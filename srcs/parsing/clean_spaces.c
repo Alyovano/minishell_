@@ -12,7 +12,6 @@
 
 #include "../includes/minishell.h"
 
-
 /*
 ** Function to know if string ends with whitespaces or not
 ** 1 == yes | 2 == no
@@ -52,8 +51,8 @@ void	get_clean_line(char *str, t_quote *quote, char **ret)
 			(*ret)[j++] = str[i];
 		else
 		{
-			if (!(((str[i] == ' '  && (str[i - 1] == ' ' || \
-					i == 0 || str[i + 1] == '\0')) ) || end_spaces(str, i)))
+			if (!(((str[i] == ' ' && (str[i - 1] == ' ' || \
+					i == 0 || str[i + 1] == '\0'))) || end_spaces(str, i)))
 				(*ret)[j++] = str[i];
 		}
 		i++;
@@ -85,8 +84,8 @@ int		get_good_len(char *str, t_quote *quote)
 			len++;
 		else
 		{
-			if (!(((str[i] == ' '  && (str[i - 1] == ' ' || \
-					i == 0 || str[i + 1] == '\0')) ) || end_spaces(str, i)))
+			if (!(((str[i] == ' ' && (str[i - 1] == ' ' || \
+					i == 0 || str[i + 1] == '\0'))) || end_spaces(str, i)))
 				len++;
 		}
 		i++;
@@ -96,9 +95,9 @@ int		get_good_len(char *str, t_quote *quote)
 
 void	clean_spaces(t_user *start, t_quote *quote)
 {
-	int i;
-	char *temp;
-	
+	int		i;
+	char	*temp;
+
 	i = 0;
 	while (start->user_cmd_tab[i])
 	{
@@ -110,5 +109,4 @@ void	clean_spaces(t_user *start, t_quote *quote)
 		free(temp);
 		i++;
 	}
-	
 }
