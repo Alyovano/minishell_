@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 09:36:15 by user42            #+#    #+#             */
-/*   Updated: 2021/01/04 09:56:46 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/04 11:08:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_file(char *str, int i, t_quote *quote)
 		{
 			quote->token_in_dquote *= -1;
 			i++;
-			if (str[i + 1] == ' ' || str[i + 1] == '\0')
+			if (str[i] == ' ' || str[i] == '\0')
 			{
 				tmp[j] = '\0';
 				return (tmp);
@@ -48,7 +48,7 @@ char	*get_file(char *str, int i, t_quote *quote)
 		{
 			quote->token_in_simple_quote *= -1;
 			i++;
-			if (str[i + 1] == ' ' || str[i + 1] == '\0')
+			if (str[i] == ' ' || str[i] == '\0')
 			{
 				tmp[j] = '\0';
 				return (tmp);
