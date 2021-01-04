@@ -22,9 +22,9 @@ int		get_redir_pipe(char *elem, t_quote *quote)
 {
 	int i;
 	int nb;
-	
+
 	i = 0;
-	nb = 0;	
+	nb = 0;
 	quote->t_in_squote = -1;
 	quote->t_in_dquote = -1;
 	while (elem[i])
@@ -43,15 +43,17 @@ int		get_redir_pipe(char *elem, t_quote *quote)
 	return (nb);
 }
 
-char	*remove_redir_pipe(char *elem, t_quote *quote, int nb)
+char	*rm_redir_pipe(char *elem, t_quote *quote, int nb)
 {
 	int		i;
 	int		j;
 	char	*tmp;
-	
+
 	i = 0;
 	j = 0;
 	tmp = malloc(sizeof(char) * (ft_strlen(elem) - nb));
+	if (tmp == NULL)
+		malloc_error();
 	quote->t_in_squote = -1;
 	quote->t_in_dquote = -1;
 	while (elem[j])
@@ -76,7 +78,7 @@ char	*remove_redir_pipe(char *elem, t_quote *quote, int nb)
 int		syntax_error_redirect(char *elem, t_quote *quote)
 {
 	int i;
-	
+
 	i = 0;
 	quote->t_in_squote = -1;
 	quote->t_in_dquote = -1;
@@ -117,7 +119,7 @@ int		parsing_redirrect(t_user *start)
 		{
 			tmp = ft_strdup(start->user_cmd_tab[i]);
 			free(start->user_cmd_tab[i]);
-			start->user_cmd_tab[i] = remove_redir_pipe(tmp, &quote, nb_redirr_pipe);
+			start->user_cmd_tab[i] = rm_redir_pipe(tmp, &quote, nb_redirr_pipe);
 			free(tmp);
 		}
 		//ft_printf("Result: |%s|\n", start->user_cmd_tab[i]);
