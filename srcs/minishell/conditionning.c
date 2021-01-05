@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 10:49:01 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 11:37:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,143 +17,78 @@
 ** EX. get_len_till_char(0, ' ', "echo lol" -> return 4
 */
 
-int         get_len_till_char(int start, char c, char *str, t_quote *quote)
+int		get_len_till_char(int start, char c, char *str, t_quote *quote)
 {
-    quote->squote = -1;
+	quote->squote = -1;
 	quote->dquote = -1;
-    while (str[start])
-    {
-        if (str[start] == '\'' && (get_backslash(str, start) == 0))
+	while (str[start])
+	{
+		if (str[start] == '\'' && (get_backslash(str, start) == 0))
 			quote->squote *= -1;
 		if (str[start] == '"' && (get_backslash(str, start) == 0))
 			quote->dquote *= -1;
 		if (quote->dquote == -1 && quote->squote == -1)
-        {
-            if (str[start] == c)
-                return (start);
-        }
-        start++;
-    }
-    if (str[start] == '\0')
-        return (start);
-    return (0);
+		{
+			if (str[start] == c)
+				return (start);
+		}
+		start++;
+	}
+	if (str[start] == '\0')
+		return (start);
+	return (0);
 }
 
-int     next_redirrect(char *str, int i, t_quote *quote)
+char	*remove_redirrect(char *str, t_quote *quote)
 {
+	char	*ret;
+	int		i;
 	int		j;
 
+	i = 0;
 	j = 0;
-	quote->dquote = -1;
-	quote->squote = -1;
-    while (str[i] && str[i] == ' ')
-    {
-        i++;
-        j++;
-    }        
+	ret = malloc(sizeof(char) * ft_strlen(str));
+	if (!ret)
+		malloc_error();
 	while (str[i])
 	{
-		if (quote->dquote == -1 && quote->squote == -1 \
-			&& (str[i] == '\'' ||  str[i] == '"') && get_backslash(str, i) == 0)
+		if (str[i] == '\'' && get_backslash(str, i) == 0)
 		{
+			ret[j++] = str[i++];
+			while (str[i] && !(str[i] == '\'' && get_backslash(str, i) == 0))
+				ret[j++] = str[i++];
 			if (str[i] == '\'')
-				quote->squote *= -1;
-			else
-				quote->dquote *= -1;
-			i++;
-            j++;
+				ret[j++] = str[i++];
 		}
-		else if (quote->dquote == 1 && str[i] == '"' && get_backslash(str, i) == 0)
+		else if (str[i] == '"' && get_backslash(str, i) == 0)
 		{
-			quote->dquote *= -1;
-			i++;
-            j++;
-			if (str[i + 1] == ' ' || str[i + 1] == '\0')
-			{
-				return (j);
-			}
+			ret[j++] = str[i++];
+			while (str[i] && !(str[i] == '"' && get_backslash(str, i) == 0))
+				ret[j++] = str[i++];
+			if (str[i] == '"')
+				ret[j++] = str[i++];
 		}
-		else if (quote->squote == 1 && str[i] == '\'' && get_backslash(str, i) == 0)
+		else if (((str[i] == '>' || str[i] == '<') && get_backslash(str, i) \
+						== 0 && (str[i + 1] != '>' && str[i + 1] != '<')))
 		{
-			quote->squote *= -1;
-			i++;
-            j++;
-			if (str[i + 1] == ' ' || str[i + 1] == '\0')
-			{
-				return (j);
-			}
+			i += next_redirrect(str, i + 1, quote);
+			i += 1;
+			while (str[i] == ' ')
+				i++;
 		}
-		else if (quote->dquote == -1 && quote->squote == -1 \
-			&& str[i] == ' ')
+		else if (((str[i] == '>' || str[i] == '<') && get_backslash(str, i) \
+						== 0 && (str[i + 1] == '>' || str[i + 1] == '<')))
 		{
-			return (j);
+			i += next_redirrect(str, i + 2, quote);
+			i += 2;
+			while (str[i] == ' ')
+				i++;
 		}
-        else
-        {
-            i++;
-            j++;
-        }
+		else
+			ret[j++] = str[i++];
 	}
-	return (j);
-}
-
-char    *remove_redirrect(char *str, t_quote *quote)
-{
-    char    *ret;
-    int     i;
-    int     j;
-
-    i = 0;
-    j = 0;
-    ret = malloc(sizeof(char) * ft_strlen(str));
-    if (!ret)
-        malloc_error();
-    while (str[i])
-    {
-        //ft_printf("Char c %c\n", str[i]);
-        if (str[i] == '\'' && get_backslash(str, i) == 0)
-        {
-            ret[j++] = str[i++];
-            while (str[i] && !(str[i] == '\'' && get_backslash(str, i) == 0))
-                ret[j++] = str[i++];
-            if (str[i] == '\'')
-                ret[j++] = str[i++];
-        }
-        else if (str[i] == '"' && get_backslash(str, i) == 0)
-        {
-            ret[j++] = str[i++];
-            while (str[i] && !(str[i] == '"' && get_backslash(str, i) == 0))
-                ret[j++] = str[i++];
-            if (str[i] == '"')
-                ret[j++] = str[i++];
-        }
-        else if (((str[i] == '>' || str[i] == '<') && \
-            (str[i + 1] != '>' && str[i + 1] != '<')) && get_backslash(str, i) == 0)
-		{
-            //ft_printf("Next redirrect %d %d\n", i, next_redirrect(str, i + 1, quote));
-            i += next_redirrect(str, i + 1, quote);
-            i += 1; //'>' '<'
-            while (str[i] == ' ')
-                i++;
-            //ft_printf("CHAR C |%c| i: %d len: %d\n", str[i], i, ft_strlen(str));
-        }
-        else if (((str[i] == '>' || str[i] == '<') && \
-            (str[i + 1] == '>' || str[i + 1] == '<')) && get_backslash(str, i) == 0)
-        {
-            //ft_printf("REDIRRECTtttt\n");
-            i += next_redirrect(str, i + 2, quote);
-            i += 2; //"><" ">>"
-            while (str[i] == ' ')
-                i++;
-        }
-        else 
-        {
-            ret[j++] = str[i++];
-        }
-    }
-    ret[j] = '\0';
-    //ft_printf("Ret: %s\n", ret);
-    return (ret);
+	ret[j] = '\0';
+	return (ret);
 }
 
 /*

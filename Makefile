@@ -11,7 +11,7 @@ EXEC = $(addprefix srcs/exec/, exec.c dispatch.c check_builtin.c \
 			check_flags.c clean_args.c exec_main.c)
 REDIRRECT = $(addprefix srcs/redirrect/, redirrect.c double_tab.c \
 			init_redirrect.c error_redirrect.c path_redirrect.c \
-			path_redirrect2.c)
+			path_redirrect2.c next_redirrect.c)
 
 SRCS		= 	$(BUILTIN)					\
 				$(MINISHELL)				\
