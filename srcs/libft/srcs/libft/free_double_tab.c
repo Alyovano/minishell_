@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_double_tab.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
+/*   Updated: 2021/01/05 10:49:03 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-void    free_double_tab(char **tab)
+void		free_double_tab(char **tab)
 {
-    int i;
+	int i;
 
-    i = 0;
-    while (*tab && tab[i])
-    {
-        free(tab[i]);
-        i++;
-    }
-    free(tab);
+	i = 0;
+	while (*tab && tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }

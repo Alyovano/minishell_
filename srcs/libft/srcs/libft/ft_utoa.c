@@ -38,10 +38,7 @@ char				*ft_utoa(long long unsigned n)
 	nb = n;
 	i = len_digit(n) + 2;
 	if (!(str = (char*)malloc(sizeof(char) * (i + 3))))
-    {
-        perror("Malloc Failure\n");
-        exit(EXIT_FAILURE);
-    }
+		malloc_error();
 	str[i--] = '\0';
 	str[0] = '0';
 	str[1] = 'x';

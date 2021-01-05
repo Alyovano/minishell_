@@ -34,10 +34,7 @@ char		*ft_itoa_base(unsigned long long n, char *base)
 
 	len = size_int(n);
 	if (!(returned_value = (char*)ft_calloc((size_t)len + 1, sizeof(char))))
-    {
-        perror("Malloc Failure\n");
-        exit(EXIT_FAILURE);
-    }
+		malloc_error();
 	i = len - 1;
 	if (n == 0)
 		returned_value[i--] = '0';
