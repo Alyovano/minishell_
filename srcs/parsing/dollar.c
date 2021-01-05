@@ -19,7 +19,7 @@ char		*ft_strn_dup(const char *s1, int len)
 
 	longueur = len;
 	if (!(tab = malloc(sizeof(char) * longueur)))
-		return (NULL);
+		malloc_error();
 	ft_strlcpy(tab, s1, longueur);
 	return (tab);
 }
@@ -180,6 +180,31 @@ int			dollar_var_name(t_user *start, int i, int j, t_dollar *dol, t_env *env)
 }
 
 /*
+** remplace $? par la valeur de retour precedente
+** Retourne la taille de la valeur de $?
+*/
+
+int			previous_return_value(t_user *start, int i, int j, t_dollar *dol)
+{
+	int int_size;
+	char *value;
+	char *one;
+	char *two;
+
+	int_size = 0;
+	value = ft_itoa(errno);
+	j += 1;
+	dol->before_str = ft_substr(start->user_cmd_tab[i], 0, j - 1);
+	dol->after_str = ft_substr(start->user_cmd_tab[i], j + 1, ft_strlen(start->user_cmd_tab[i]));
+	one = ft_strjoin(dol->before_str, value);
+	two = ft_strjoin(one, dol->after_str);
+	free(start->user_cmd_tab[i]);
+	start->user_cmd_tab[i] = ft_strdup(two);
+	int_size = ft_strlen(one);
+	return (int_size);
+}
+
+/*
 ** j = check_simple_quote(start, quote, j, i);// jump sur la char apres la squote
 */
 
@@ -187,11 +212,13 @@ int				check_dollar_or_not_dollar(t_user *start,
 						t_quote *quote, int i, t_dollar *dol, t_env *env)
 {
 	int j;
+	int token;
 
 	j = 0;
 	quote->dollar_quote = 0;
 	while (start->user_cmd_tab[i][j])
 	{
+		token = 0;
 		j = check_simple_quote(start, quote, j, i);
 		if (start->user_cmd_tab[i][j] == '$' &&
 					(get_backslash(start->user_cmd_tab[i], j) == 0)
@@ -201,15 +228,14 @@ int				check_dollar_or_not_dollar(t_user *start,
 		{
 			if (start->user_cmd_tab[i][j + 1] && (start->user_cmd_tab[i][j + 1] == '?'))
 			{
-				// ici il faut implementer $?
-				j = printf("%d\n", errno);
+				token = 1;
+				j = previous_return_value(start, i, j, dol);
 			}
 			else
-			{
 				j = dollar_var_name(start, i, j, dol, env);
-			}
 		}
-		j++;
+		if (token != 1)
+			j++;
 	}
 	return (0);
 }
