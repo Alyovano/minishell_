@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_spaces.c                                     :+:      :+:    :+:   */
+/*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 10:45:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/04 13:57:31 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 10:49:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,23 @@ int			simple_quote_get_len_and_validity(t_user *start,
 {
 	quote->len = 0;
 	while (start->user_cmd_tab[i][j]
-	&& (quote->t_in_squote % 2 != 0 || quote->t_in_dquote % 2 != 0))
+	&& (quote->squote % 2 != 0 || quote->dquote % 2 != 0))
 	{
 		if (start->user_cmd_tab[i][j] == '"')
 		{
 			if (get_backslash(start->user_cmd_tab[i], j) == 0
-			&& quote->t_in_squote % 2 == 0)
-				quote->t_in_dquote++;
+			&& quote->squote % 2 == 0)
+				quote->dquote++;
 		}
 		else if (start->user_cmd_tab[i][j] == '\'')
 		{
-			if (quote->t_in_squote % 2 == 0 && quote->t_in_dquote % 2 == 0)
+			if (quote->squote % 2 == 0 && quote->dquote % 2 == 0)
 			{
 				if (get_backslash(start->user_cmd_tab[i], j) == 0)
-					quote->t_in_squote++;
+					quote->squote++;
 			}
-			else if (quote->t_in_squote % 1 == 0 && quote->t_in_dquote % 2 == 0)
-				quote->t_in_squote++;
+			else if (quote->squote % 1 == 0 && quote->dquote % 2 == 0)
+				quote->squote++;
 		}
 		j++;
 		quote->len++;
@@ -83,10 +83,10 @@ int			check_simple_quote(t_user *start, t_quote *quote, int j, int i)
 	&& (get_backslash(start->user_cmd_tab[i], j) == 0)
 	&& quote->dollar_quote % 2 == 0)
 	{
-		quote->t_in_squote = 1;
+		quote->squote = 1;
 		simple_quote_get_len_and_validity(start, quote, i, j + 1);
 		j += quote->len;
-		quote->t_in_squote = 0;
+		quote->squote = 0;
 	}
 	if (start->user_cmd_tab[i][j] == '"'
 	&& (get_backslash(start->user_cmd_tab[i], j) == 0))

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 19:46:49 by user42            #+#    #+#             */
-/*   Updated: 2021/01/04 13:57:28 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 10:49:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,21 @@ int		valid_flags(char *argu, int *i)
 	quote = malloc(sizeof(t_quote));
 	if (!quote)
 		exit(-1);
-	quote->t_in_squote = -1;
-	quote->t_in_dquote = -1;
+	quote->squote = -1;
+	quote->dquote = -1;
 	if (!((argu[*i] == '-' && argu[*i + 1] != ' ') || (argu[*i] == '\'' && argu[*i + 1] == '-') || \
 						(argu[*i] == '"' && argu[*i + 1] == '-')))
 		return (0);		//flag invalid, no '-' at begin of string
 	while (argu[*i])
 	{
 		if (argu[*i] == '\'' && (get_backslash(argu, *i) == 0))
-			quote->t_in_squote *= -1;
+			quote->squote *= -1;
 		if (argu[*i] == '"' && (get_backslash(argu, *i) == 0))
-			quote->t_in_dquote *= -1;
-		if ((quote->t_in_squote == 1 || quote->t_in_dquote == 1) \
+			quote->dquote *= -1;
+		if ((quote->squote == 1 || quote->dquote == 1) \
 									&& argu[*i] == ' ')
 			return (0);		//flag invalid, space in quote
-		if ((quote->t_in_squote == -1 && quote->t_in_dquote == -1) \
+		if ((quote->squote == -1 && quote->dquote == -1) \
 									&& (argu[*i] == ' ' || argu[*i] == '\0'))
 			return (1);		//flag valid, end of flag, out quote
 		(*i)++;

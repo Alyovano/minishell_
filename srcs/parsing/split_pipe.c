@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 13:20:17 by user42            #+#    #+#             */
-/*   Updated: 2021/01/04 13:57:35 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 10:49:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,27 @@ static int			quote_get_len_and_validity2(char *str, t_quote *quote, int i)
 	quote->len = 0;
 	quote->verif = 0;
 	while (str[i]
-	&& (quote->t_in_squote % 2 != 0 || quote->t_in_dquote % 2 != 0))
+	&& (quote->squote % 2 != 0 || quote->dquote % 2 != 0))
 	{
 		if (str[i] == '"')
 		{
-			if (get_backslash(str, i) == 0 && quote->t_in_squote % 2 == 0)
-				quote->t_in_dquote++;
+			if (get_backslash(str, i) == 0 && quote->squote % 2 == 0)
+				quote->dquote++;
 		}
 		else if (str[i] == '\'')
 		{
-			if (quote->t_in_squote % 2 == 0 && quote->t_in_dquote % 2 == 0)
+			if (quote->squote % 2 == 0 && quote->dquote % 2 == 0)
 			{
 				if (get_backslash(str, i) == 0)
-					quote->t_in_squote++;
+					quote->squote++;
 			}
-			else if (quote->t_in_squote % 1 == 0 && quote->t_in_dquote % 2 == 0)
-				quote->t_in_squote++;
+			else if (quote->squote % 1 == 0 && quote->dquote % 2 == 0)
+				quote->squote++;
 		}
 		i++;
 		quote->len++;
 	}
-	quote->verif = (quote->t_in_dquote % 2) + (quote->t_in_squote % 2);
+	quote->verif = (quote->dquote % 2) + (quote->squote % 2);
 	return (quote->len - 1);
 }
 
@@ -84,18 +84,18 @@ static t_list			*cut_input_to_tab(t_quote *quote, char *str)
 		if (str[i] == '\''
 		&& (get_backslash(str, i) == 0))
 		{
-			quote->t_in_squote = 1;
+			quote->squote = 1;
 			quote_get_len_and_validity2(str, quote, i + 1);
 			i += quote->len;
-			quote->t_in_squote = 0;
+			quote->squote = 0;
 		}
 		if (str[i] == '"'
 		&& (get_backslash(str, i) == 0))
 		{
-			quote->t_in_dquote = 1;
+			quote->dquote = 1;
 			quote_get_len_and_validity2(str, quote, i + 1);
 			i += quote->len;
-			quote->t_in_dquote = 2;
+			quote->dquote = 2;
 		}
 		if (maybe_split(str, i) == 0)
 		{

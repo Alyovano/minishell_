@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 10:23:37 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 10:49:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
 
 int         get_len_till_char(int start, char c, char *str, t_quote *quote)
 {
-    quote->t_in_squote = -1;
-	quote->t_in_dquote = -1;
+    quote->squote = -1;
+	quote->dquote = -1;
     while (str[start])
     {
         if (str[start] == '\'' && (get_backslash(str, start) == 0))
-			quote->t_in_squote *= -1;
+			quote->squote *= -1;
 		if (str[start] == '"' && (get_backslash(str, start) == 0))
-			quote->t_in_dquote *= -1;
-		if (quote->t_in_dquote == -1 && quote->t_in_squote == -1)
+			quote->dquote *= -1;
+		if (quote->dquote == -1 && quote->squote == -1)
         {
             if (str[start] == c)
                 return (start);
@@ -44,8 +44,8 @@ int     next_redirrect(char *str, int i, t_quote *quote)
 	int		j;
 
 	j = 0;
-	quote->t_in_dquote = -1;
-	quote->t_in_squote = -1;
+	quote->dquote = -1;
+	quote->squote = -1;
     while (str[i] && str[i] == ' ')
     {
         i++;
@@ -53,19 +53,19 @@ int     next_redirrect(char *str, int i, t_quote *quote)
     }        
 	while (str[i])
 	{
-		if (quote->t_in_dquote == -1 && quote->t_in_squote == -1 \
+		if (quote->dquote == -1 && quote->squote == -1 \
 			&& (str[i] == '\'' ||  str[i] == '"') && get_backslash(str, i) == 0)
 		{
 			if (str[i] == '\'')
-				quote->t_in_squote *= -1;
+				quote->squote *= -1;
 			else
-				quote->t_in_dquote *= -1;
+				quote->dquote *= -1;
 			i++;
             j++;
 		}
-		else if (quote->t_in_dquote == 1 && str[i] == '"' && get_backslash(str, i) == 0)
+		else if (quote->dquote == 1 && str[i] == '"' && get_backslash(str, i) == 0)
 		{
-			quote->t_in_dquote *= -1;
+			quote->dquote *= -1;
 			i++;
             j++;
 			if (str[i + 1] == ' ' || str[i + 1] == '\0')
@@ -73,9 +73,9 @@ int     next_redirrect(char *str, int i, t_quote *quote)
 				return (j);
 			}
 		}
-		else if (quote->t_in_squote == 1 && str[i] == '\'' && get_backslash(str, i) == 0)
+		else if (quote->squote == 1 && str[i] == '\'' && get_backslash(str, i) == 0)
 		{
-			quote->t_in_squote *= -1;
+			quote->squote *= -1;
 			i++;
             j++;
 			if (str[i + 1] == ' ' || str[i + 1] == '\0')
@@ -83,7 +83,7 @@ int     next_redirrect(char *str, int i, t_quote *quote)
 				return (j);
 			}
 		}
-		else if (quote->t_in_dquote == -1 && quote->t_in_squote == -1 \
+		else if (quote->dquote == -1 && quote->squote == -1 \
 			&& str[i] == ' ')
 		{
 			return (j);

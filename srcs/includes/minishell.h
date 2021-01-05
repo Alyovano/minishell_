@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/04 14:24:00 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 10:50:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ typedef struct      s_user
 
 typedef struct      s_quote
 {
-    int     t_in_dquote;
-    int     t_in_squote;
+    int     dquote;
+    int     squote;
     int     verif;
     int     len;
     int     dollar_quote;
@@ -177,7 +177,9 @@ int	    	redirrect_error(char *elem);
 int 	    read_redirrect(char *str, int i, t_list *lst, char *type);
 int 	    write_redirrect(char *str, int i, t_list *lst, char *type);
 char	    *get_file_path(char *str, int i, t_quote *quote);
-char    	*get_file(char *str, int i, t_quote *quote);
+char    	*get_file(char *str, int i, int j, t_quote *quote);
+int		    write_redirrect(char *str, int i, t_list *lst, char *type);
+int	    	read_redirrect(char *str, int i, t_list *lst, char *type);
 
 /*
 **          Environnement - Variable - $

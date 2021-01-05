@@ -21,27 +21,27 @@ int quote_get_len_and_validity(t_user *start, t_quote *quote, int i)
 {
     init_quote_len_validity(quote);
     while (start->user_input[i] 
-    && (quote->t_in_squote % 2 != 0 || quote->t_in_dquote % 2 != 0))
+    && (quote->squote % 2 != 0 || quote->dquote % 2 != 0))
     {
         if (start->user_input[i] == '"')
         {
-            if (get_backslash(start->user_input, i) == 0 && quote->t_in_squote % 2 == 0)
-                quote->t_in_dquote++;
+            if (get_backslash(start->user_input, i) == 0 && quote->squote % 2 == 0)
+                quote->dquote++;
         }
         else if (start->user_input[i] == '\'')
         {
-            if (quote->t_in_squote % 2 == 0 && quote->t_in_dquote % 2 == 0)
+            if (quote->squote % 2 == 0 && quote->dquote % 2 == 0)
             {
                 if (get_backslash(start->user_input, i) == 0)
-                    quote->t_in_squote++;
+                    quote->squote++;
             }
-            else if (quote->t_in_squote % 1 == 0 && quote->t_in_dquote % 2 == 0)
-                quote->t_in_squote++;
+            else if (quote->squote % 1 == 0 && quote->dquote % 2 == 0)
+                quote->squote++;
         }
         i++;
         quote->len++;
     }
-    quote->verif = (quote->t_in_dquote % 2) + (quote->t_in_squote % 2);
+    quote->verif = (quote->dquote % 2) + (quote->squote % 2);
     return (quote->len - 1);
 }
 

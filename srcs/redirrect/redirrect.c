@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:51:22 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 09:18:46 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 10:49:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ int		is_redirrect(t_list *lst, t_quote *quote)
 
 	i = 0;
 	tmp = ft_strdup(lst->content);
-	quote->t_in_dquote = -1;
-	quote->t_in_squote = -1;
+	quote->dquote = -1;
+	quote->squote = -1;
 	while (tmp[i])
 	{
 		if (tmp[i] == '\'' && get_backslash(tmp, i) == 0)
-			quote->t_in_squote *= -1;
+			quote->squote *= -1;
 		else if (tmp[i] == '"' && get_backslash(tmp, i) == 0)
-			quote->t_in_dquote *= -1;
+			quote->dquote *= -1;
 		else if ((tmp[i] == '>' || tmp[i] == '<') && get_backslash(tmp, i) == 0
-			&& quote->t_in_dquote == -1 && quote->t_in_squote == -1)
+			&& quote->dquote == -1 && quote->squote == -1)
 			return (1);
 		i++;
 	}
@@ -109,8 +109,8 @@ int		get_redirrect(t_list *lst, t_quote *quote)
 
 	i = 0;
 	tmp = ft_strdup(lst->content);
-	quote->t_in_dquote = -1;
-	quote->t_in_squote = -1;
+	quote->dquote = -1;
+	quote->squote = -1;
 	if (redirrect_error(tmp) == -1)
 		return (-1);
 	while (tmp[i])

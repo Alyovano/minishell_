@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 10:45:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/04 13:57:31 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 10:49:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,15 @@ void	get_clean_line(char *str, t_quote *quote, char **ret)
 
 	i = 0;
 	j = 0;
-	quote->t_in_squote = -1;
-	quote->t_in_dquote = -1;
+	quote->squote = -1;
+	quote->dquote = -1;
 	while (str[i])
 	{
 		if (str[i] == '\'' && (get_backslash(str, i) == 0))
-			quote->t_in_squote *= -1;
+			quote->squote *= -1;
 		if (str[i] == '"' && (get_backslash(str, i) == 0))
-			quote->t_in_dquote *= -1;
-		if (quote->t_in_dquote == 1 || quote->t_in_squote == 1)
+			quote->dquote *= -1;
+		if (quote->dquote == 1 || quote->squote == 1)
 			(*ret)[j++] = str[i];
 		else
 		{
@@ -72,15 +72,15 @@ int		get_good_len(char *str, t_quote *quote)
 
 	i = 0;
 	len = 0;
-	quote->t_in_squote = -1;
-	quote->t_in_dquote = -1;
+	quote->squote = -1;
+	quote->dquote = -1;
 	while (str[i])
 	{
 		if (str[i] == '\'' && (get_backslash(str, i) == 0))
-			quote->t_in_squote *= -1;
+			quote->squote *= -1;
 		if (str[i] == '"' && (get_backslash(str, i) == 0))
-			quote->t_in_dquote *= -1;
-		if (quote->t_in_dquote == 1 || quote->t_in_squote == 1)
+			quote->dquote *= -1;
+		if (quote->dquote == 1 || quote->squote == 1)
 			len++;
 		else
 		{

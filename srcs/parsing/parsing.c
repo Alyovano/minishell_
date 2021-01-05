@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_line.c                                       :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
-/*   Updated: 2020/10/22 13:20:04 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 10:49:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ int				input_to_tab_verif(t_user *start, t_quote *quote, int i)
 	if (start->user_input[i] == '\''
 	&& (get_backslash(start->user_input, i) == 0))
 	{
-		quote->t_in_squote = 1;
+		quote->squote = 1;
 		quote_get_len_and_validity(start, quote, i + 1);
 		i += quote->len;
-		quote->t_in_squote = 0;
+		quote->squote = 0;
 	}
 	if (start->user_input[i] == '"'
 	&& (get_backslash(start->user_input, i) == 0))
 	{
-		quote->t_in_dquote = 1;
+		quote->dquote = 1;
 		quote_get_len_and_validity(start, quote, i + 1);
 		i += quote->len;
-		quote->t_in_dquote = 0;
+		quote->dquote = 0;
 	}
 	return (i);
 }
@@ -40,8 +40,8 @@ int				input_to_tab(t_user *start, t_quote *quote)
 	i = 0;
 	while (start->user_input[i])
 	{
-		quote->t_in_squote = 0;
-		quote->t_in_dquote = 0;
+		quote->squote = 0;
+		quote->dquote = 0;
 		i = input_to_tab_verif(start, quote, i);
 		if (is_this_splitable(start, quote, i) == -1)
 			return (-1);

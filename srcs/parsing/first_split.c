@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_line.c                                       :+:      :+:    :+:   */
+/*   first_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
-/*   Updated: 2020/10/22 13:20:04 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 10:49:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int			maybe_split(t_user *start, int i)
 void			init_quotes_to_fix(t_quote *quote)
 {
 	quote->verif = 0;
-	quote->t_in_squote = 0;
-	quote->t_in_dquote = 0;
+	quote->squote = 0;
+	quote->dquote = 0;
 }
 
 int				cut_input_to_tab(t_user *start, t_quote *quote)
@@ -81,18 +81,18 @@ int				cut_input_to_tab(t_user *start, t_quote *quote)
 		if (start->user_input[i] == '\''
 		&& (get_backslash(start->user_input, i) == 0))
 		{
-			quote->t_in_squote = 1;
+			quote->squote = 1;
 			quote_get_len_and_validity(start, quote, i + 1);
 			i += quote->len;
-			quote->t_in_squote = 0;
+			quote->squote = 0;
 		}
 		if (start->user_input[i] == '"'
 		&& (get_backslash(start->user_input, i) == 0))
 		{
-			quote->t_in_dquote = 1;
+			quote->dquote = 1;
 			quote_get_len_and_validity(start, quote, i + 1);
 			i += quote->len;
-			quote->t_in_dquote = 0;
+			quote->dquote = 0;
 		}
 		if (maybe_split(start, i) == 0)
 		{
