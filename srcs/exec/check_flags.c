@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 19:46:49 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 10:49:00 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 14:50:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@
 int		valid_flags(char *argu, int *i)
 {
 	t_quote	*quote;
-	
+
 	quote = malloc(sizeof(t_quote));
 	if (!quote)
 		exit(-1);
 	quote->squote = -1;
 	quote->dquote = -1;
-	if (!((argu[*i] == '-' && argu[*i + 1] != ' ') || (argu[*i] == '\'' && argu[*i + 1] == '-') || \
-						(argu[*i] == '"' && argu[*i + 1] == '-')))
-		return (0);		//flag invalid, no '-' at begin of string
+	if (!((argu[*i] == '-' && argu[*i + 1] != ' ') || (argu[*i] == '\'' && \
+		argu[*i + 1] == '-') || (argu[*i] == '"' && argu[*i + 1] == '-')))
+		return (0);
 	while (argu[*i])
 	{
 		if (argu[*i] == '\'' && (get_backslash(argu, *i) == 0))
@@ -38,13 +38,13 @@ int		valid_flags(char *argu, int *i)
 			quote->dquote *= -1;
 		if ((quote->squote == 1 || quote->dquote == 1) \
 									&& argu[*i] == ' ')
-			return (0);		//flag invalid, space in quote
+			return (0);
 		if ((quote->squote == -1 && quote->dquote == -1) \
 									&& (argu[*i] == ' ' || argu[*i] == '\0'))
-			return (1);		//flag valid, end of flag, out quote
+			return (1);
 		(*i)++;
 	}
-	return (1); //flag exist
+	return (1);
 }
 
 /*
@@ -52,23 +52,22 @@ int		valid_flags(char *argu, int *i)
 ** check if valid flags in argu
 */
 
-void		parse_flags(t_list *lst)
+void	parse_flags(t_list *lst)
 {
 	int		i;
 	char	*tmp;
-	
+
 	while (lst)
 	{
 		i = 0;
 		if (valid_flags(lst->argu, &i) == 1)
 		{
-			//lflag exist
 			lst->flag = ft_str_n_dup(lst->argu, i);
 			clean_quote(&lst->flag);
 			tmp = ft_substr(lst->argu, i + 1, ft_strlen(lst->argu));
 			free(lst->argu);
 			lst->argu = tmp;
-		}	
+		}
 		lst = lst->next;
 	}
 }
