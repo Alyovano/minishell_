@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean_args.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/05 14:50:55 by user42            #+#    #+#             */
+/*   Updated: 2021/01/05 14:52:11 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 /*
@@ -9,7 +21,7 @@ void		clean_end_spaces(char **str)
 {
 	int		i;
 	char	*tmp;
-	
+
 	i = ft_strlen(*str) - 1;
 	while ((*str)[i] && (*str)[i] == ' ')
 		i--;
@@ -20,7 +32,8 @@ void		clean_end_spaces(char **str)
 
 /*
 ** Function to clean args
-** We can add clean another clean function to clean \' \" and remove quotes before printing
+** We can add another clean function to clean \' \"
+** and remove quotes before printing
 */
 
 void		clean_args(t_list *lst)
