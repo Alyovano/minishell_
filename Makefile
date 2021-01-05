@@ -8,7 +8,8 @@ PARSING = $(addprefix srcs/parsing/, backslash.c parsing.c \
 			split_pipe.c debug_print_lst.c pipe.c parsing_redirrect.c)
 QUOTE = $(addprefix srcs/quote/, algo_quote_actuel.c multilines_quote.c)
 EXEC = $(addprefix srcs/exec/, exec.c dispatch.c check_builtin.c \
-			check_flags.c clean_args.c exec_main.c)
+			check_flags.c clean_args.c exec_main.c exec_type.c \
+			in_out_setup.c)
 REDIRRECT = $(addprefix srcs/redirrect/, redirrect.c double_tab.c \
 			init_redirrect.c error_redirrect.c path_redirrect.c \
 			path_redirrect2.c next_redirrect.c remove_redirrect.c)
