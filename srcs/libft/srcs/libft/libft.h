@@ -65,6 +65,8 @@ int					ft_putchar_fd(char c, int fd);
 int					ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
+void				ft_putstr(char *str);
+void				ft_putstr_color(char const *s, char *str);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strnstr(const char *haystack, const char *needle,
 					size_t len);
