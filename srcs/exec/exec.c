@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 16:01:24 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 16:11:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char		**get_path(char **env, char *builtin)
 
 	i = 0;
 	path = NULL;
-	while (env[i] && path == NULL) //find path env var
+	while (env[i] && path == NULL)
 	{
 		if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T' \
 									&& env[i][3] == 'H' && env[i][4] == '=')
@@ -36,8 +36,8 @@ char		**get_path(char **env, char *builtin)
 	{
 		free(paths);
 		return (NULL);
-	}		
-	i = 0;	
+	}
+	i = 0;
 	while (paths[i])
 	{
 		if (paths[i][ft_strlen(paths[i]) - 1] != '/')
@@ -72,7 +72,7 @@ char		*check_path(char **paths, char *path)
 		return (NULL);
 	}
 	if (paths == NULL)
-		return (NULL);	
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
@@ -87,12 +87,12 @@ char		*check_path(char **paths, char *path)
 ** Ajout du flag dans execve pour tester le comportement
 */
 
-int         exec_execve(t_list *lst, t_env *env, char *path)
+int		exec_execve(t_list *lst, t_env *env, char *path)
 {
-	char 	*exec_arg[4];
+	char	*exec_arg[4];
 
 	exec_arg[0] = lst->builtin;
-	if (lst->argu == NULL || ft_strncmp(lst->argu, "", 1) == 0) //temp fix
+	if (lst->argu == NULL || ft_strncmp(lst->argu, "", 1) == 0)
 	{
 		if (lst->flag)
 		{
@@ -108,13 +108,13 @@ int         exec_execve(t_list *lst, t_env *env, char *path)
 		exec_arg[2] = lst->argu;
 		exec_arg[3] = NULL;
 	}
-	else 
+	else
 	{
 		exec_arg[1] = lst->argu;
 		exec_arg[2] = NULL;
 	}
 	if (execve(path, exec_arg, env->tab) == -1)
-		return (-2); //error with execve
+		return (-2);
 	return (0);
 }
 
@@ -143,14 +143,15 @@ int		last_check(t_list *lst)
 /*
 ** Fonction exectution qui clean les builtins et faire le parsing des flags
 ** puis execute les commandes
+** Debug with: debug(lst);
 */
 
-int		 execution(t_user *start, t_env *env)
+int		execution(t_user *start, t_env *env)
 {
 	void	*ptr;
 	t_list	*lst;
 
-    ptr = start->line;
+	ptr = start->line;
 	while (start->line)
 	{
 		lst = start->line->content;
@@ -159,18 +160,17 @@ int		 execution(t_user *start, t_env *env)
 		start->line = start->line->next;
 	}
 	start->line = ptr;
-    while (start->line)
-    {
+	while (start->line)
+	{
 		lst = start->line->content;
 		clean_builtin(lst);
 		parse_flags(lst);
 		clean_args(lst);
-		//debug(lst);
 		if (ft_strcmp("exit", lst->builtin) == 0)
 			ft_exit(env, lst, start);
 		else if (exec_main(lst, env) == -1)
 			return (-1);
-		start->line = start->line->next;		
+		start->line = start->line->next;
 	}
-    return (0);
+	return (0);
 }
