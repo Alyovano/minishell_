@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:51:22 by user42            #+#    #+#             */
-/*   Updated: 2021/01/04 13:59:59 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 09:18:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void	next_quote(char *str, int *i)
 	if (str[*i] == '\'' && get_backslash(str, *i) == 0)
 	{
 		(*i)++;
-		while (str[*i] && str[*i] != '\'' && get_backslash(str, *i) == 0)
+		while (str[*i] && !(str[*i] == '\'' && get_backslash(str, *i) == 0))
 			(*i)++;
 	}
 	else if (str[*i] == '"' && get_backslash(str, *i) == 0)
 	{
 		(*i)++;
-		while (str[*i] && str[*i] != '"' && get_backslash(str, *i) == 0)
+		while (str[*i] && !(str[*i] == '"' && get_backslash(str, *i) == 0))
 			(*i)++;
 	}
 }
