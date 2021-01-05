@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   double_tab.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/05 10:56:04 by user42            #+#    #+#             */
+/*   Updated: 2021/01/05 10:56:39 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 char	**add_str_to_tab(char **tab, char *str)
 {
-	char **ret;
-	int i;
+	char	**ret;
+	int		i;
 
 	i = 0;
 	ret = malloc(sizeof(char *) * (double_tab_size(tab) + 2));
@@ -36,5 +48,5 @@ void	print_in_out(t_list *lst)
 	{
 		ft_printf("File path OUT: |%s| id: %d\n", (lst->in)[i], i);
 		ft_printf("Type OUT: |%s| id: %d\n\n", (lst->in_types)[i], i);
-	}	
+	}
 }
