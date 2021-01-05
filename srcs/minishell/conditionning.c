@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 11:37:32 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 13:11:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,58 +37,6 @@ int		get_len_till_char(int start, char c, char *str, t_quote *quote)
 	if (str[start] == '\0')
 		return (start);
 	return (0);
-}
-
-char	*remove_redirrect(char *str, t_quote *quote)
-{
-	char	*ret;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	ret = malloc(sizeof(char) * ft_strlen(str));
-	if (!ret)
-		malloc_error();
-	while (str[i])
-	{
-		if (str[i] == '\'' && get_backslash(str, i) == 0)
-		{
-			ret[j++] = str[i++];
-			while (str[i] && !(str[i] == '\'' && get_backslash(str, i) == 0))
-				ret[j++] = str[i++];
-			if (str[i] == '\'')
-				ret[j++] = str[i++];
-		}
-		else if (str[i] == '"' && get_backslash(str, i) == 0)
-		{
-			ret[j++] = str[i++];
-			while (str[i] && !(str[i] == '"' && get_backslash(str, i) == 0))
-				ret[j++] = str[i++];
-			if (str[i] == '"')
-				ret[j++] = str[i++];
-		}
-		else if (((str[i] == '>' || str[i] == '<') && get_backslash(str, i) \
-						== 0 && (str[i + 1] != '>' && str[i + 1] != '<')))
-		{
-			i += next_redirrect(str, i + 1, quote);
-			i += 1;
-			while (str[i] == ' ')
-				i++;
-		}
-		else if (((str[i] == '>' || str[i] == '<') && get_backslash(str, i) \
-						== 0 && (str[i + 1] == '>' || str[i + 1] == '<')))
-		{
-			i += next_redirrect(str, i + 2, quote);
-			i += 2;
-			while (str[i] == ' ')
-				i++;
-		}
-		else
-			ret[j++] = str[i++];
-	}
-	ret[j] = '\0';
-	return (ret);
 }
 
 /*
@@ -189,7 +137,7 @@ int         conditionning(t_user *start)
                 if (get_redirrect(lst, &quote) == -1)
                     return (-1);
                 //print_in_out(lst);
-                tmp = remove_redirrect(lst->content, &quote);
+                tmp = remove_redirrect(lst->content);
                 free(lst->content);
                 lst->content = ft_strdup(tmp);
                 free(tmp);
