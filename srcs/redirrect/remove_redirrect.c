@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 13:10:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 13:11:49 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/05 13:38:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,19 @@ char	*remove_redirrect(char *str)
 	}
 	ret[j] = '\0';
 	return (ret);
+}
+
+int		remove_redirrect_alloc(t_list *lst)
+{
+	t_quote	quote;
+	char	*tmp;
+
+	init_redirrect(lst);
+	if (get_redirrect(lst, &quote) == -1)
+		return (-1);
+	tmp = remove_redirrect(lst->content);
+	free(lst->content);
+	lst->content = ft_strdup(tmp);
+	free(tmp);
+	return (0);
 }
