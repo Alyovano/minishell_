@@ -65,6 +65,8 @@ int					ft_putchar_fd(char c, int fd);
 int					ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
+void				ft_putstr(char *str);
+void				ft_putstr_color(char const *s, char *str);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strnstr(const char *haystack, const char *needle,
 					size_t len);
@@ -76,7 +78,7 @@ void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstdelone(t_list *lst, void (*del)(void*));
 void				ft_lstclear(t_list **lst, void (*del)(void*));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
-void    			free_double_tab(char **tab);
+void				free_double_tab(char **tab);
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *)
 					, void (*del)(void *));
 void				ft_putnbr_unsigned_fd(unsigned int n, int fd);
@@ -91,7 +93,7 @@ char				*ft_itoa_unsigned(unsigned int n);
 char				*ft_utoa(long long unsigned n);
 char				*ft_utoa_p_zero_printf(unsigned long n, int precision);
 int					ft_strcmp(char *s1, char *s2);
-int     			double_tab_size(char **src);
-char    			**copy_double_tab(char **src);
-void     			malloc_error(void);
+int					double_tab_size(char **src);
+char				**copy_double_tab(char **src);
+void				malloc_error(void);
 #endif

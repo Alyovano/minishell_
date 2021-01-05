@@ -12,6 +12,25 @@
 
 #include "libft.h"
 
+void		ft_putstr(char *str)
+{
+	if (str)
+	{
+		write(1, str, ft_strlen(str));
+	}
+}
+
+void		ft_putstr_color(char const *s, char *str)
+{
+	ft_putstr(str);
+	if (s)
+	{
+		while (*s)
+			ft_putchar_fd(*s++, 1);
+	}
+	ft_putstr("\e[0m");
+}
+
 int			ft_putstr_fd(char *s, int fd)
 {
 	unsigned int	size;

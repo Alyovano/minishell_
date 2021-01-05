@@ -57,10 +57,7 @@ char				*ft_itoa_base_two(unsigned int n)
 	nb = n;
 	i = len_digit(n);
 	if (!(str = (char*)malloc(sizeof(char) * (i + 1))))
-    {
-        perror("Malloc Failure\n");
-        exit(EXIT_FAILURE);
-    }
+		malloc_error();
 	str[i--] = '\0';
 	while (nb > 0)
 	{

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signaux.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
+/*   Updated: 2021/01/05 11:37:32 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void		sig_handler(int sig)
 {
-    (void)sig;
+	(void)sig;
 	char buf[PATH_CWD_MAX + 1];
 
 	wait(NULL);
@@ -25,10 +37,11 @@ int			verif_ret(int ret, char *user_input)
 {
 	(void)user_input;
 	if (ret == 0)
-    {
-        write(1, "exit\n", 5);
+	{
+		write(1, "exit\n", 5);
 		exit(EXIT_SUCCESS);
 		//ICI MEGA FREE SORTIE CTRL-D
-    }
+		// NE PAS DELETE CE COM TANT QUE C EST PAS FAIT
+	}
 	return (0);
 }
