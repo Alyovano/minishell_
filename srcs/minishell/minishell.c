@@ -34,10 +34,10 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
     char    *user_input;
 
     (void)used;
+	g_errno = 0;
     catch_signal();
     if (argv != NULL)
     {
-        //TESTEUR bash -c
         used = 0;
         user_input = ft_strdup(argv);
         if (ft_strcmp(user_input, "") != 0)
@@ -52,6 +52,7 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
                 }
             }
         }
+		// Un free pour le testeur aussi ? 
     }
     else
     {
@@ -61,7 +62,6 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
             prompt();
             ret = get_next_line(0, &user_input);
             verif_ret(ret, user_input);
-            //printf("ret = %d\n", ret);
             if (ft_strcmp(user_input, "") != 0)
             {
                 used = 1;
@@ -73,7 +73,6 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
                     }
                 }
             }
-            //g_reg = 1;
             //end_loop_free(start, user_input, used);
         }
     }

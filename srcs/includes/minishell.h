@@ -34,6 +34,7 @@
 #include <string.h>
 
 int     g_reg;
+int		g_errno;
 
 /*
 **               Des structures

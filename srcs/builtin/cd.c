@@ -60,6 +60,7 @@ int     go_home(char *tmp, char *var_name, t_env *env)
 
 int     dirr_error(char *path)
 {
+	g_errno = 1;
     ft_printf("bash: cd: %s: %s\n", path, strerror(errno));
     return (0);
 }
@@ -78,6 +79,7 @@ int     ft_cd(t_env *env, char *path)
     {
         go_home(tmp, "HOME", env);
         free(tmp);
+		g_errno = 0;
         return (0);
 
     }
@@ -85,6 +87,7 @@ int     ft_cd(t_env *env, char *path)
     {
         change_old_pwd(tmp, env);
         change_pwd(env);
+		g_errno = 0;
     }
     else
         dirr_error(path);

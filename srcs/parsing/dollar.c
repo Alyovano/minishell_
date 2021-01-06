@@ -192,7 +192,7 @@ int			previous_return_value(t_user *start, int i, int j, t_dollar *dol)
 	char *two;
 
 	int_size = 0;
-	value = ft_itoa(errno);
+	value = ft_itoa(g_errno);
 	j += 1;
 	dol->before_str = ft_substr(start->user_cmd_tab[i], 0, j - 1);
 	dol->after_str = ft_substr(start->user_cmd_tab[i], j + 1, ft_strlen(start->user_cmd_tab[i]));
