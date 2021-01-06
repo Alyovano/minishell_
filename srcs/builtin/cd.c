@@ -79,7 +79,7 @@ int     ft_cd(t_env *env, char *path)
     {
         go_home(tmp, "HOME", env);
         free(tmp);
-		g_errno = 0;
+		//g_errno = 0;
         return (0);
 
     }
@@ -87,7 +87,7 @@ int     ft_cd(t_env *env, char *path)
     {
         change_old_pwd(tmp, env);
         change_pwd(env);
-		g_errno = 0;
+		//g_errno = 0;
     }
     else
         dirr_error(path);
