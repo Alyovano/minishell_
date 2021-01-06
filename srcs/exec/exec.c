@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 16:11:17 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/06 11:37:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,28 +118,6 @@ int		exec_execve(t_list *lst, t_env *env, char *path)
 	return (0);
 }
 
-int		last_check(t_list *lst)
-{
-	int		i;
-
-	while (lst)
-	{
-		i = 0;
-		if (find_char(lst->builtin, '/') == 1)
-		{
-			while (lst->builtin[i] == ' ')
-				i++;
-			if (lst->builtin[i] != '/')
-			{
-				error_output_token(-10, NULL, '\0');
-				return (-1);
-			}
-		}
-		lst = lst->next;
-	}
-	return (0);
-}
-
 /*
 ** Fonction exectution qui clean les builtins et faire le parsing des flags
 ** puis execute les commandes
@@ -148,18 +126,8 @@ int		last_check(t_list *lst)
 
 int		execution(t_user *start, t_env *env)
 {
-	void	*ptr;
 	t_list	*lst;
 
-	ptr = start->line;
-	while (start->line)
-	{
-		lst = start->line->content;
-		if (last_check(lst) == -1)
-			return (-1);
-		start->line = start->line->next;
-	}
-	start->line = ptr;
 	while (start->line)
 	{
 		lst = start->line->content;
