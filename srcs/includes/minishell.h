@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 15:25:01 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/07 14:46:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void				init_quotes_to_fix(t_quote *quote);
 int					find_char(char *str, char c);
 void				clean_end_spaces(char **str);
 char				**add_str_to_tab(char **tab, char *str);
+void				init_quotes_to_fix(t_quote *quote);
 
 /*
 **          Split
@@ -148,6 +149,10 @@ char				*ft_str_n_dup(const char *s1, int size);
 void				clean_spaces(t_user *start, t_quote *quote);
 void				clean_line(t_user *start, t_quote *quote);
 int					first_split_dirty_line(t_user *start, t_quote *quote);
+int					init_double_tab_cmd(t_user *start);
+int					input_to_tab_verif(t_user *start, t_quote *quote, int i);
+void				is_split_tokenize(t_user *start, int i);
+char				split_tokenize(t_user *start, t_quote *quote);
 
 /*
 **          Pipe '|'
