@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2021/01/06 11:37:21 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/07 13:21:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int		exec_execve(t_list *lst, t_env *env, char *path)
 	char	*exec_arg[4];
 
 	exec_arg[0] = lst->builtin;
-	if (lst->argu == NULL || ft_strncmp(lst->argu, "", 1) == 0)
+	if (lst->argu == NULL || ft_strcmp(lst->argu, "") == 0)
 	{
 		if (lst->flag)
 		{

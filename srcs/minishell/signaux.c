@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 11:37:32 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/07 13:49:57 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 void		sig_handler(int sig)
 {
 	(void)sig;
-	char buf[PATH_CWD_MAX + 1];
+	//char buf[PATH_CWD_MAX + 1];
 
 	wait(NULL);
 	ft_putchar_fd('\n', 1);
 	if (g_reg != 1)
-		print_promt(getcwd(buf, sizeof(buf)));
+		ft_printf("Minishell> ");	//print_promt(getcwd(buf, sizeof(buf)));
 	g_reg = -1;
 }
 

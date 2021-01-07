@@ -58,7 +58,9 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
         while (1)
         {
             used = 0;
-            prompt();
+            //prompt();
+			g_reg = 0;
+			ft_printf("Minishell> ");
             ret = get_next_line(0, &user_input);
             verif_ret(ret, user_input);
             //printf("ret = %d\n", ret);
