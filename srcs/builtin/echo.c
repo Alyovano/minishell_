@@ -13,14 +13,10 @@ int			check_echo_flag(char *str)
 	if (str[0] == '-')
 	{
 		while (str[i] == 'n')
-		{
 			i++;
-		}
 	}
 	if (i == ft_strlen(str))
-	{
 		return (FLAG_OK);
-	}
 	return (FLAG_FAILURE);
 }
 
@@ -33,6 +29,7 @@ int			ft_echo(t_env *env, t_list *lst)
 	if (flag == FLAG_OK)
 	{
 		ft_printf("%s", lst->argu);
+		//g_errno = 0;
 		return (0);
 	}
 	else if (flag == FLAG_FAILURE)
@@ -40,12 +37,15 @@ int			ft_echo(t_env *env, t_list *lst)
 		if (lst->flag)
 			ft_printf("%s ", lst->flag);
 		ft_printf("%s\n", lst->argu);
+		//g_errno = 0;
 		return (0);
 	}
 	else
 	{
 		ft_printf("%s\n", lst->argu);
+		//g_errno = 0;
 		return (0);
 	}
+	g_errno = 1;
 	return (1);
 }
