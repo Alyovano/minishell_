@@ -49,8 +49,9 @@ void		error_output_token(int error, char *str, char c)
 	}
 	else if (error == -6)
 	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
-		ft_putstr_fd(" : commande introuvable\n", STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 		g_errno = 127;
 	}
 	else if (error == -7)
