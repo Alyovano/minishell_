@@ -61,7 +61,7 @@ int		dispatch_cmd(t_list *lst, t_env *env)
 	else if (ft_strcmp("cd", lst->tab_cmd[0]) == 0)
 		ft_cd(env, lst);
 	else if (ft_strcmp("env", lst->tab_cmd[0]) == 0)
-		ft_env(env, lst->argu);
+		ft_env(env, lst);
 	else if (ft_strcmp("exit", lst->tab_cmd[0]) != 0)
 	{
 		path = check_path(get_path(env->tab, lst->tab_cmd[0]), NULL);

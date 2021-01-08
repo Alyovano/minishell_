@@ -55,10 +55,18 @@
 //     return (0);
 // }
 
-int         ft_env(t_env *env, char *arg)
+int         ft_env(t_env *env, t_list *lst)
 {
-    (void)env;
-    (void)arg;
+	(void)lst;
+	int i;
+
+	i = 0;
+	while (env->tab[i])
+	{
+		ft_printf("%s\n", env->tab[i]);
+		i++;
+	}
+	return (0);
     // char **arg_tab;
     // int i;
 
@@ -80,5 +88,4 @@ int         ft_env(t_env *env, char *arg)
     //     i++;
     // }
     // free_double_tab(arg_tab);
-  	return (0);
 }
