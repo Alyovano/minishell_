@@ -53,7 +53,7 @@ int		dispatch_cmd(t_list *lst, t_env *env)
 	if (ft_strcmp("export", lst->tab_cmd[0]) == 0)
 		ft_export(env, lst->argu);
 	else if (ft_strcmp("unset", lst->tab_cmd[0]) == 0)
-		ft_unset(env, lst->argu);
+		ft_unset(env, lst);
 	else if (ft_strcmp("pwd", lst->tab_cmd[0]) == 0)
 		ft_pwd();
 	else if (ft_strcmp("echo", lst->tab_cmd[0]) == 0)

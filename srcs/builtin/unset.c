@@ -20,7 +20,7 @@
 ** return 1 -> Cette var n'est pas dans le tableau
 */
 
-int     catch_env_varr(char *arg, char *env_line)
+int				catch_env_varr(char *arg, char *env_line)
 {
     unsigned int i;
 
@@ -38,7 +38,7 @@ int     catch_env_varr(char *arg, char *env_line)
     return (1);
 }
 
-char    **copy_unset_tab(char **src)
+char			**copy_unset_tab(char **src)
 {
     char **new_tab;
     int size;
@@ -65,16 +65,16 @@ char    **copy_unset_tab(char **src)
     return (new_tab);
 }
 
-int		is_valid_var_name(char *str)
+int				is_valid_var_name(char *str)
 {
 	int i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (ft_isalpha(str[i]) == 0)
+		if (ft_isalpha(str[i]) == 0) // Pourri - a changer
 		{
-			if (str[i] != '_')
+			if (str[i] != '_')		// Pourri - a changer
 				return (-1);
 		}
 		i++;
@@ -82,7 +82,7 @@ int		is_valid_var_name(char *str)
 	return (0);
 }
 
-char	**check_var_name(char **arg)
+char			**check_var_name(char **arg)
 {
 	int i;
 	int j;
@@ -97,7 +97,7 @@ char	**check_var_name(char **arg)
 	{
 		if (is_valid_var_name(arg[i]) == -1)
 		{
-			ft_printf("bash: unset: « %s » : identifiant non valable\n", arg[i]);
+			ft_printf("minishell: unset: « %s » : identifiant non valable\n", arg[i]);
 			i++;
 		}
 		else
@@ -120,29 +120,26 @@ char	**check_var_name(char **arg)
 ** par user -> check_var_name(tmp); bloque son accessibilite
 */
 
-int     ft_unset(t_env *env, char *arg)
+int				ft_unset(t_env *env, t_list *lst)
 {
-	char	**tmp;
 	char	**new_tab;
 	int		i;
 	int 	j;
 
-	tmp = ft_split(arg, ' ');
 	i = 0;
 	j = 0;
-	tmp = check_var_name(tmp);
-	while (tmp[i])
+	while (lst->tab_cmd[i])
 	{
-		tmp[i] = delete_quote(tmp[i]);
+		lst->tab_cmd[i] = delete_quote(lst->tab_cmd[i]);
 		i++;
 	}
 	i = 0;
-	while (tmp[i])
+	while (lst->tab_cmd[i])
 	{
 		j = 0;
 		while (env->tab[j])
 		{
-			if (catch_env_varr(tmp[i], env->tab[j]) == 0)
+			if (catch_env_varr(lst->tab_cmd[i], env->tab[j]) == 0)
 			{
 				free(env->tab[j]);
 				env->tab[j] = ft_strdup("123456789");
@@ -155,6 +152,5 @@ int     ft_unset(t_env *env, char *arg)
 	free_double_tab(env->tab);
 	env->tab = copy_double_tab(new_tab);
 	free_double_tab(new_tab);
-	free_double_tab(tmp);
 	return (0);
 }
