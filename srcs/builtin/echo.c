@@ -36,28 +36,39 @@ int			ft_echo(t_env *env, t_list *lst)
 {
 	(void)env;
 	int flag;
+	int i;
 
-	flag = check_echo_flag(lst->flag);
+	flag = check_echo_flag(lst->tab_cmd[1]);
+	i = 0;
 	if (flag == FLAG_OK)
 	{
-		ft_printf("%s", lst->argu);
-		//g_errno = 0;
+		i = 2;
+		while (lst->tab_cmd[i])
+		{
+			if (lst->tab_cmd[i + 1] == NULL)
+				ft_printf("%s", lst->tab_cmd[i]);
+			else
+				ft_printf("%s ", lst->tab_cmd[i]);
+			i++;
+		}
+		//status = 0
 		return (0);
 	}
 	else if (flag == FLAG_FAILURE)
 	{
-		if (lst->flag)
-			ft_printf("%s ", lst->flag);
-		ft_printf("%s\n", lst->argu);
-		//g_errno = 0;
+		i = 1;
+		while (lst->tab_cmd[i])
+		{
+			if (lst->tab_cmd[i + 1] == NULL)
+				ft_printf("%s", lst->tab_cmd[i]);
+			else
+				ft_printf("%s ", lst->tab_cmd[i]);
+			i++;
+		}
+		write(1, "\n", 1);
+		// status = 0;
 		return (0);
 	}
-	else
-	{
-		ft_printf("%s\n", lst->argu);
-		//g_errno = 0;
-		return (0);
-	}
-	g_errno = 1;
+	//status = 1;
 	return (1);
 }
