@@ -194,11 +194,13 @@
 //     return (new_tab);
 // }
 
-int			export_new_var(env, lst);
+int			export_new_var(t_env *env, t_list *lst)
 {
 	(void)env;
 	(void)lst;
 
+	for (int test = 0; lst->tab_cmd[test] ; test++)
+        printf("Mon nouveau tableau :%s\n", lst->tab_cmd[test]);
 	return (0);
 }
 

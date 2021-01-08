@@ -34,7 +34,6 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
     char    *user_input;
 
     (void)used;
-	g_errno = 0;
     catch_signal();
     if (argv != NULL)
     {
@@ -47,7 +46,7 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
             {
                 if (conditionning(start) != -1)
                 {
-                    ft_export(env, "MINISHELL_TEST_DONT_CHECK_ERROR_MESSAGE=yes");
+                    //ft_export(env, "MINISHELL_TEST_DONT_CHECK_ERROR_MESSAGE=yes");
                     execution(start, env);
                 }
             }
