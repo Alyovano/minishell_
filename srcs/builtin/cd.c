@@ -82,27 +82,25 @@ int     dirr_error(char *path)
 // de CD, si elles ont ete unset par user
 // cas d'erreur probable sinon
 
-int     ft_cd(t_env *env, char *path)
+int     ft_cd(t_env *env, t_list *lst)
 {
     char *tmp;
 
     tmp = getcwd(NULL, 0);
-    if (!path[0] || !path)
+    if (!lst->tab_cmd[1][0] || !lst->tab_cmd[1])
     {
         go_home(tmp, "HOME", env);
         free(tmp);
-		//g_errno = 0;
         return (0);
 
     }
-    if (chdir(path) == 0)
+    if (chdir(lst->tab_cmd[1]) == 0)
     {
         change_old_pwd(tmp, env);
         change_pwd(env);
-		//g_errno = 0;
     }
     else
-        dirr_error(path);
+        dirr_error(lst->tab_cmd[1]);
     free(tmp);
     return (0);
 }
