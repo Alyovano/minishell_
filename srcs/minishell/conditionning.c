@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/07 15:41:21 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/08 12:52:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ int		print_tabbbbbssssss(t_user *start, t_quote *quote)
 ** for other elements, everything after builtin goes to argu
 */
 
+//TO DOl
+// clean code
+// remove lst->builtin and replace with lst->tab_cmd[0]
+
 void	last_split(t_list *lst, int id, int size)
 {
 	int			i;
@@ -93,7 +97,7 @@ void	last_split(t_list *lst, int id, int size)
 	i = 0;
 	start.user_input = ft_strdup(lst->content);
 	start.split_nb = 1;
-	while (start.user_input[i])
+	while (start.user_input[i]) //get nb elements
 	{
 		quote.squote = 0;
 		quote.dquote = 0;
@@ -102,13 +106,15 @@ void	last_split(t_list *lst, int id, int size)
 		i++;
 	}
 	//ft_printf("nb to split: %d\n", start.split_nb);
-	split_tokenize(&start, &quote);
-	i = 0;/*
-	while (start.user_cmd_tab[i])
+	split_tokenize(&start, &quote); //split
+	lst->tab_cmd = tokenize_realloc(start.user_cmd_tab);
+	i = 0;
+	while (lst->tab_cmd[i])
 	{
-		ft_printf("user-cmd_tab: |%s|\n", start.user_cmd_tab[i]); //need to clear empty '\0' and space before elem
- 		i++;
-	}*/
+		//ft_printf("user-cmd_tab: |%s|\n", lst->tab_cmd[i]); //need to clear empty '\0' and space before elem
+		i++;
+	}
+	//ft_printf("END\n");
 	//print_tabbbbbssssss(&start, &quote); 
 	tmp = ft_strdup(lst->content);
 	j = 0;

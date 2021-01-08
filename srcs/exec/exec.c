@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2021/01/07 13:21:51 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/08 11:46:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,31 +89,7 @@ char		*check_path(char **paths, char *path)
 
 int		exec_execve(t_list *lst, t_env *env, char *path)
 {
-	char	*exec_arg[4];
-
-	exec_arg[0] = lst->builtin;
-	if (lst->argu == NULL || ft_strcmp(lst->argu, "") == 0)
-	{
-		if (lst->flag)
-		{
-			exec_arg[1] = lst->flag;
-			exec_arg[2] = NULL;
-		}
-		else
-			exec_arg[1] = NULL;
-	}
-	else if (lst->flag)
-	{
-		exec_arg[1] = lst->flag;
-		exec_arg[2] = lst->argu;
-		exec_arg[3] = NULL;
-	}
-	else
-	{
-		exec_arg[1] = lst->argu;
-		exec_arg[2] = NULL;
-	}
-	if (execve(path, exec_arg, env->tab) == -1)
+	if (execve(path, lst->tab_cmd, env->tab) == -1)
 		return (-2);
 	return (0);
 }
