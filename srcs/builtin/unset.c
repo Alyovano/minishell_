@@ -149,8 +149,8 @@ int				ft_unset(t_env *env, t_list *lst)
 		i++;
 	}
 	new_tab = copy_unset_tab(env->tab);
-	free_double_tab(env->tab);
+	//free_double_tab(env->tab);
 	env->tab = copy_double_tab(new_tab);
-	free_double_tab(new_tab);
+	//free_double_tab(new_tab);
 	return (0);
 }

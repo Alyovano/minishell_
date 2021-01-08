@@ -18,9 +18,7 @@ int         export_without_args(t_env *env)
     
     i = 0;
     while (env->export[i])
-    {
         ft_printf("%s %s\n", "declare -x", env->export[i++]);
-    }
     return (NO_ARGS);
 }
 
