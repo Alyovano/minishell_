@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 15:19:08 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 15:20:23 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/08 12:55:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ void	exec_type2(t_env *env, t_list *lst)
 	char	*path;
 	int		error;
 
-	path = check_path(NULL, lst->builtin);
+	path = check_path(NULL, lst->tab_cmd[0]);
 	if (exec_execve(lst, env, path) != 0)
 	{
 		error = errno;
 		if (error == 13)
 			error_output_token(-9, path, '\0');
 		else
-			error_output_token(-8, lst->builtin, '\0');
+			error_output_token(-8, lst->tab_cmd[0], '\0');
 		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
@@ -51,14 +51,14 @@ void	exec_type3(t_env *env, t_list *lst)
 
 	if (dispatch_cmd(lst, env) != 0)
 	{
-		path = check_path(get_path(env->tab, lst->builtin), NULL);
+		path = check_path(get_path(env->tab, lst->tab_cmd[0]), NULL);
 		error = errno;
 		if (error == 13)
 			error_output_token(-9, path, '\0');
-		else if (get_path(env->tab, lst->builtin) == NULL)
-			error_output_token(-8, lst->builtin, '\0');
+		else if (get_path(env->tab, lst->tab_cmd[0]) == NULL)
+			error_output_token(-8, lst->tab_cmd[0], '\0');
 		else
-			error_output_token(-6, lst->builtin, '\0');
+			error_output_token(-6, lst->tab_cmd[0], '\0');
 		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
@@ -75,7 +75,7 @@ void	exec_type(int size, int old_fd[2], t_env *env, t_list *lst)
 {
 	if (size != 1)
 		exec_type1(old_fd, lst);
-	if (find_char(lst->builtin, '/') == 1)
+	if (find_char(lst->tab_cmd[0], '/') == 1)
 		exec_type2(env, lst);
 	else
 		exec_type3(env, lst);

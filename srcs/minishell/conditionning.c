@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/08 12:52:30 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/08 13:23:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		print_tabbbbbssssss(t_user *start, t_quote *quote)
 ** for other elements, everything after builtin goes to argu
 */
 
-//TO DOl
+//TO DO
 // clean code
 // remove lst->builtin and replace with lst->tab_cmd[0]
 
@@ -121,7 +121,6 @@ void	last_split(t_list *lst, int id, int size)
 	while (tmp[j] && tmp[j] == ' ')
 		j++;
 	i = get_len_till_char(j, ' ', tmp);
-	lst->builtin = ft_substr(tmp, j, i);
 	lst->flag = NULL;
 	lst->argu = ft_substr(tmp, i + 1, ft_strlen(tmp));
 	set_fd_in_out(id, size, lst);
@@ -138,7 +137,6 @@ void	debug(t_list *lst)
 	while (lst)
 	{
 		ft_printf("Content: |%s|\n", (char *)lst->content);
-		ft_printf("Builtin: |%s|\n", (char *)lst->builtin);
 		ft_printf("Flag: |%s|\n", (char *)lst->flag);
 		ft_printf("Argu: |%s|\n\n", (char *)lst->argu);
 		ft_printf("Stdin ? : |%d|\n\n", lst->stdin_fd);

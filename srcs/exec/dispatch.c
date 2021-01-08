@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 14:52:52 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/08 12:55:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,21 @@ int		dispatch_cmd(t_list *lst, t_env *env)
 	char	*path;
 
 	ret = 0;
-	if (ft_strcmp("export", lst->builtin) == 0)
+	if (ft_strcmp("export", lst->tab_cmd[0]) == 0)
 		ft_export(env, lst->argu);
-	else if (ft_strcmp("unset", lst->builtin) == 0)
+	else if (ft_strcmp("unset", lst->tab_cmd[0]) == 0)
 		ft_unset(env, lst->argu);
-	else if (ft_strcmp("pwd", lst->builtin) == 0)
+	else if (ft_strcmp("pwd", lst->tab_cmd[0]) == 0)
 		ft_pwd();
-	else if (ft_strcmp("echo", lst->builtin) == 0)
+	else if (ft_strcmp("echo", lst->tab_cmd[0]) == 0)
 		ft_echo(env, lst);
-	else if (ft_strcmp("cd", lst->builtin) == 0)
+	else if (ft_strcmp("cd", lst->tab_cmd[0]) == 0)
 		ft_cd(env, lst->argu);
-	else if (ft_strcmp("env", lst->builtin) == 0)
+	else if (ft_strcmp("env", lst->tab_cmd[0]) == 0)
 		ft_env(env, lst->argu);
-	else if (ft_strcmp("exit", lst->builtin) != 0)
+	else if (ft_strcmp("exit", lst->tab_cmd[0]) != 0)
 	{
-		path = check_path(get_path(env->tab, lst->builtin), NULL);
+		path = check_path(get_path(env->tab, lst->tab_cmd[0]), NULL);
 		ret = exec_execve(lst, env, path);
 	}
 	return (ret);

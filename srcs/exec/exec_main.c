@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 14:53:07 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 16:01:05 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/08 12:55:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 
 	if (in_out_setup(&fds, lst) == -1)
 		return (-1);
-	if (size == 1 && (ft_strcmp("export", lst->builtin) == 0 || \
-							ft_strcmp("cd", lst->builtin) == 0 || \
-							ft_strcmp("unset", lst->builtin) == 0))
+	if (size == 1 && (ft_strcmp("export", lst->tab_cmd[0]) == 0 || \
+							ft_strcmp("cd", lst->tab_cmd[0]) == 0 || \
+							ft_strcmp("unset", lst->tab_cmd[0]) == 0))
 		dispatch_cmd(lst, env);
 	else
 	{
