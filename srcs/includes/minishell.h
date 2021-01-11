@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/08 11:13:41 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/11 09:57:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ int					conditionning(t_user *start);
 int					execution(t_user *start, t_env *env);
 int					dispatch_cmd(t_list *lst, t_env *env);
 void				clean_builtin(t_list *lst);
-void				parse_flags(t_list *lst);
+void				check_flags(t_list *lst);
 void				clean_quote(char **str);
 void				clean_args(t_list *lst);
 int					exec_pipe(t_list *lst, t_env *env, int size);
@@ -232,7 +232,6 @@ char				*check_path(char **paths, char *path);
 /*
 **         Built-in
 */
-
 
 int					ft_cd(t_env *env, t_list *lst);
 int					ft_export(t_env *env, t_list *lst);

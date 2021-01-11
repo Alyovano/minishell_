@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 19:46:49 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 14:50:37 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/11 09:57:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** ne vérifie pas le flag en lui-meme mais la syntaxe
 ** il faut pas d'espaces dans les flags et un '-' au début d'argu
 */
-
+/*
 int		valid_flags(char *argu, int *i)
 {
 	t_quote	*quote;
@@ -46,27 +46,26 @@ int		valid_flags(char *argu, int *i)
 	}
 	return (1);
 }
+*/
 
 /*
 ** Go trough every element of list
 ** check if valid flags in argu
 */
 
-void	parse_flags(t_list *lst)
+void	check_flags(t_list *lst)
 {
 	int		i;
-	char	*tmp;
 
 	while (lst)
 	{
-		i = 0;
-		if (valid_flags(lst->argu, &i) == 1)
+		i = 1;
+		while (lst->tab_cmd[i] && (lst->tab_cmd[i][0] == '-' || \
+		((lst->tab_cmd[i][0] == '"' || lst->tab_cmd[i][0] == '\'') \
+									&& lst->tab_cmd[i][1] == '-')))
 		{
-			lst->flag = ft_str_n_dup(lst->argu, i);
-			clean_quote(&lst->flag);
-			tmp = ft_substr(lst->argu, i + 1, ft_strlen(lst->argu));
-			free(lst->argu);
-			lst->argu = tmp;
+			clean_quote(&lst->tab_cmd[i]);
+			i++;
 		}
 		lst = lst->next;
 	}
