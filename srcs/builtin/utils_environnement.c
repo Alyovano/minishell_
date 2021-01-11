@@ -17,33 +17,61 @@
 ** a appliquer a l'argument (combien de ligne va-t-on add au tableau env)
 */
 
-int     catch_env_var(char *arg, char *env_line)
-{
-    unsigned int            i;
-    char              **split;
+// int     catch_env_var(char *arg, char *env_line)
+// {
+//     unsigned int            i;
+//     char              **split;
 
-    i = 0;
-    split = ft_split(arg, '=');
-    while (split[0][i] && env_line[i])
-    {
-        if (split[0][i] != env_line[i])
-            break ;
-        i++;
-    }
-    if ((env_line[i] == '\0' || env_line[i] == '=') && i == ft_strlen(split[0]))
-    {
-        free_double_tab(split);
-        return (0);
-    }
-    free_double_tab(split);
-    return (1);
-}
+//     i = 0;
+//     split = ft_split(arg, '=');
+//     while (split[0][i] && env_line[i])
+//     {
+//         if (split[0][i] != env_line[i])
+//             break ;
+//         i++;
+//     }
+//     if ((env_line[i] == '\0' || env_line[i] == '=') && i == ft_strlen(split[0]))
+//     {
+//         free_double_tab(split);
+//         return (0);
+//     }
+//     free_double_tab(split);
+//     return (1);
+// }
 
 /*
 ** Pour savoir si une var existe dans le tableau env
 ** Si -1 alors la var n'existe pas
 ** si i > -1 alors i represente la position de la var dans le tableau
 */
+
+int     catch_env_var(char *arg, char *env_line)
+{
+	unsigned int i;
+
+	i = 0;
+	while (arg[i] && env_line[i])
+	{
+		if (arg[i] != '=' && env_line[i] != '=')
+		{
+			if (arg[i] != env_line[i])
+				return (-1);
+		}
+		else
+		{
+			if (env_line[i] == '=' && arg[i] == '=')
+				return (0);
+			else if ((env_line[i] == '=' && arg[i] == '\0') || (env_line[i] == '\0' && arg[i] == '='))
+				return (0);
+			else
+				return (-1);
+		}
+		i++;
+	}
+	if (i == ft_strlen(arg) || i == ft_strlen(env_line))
+		return (0);
+	return (-1);
+}
 
 int         check_if_exist(char **tab, char *arg)
 {

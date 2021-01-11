@@ -204,7 +204,7 @@ int			export_new_var(t_env *env, t_list *lst)
 	int position;
 
 	printf("1\n");
-	new_tab = malloc(sizeof(new_tab) * (double_tab_size(env->tab) + double_tab_size(lst->tab_cmd)) + 1);
+	new_tab = malloc(sizeof(new_tab) * (double_tab_size(env->tab) + double_tab_size(lst->tab_cmd)) + 2);
 	if (!new_tab)
 		malloc_error();
 	i = 0;
@@ -223,7 +223,7 @@ int			export_new_var(t_env *env, t_list *lst)
 		position = check_if_exist(new_tab, lst->tab_cmd[j]);
 		if (position != -1)
 		{
-			replace_var_value(lst->tab_cmd[j], new_tab[position]);
+			new_tab[position] = replace_var_value(new_tab[position], lst->tab_cmd[j]);
 			j++;
 		}
 		else
@@ -240,17 +240,17 @@ int			export_new_var(t_env *env, t_list *lst)
 	//free_double_tab(env->tab);
 	// ici ce free est grave chelou
 	printf("4\n");
-	i = 0;
-	while (env->tab[i])
-	{
-		printf("%d\n", i);
-		printf("La str a free :%s\n", env->tab[i]);
-		if (i != 1)
-			free(env->tab[i]);
-		printf("FREE OK\n");
-		i++;
-	}
-	free(env->tab);
+	// i = 0;
+	// while (env->tab[i])
+	// {
+	// 	printf("%d\n", i);
+	// 	printf("La str a free :%s\n", env->tab[i]);
+	// 	if (i != 1)
+	// 		free(env->tab[i]);
+	// 	printf("FREE OK\n");
+	// 	i++;
+	// }
+	// free(env->tab);
 	// Ajout des nouvelles variables de l'input
 	//i = 1; 
 	printf("5\n");

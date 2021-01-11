@@ -17,6 +17,8 @@ char	*ft_strdup(const char *s1)
 	size_t	longueur;
 	char	*tab;
 
+	if (!s1)
+		return (malloc(1));
 	longueur = ft_strlen(s1) + 1;
 	if (!(tab = malloc(sizeof(char) * longueur)))
 		malloc_error();
