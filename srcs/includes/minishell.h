@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/11 09:57:07 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/11 14:19:11 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,7 @@ int					cmd_valididy(char *cmd, t_env *env);
 int					exec_main(t_list *lst, t_env *env);
 char				**get_path(char **env, char *builtin);
 char				*check_path(char **paths, char *path);
+void				set_gerrno(t_list *lst, t_env *env);
 
 /*
 **         Built-in

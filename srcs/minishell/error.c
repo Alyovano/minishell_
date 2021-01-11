@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/07 16:11:51 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/11 15:18:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,32 @@ void		malloc_error(void)
 {
 	strerror(errno);
 	exit(EXIT_FAILURE);
+}
+
+void		set_gerrno(t_list *lst, t_env *env)
+{
+	int		error;
+	struct stat		test;
+
+	if (find_char(lst->tab_cmd[0], '/') == 1)
+	{
+		//check path
+		if (stat(lst->tab_cmd[0], &test) == -1)
+		{
+			//error = errno;
+			g_errno = 1;
+		}
+	}
+	else if (cmd_valididy(lst->tab_cmd[0], env) == 0)
+	{
+		error = errno;
+		if (error == 13 || get_path(env->tab, lst->tab_cmd[0]) == NULL)
+			g_errno = 1; //error_output_token(-9 / -8, path, '\0');
+		else
+			g_errno = 127; //error_output_token(-6, lst->tab_cmd[0], '\0');
+	}
+	else
+		g_errno = 0;
 }
 
 /*
@@ -74,11 +100,6 @@ void		error_output_token(int error, char *str, char c)
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": Permission non accordée\n", STDERR_FILENO);
 		g_errno = 1;
-	}
-	else if (error == -10)
-	{
-		ft_putstr_fd("Minishell cannot do that: only absolute path (ex. /bin/echo)\n", STDERR_FILENO);
-		g_errno = 445; // arbitraire, ca existe pas dans bash cette 
 	}
 	//Ici ca va free comme jaja  --> free dans minishell avant de reprendre boucle while
 }

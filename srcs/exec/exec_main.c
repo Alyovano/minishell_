@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 14:53:07 by user42            #+#    #+#             */
-/*   Updated: 2021/01/08 12:55:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/11 15:21:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,12 @@ int		exec_main(t_list *lst, t_env *env)
 
 	ptr = lst;
 	size = ft_lstsize(lst);
+	while (lst)
+	{
+		set_gerrno(lst, env);
+		lst = lst->next;
+	}
+	lst = ptr;
 	while (lst)
 	{
 		if (exec_redirrect(lst, env, old_fd, size) == -1)
