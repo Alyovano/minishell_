@@ -32,6 +32,7 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
     int     used;
     int     ret;
     char    *user_input;
+	t_list	lst;
 
     (void)used;
     catch_signal();
@@ -46,7 +47,12 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
             {
                 if (conditionning(start) != -1)
                 {
-                    //ft_export(env, "MINISHELL_TEST_DONT_CHECK_ERROR_MESSAGE=yes");
+					lst.tab_cmd = malloc(sizeof(char *) * 2);
+					if (!lst.tab_cmd)
+						malloc_error();
+					lst.tab_cmd[1] = NULL;
+					lst.tab_cmd[0] = ft_strdup("MINISHELL_TEST_DONT_CHECK_ERROR_MESSAGE=yes");
+                    //ft_export(env, &lst); bug avec export
                     execution(start, env);
                 }
             }

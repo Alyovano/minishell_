@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 14:50:55 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 14:52:11 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/11 10:09:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		clean_end_spaces(char **str)
 ** We can add another clean function to clean \' \"
 ** and remove quotes before printing
 */
-
+/*
 void		clean_args(t_list *lst)
 {
 	while (lst)
@@ -44,3 +44,4 @@ void		clean_args(t_list *lst)
 		lst = lst->next;
 	}
 }
+*/

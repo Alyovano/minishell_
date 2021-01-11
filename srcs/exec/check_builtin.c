@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 18:52:44 by user42            #+#    #+#             */
-/*   Updated: 2021/01/08 12:56:36 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/11 10:24:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	clean_quote(char **str)
 
 void	clean_builtin(t_list *lst)
 {
-	while (lst)
+	while (lst && lst->tab_cmd[0])
 	{
 		if (find_char(lst->tab_cmd[0], '"') || find_char(lst->tab_cmd[0], '\''))
 			clean_quote(&lst->tab_cmd[0]);

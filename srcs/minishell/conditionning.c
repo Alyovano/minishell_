@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/08 13:23:13 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/11 10:36:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ int		print_tabbbbbssssss(t_user *start, t_quote *quote)
 void	last_split(t_list *lst, int id, int size)
 {
 	int			i;
-	int			j;
-	char		*tmp;
 	t_user		start;
 	t_quote		quote;
 
@@ -105,26 +103,9 @@ void	last_split(t_list *lst, int id, int size)
 		is_split_tokenize(&start, i);
 		i++;
 	}
-	//ft_printf("nb to split: %d\n", start.split_nb);
-	split_tokenize(&start, &quote); //split
+	split_tokenize(&start, &quote);
 	lst->tab_cmd = tokenize_realloc(start.user_cmd_tab);
-	i = 0;
-	while (lst->tab_cmd[i])
-	{
-		//ft_printf("user-cmd_tab: |%s|\n", lst->tab_cmd[i]); //need to clear empty '\0' and space before elem
-		i++;
-	}
-	//ft_printf("END\n");
-	//print_tabbbbbssssss(&start, &quote); 
-	tmp = ft_strdup(lst->content);
-	j = 0;
-	while (tmp[j] && tmp[j] == ' ')
-		j++;
-	i = get_len_till_char(j, ' ', tmp);
-	lst->flag = NULL;
-	lst->argu = ft_substr(tmp, i + 1, ft_strlen(tmp));
 	set_fd_in_out(id, size, lst);
-	free(tmp);
 }
 
 /*
@@ -137,8 +118,6 @@ void	debug(t_list *lst)
 	while (lst)
 	{
 		ft_printf("Content: |%s|\n", (char *)lst->content);
-		ft_printf("Flag: |%s|\n", (char *)lst->flag);
-		ft_printf("Argu: |%s|\n\n", (char *)lst->argu);
 		ft_printf("Stdin ? : |%d|\n\n", lst->stdin_fd);
 		ft_printf("Stdout ?: |%d|\n\n", lst->stdout_fd);
 		lst = lst->next;
