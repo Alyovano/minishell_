@@ -139,6 +139,7 @@ void				init_quotes_to_fix(t_quote *quote);
 int					find_char(char *str, char c);
 char				**add_str_to_tab(char **tab, char *str);
 void				init_quotes_to_fix(t_quote *quote);
+void				clean_end_spaces(char **str);
 
 /*
 **          Split

@@ -198,9 +198,71 @@ int			export_new_var(t_env *env, t_list *lst)
 {
 	(void)env;
 	(void)lst;
+	char **new_tab;
+	int i;
+	int j;
+	int position;
 
-	for (int test = 0; lst->tab_cmd[test] ; test++)
-        printf("Mon nouveau tableau :%s\n", lst->tab_cmd[test]);
+	printf("1\n");
+	new_tab = malloc(sizeof(new_tab) * (double_tab_size(env->tab) + double_tab_size(lst->tab_cmd)) + 1);
+	if (!new_tab)
+		malloc_error();
+	i = 0;
+	j = 1; // pcq le premier du tableau = "export"
+	printf("2\n");
+	while (env->tab[i])
+	{
+		new_tab[i] = ft_strdup(env->tab[i]);
+		i++;
+	}
+	new_tab[i] = NULL;
+	printf("3\n");
+
+	while (lst->tab_cmd[j])
+	{
+		position = check_if_exist(new_tab, lst->tab_cmd[j]);
+		if (position != -1)
+		{
+			replace_var_value(lst->tab_cmd[j], new_tab[position]);
+			j++;
+		}
+		else
+		{
+			new_tab[i] = ft_strdup(lst->tab_cmd[j]);
+			j++;
+			i++;
+		}
+	}
+	new_tab[i] = NULL;
+
+
+	// Free le vieux tableau d'env
+	//free_double_tab(env->tab);
+	// ici ce free est grave chelou
+	printf("4\n");
+	i = 0;
+	while (env->tab[i])
+	{
+		printf("%d\n", i);
+		printf("La str a free :%s\n", env->tab[i]);
+		if (i != 1)
+			free(env->tab[i]);
+		printf("FREE OK\n");
+		i++;
+	}
+	free(env->tab);
+	// Ajout des nouvelles variables de l'input
+	//i = 1; 
+	printf("5\n");
+	// Copie du nouveau tableau dans ENV
+	env->tab = copy_double_tab(new_tab);
+	printf("6\n");
+	//free_double_tab(new_tab);
+	// debugg
+	// for (int test = 0; new_tab[test] ; test++)
+    //     printf("Mon nouveau tableau :%s\n", new_tab[test]);
+	// for (int test = 0; lst->tab_cmd[test] ; test++)
+    //     printf("Mon nouveau tableau :%s\n", lst->tab_cmd[test]);
 	return (0);
 }
 
@@ -223,7 +285,10 @@ int         ft_export(t_env *env, t_list *lst)
 		export_new_var(env, lst);
         for (int test = 0; env->tab[test] ; test++)
             printf("Mon nouveau tableau :%s\n", env->tab[test]);
-		return (-1); // pour le moment
+		// status = 0 ici aussi
+		printf("HORS CHAMPS\n");
+		return (ARGS); // pour le moment
     }
-    return (ARGS);
+	// status = 1 ici
+    return (-1);
 }
