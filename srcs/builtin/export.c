@@ -196,9 +196,8 @@
 
 int			export_new_var(t_env *env, t_list *lst)
 {
-	(void)env;
-	(void)lst;
 	char **new_tab;
+	char *tmp;
 	int i;
 	int j;
 	int position;
@@ -223,7 +222,10 @@ int			export_new_var(t_env *env, t_list *lst)
 		position = check_if_exist(new_tab, lst->tab_cmd[j]);
 		if (position != -1)
 		{
-			new_tab[position] = replace_var_value(new_tab[position], lst->tab_cmd[j]);
+			tmp = replace_var_value(new_tab[position], lst->tab_cmd[j]);
+			free(new_tab[position]);
+			new_tab[position] = ft_strdup(tmp);
+			free(tmp);
 			j++;
 		}
 		else
@@ -231,15 +233,14 @@ int			export_new_var(t_env *env, t_list *lst)
 			new_tab[i] = ft_strdup(lst->tab_cmd[j]);
 			j++;
 			i++;
+			new_tab[i] = NULL;
 		}
 	}
 	new_tab[i] = NULL;
-
-
 	// Free le vieux tableau d'env
 	//free_double_tab(env->tab);
 	// ici ce free est grave chelou
-	printf("4\n");
+	// printf("4\n");
 	// i = 0;
 	// while (env->tab[i])
 	// {

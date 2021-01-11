@@ -1,28 +1,5 @@
 #include "../includes/minishell.h"
 
-int         free_copy(char **arg_tab, t_env *env)
-{
-    int i;
-
-    i = 0;
-    while (arg_tab[i])
-    {
-        free(arg_tab[i]);
-        i++;
-    }
-    i = 0;
-    while (env->tab[i])
-    {
-        free(env->tab[i]);
-        i++;
-    }
-    if (arg_tab)
-        free(arg_tab);
-    if (env->tab)
-        free(env->tab);
-    return (0);
-}
-
 int         check_arg_nb(char *arg)
 {
     int i;
