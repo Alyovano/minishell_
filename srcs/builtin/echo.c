@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/08 12:55:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/11 13:24:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int			check_echo_flag(char *str)
 		while (str[i] == 'n')
 			i++;
 	}
+	else
+		return (NO_FLAG);
 	if (i == ft_strlen(str))
 		return (FLAG_OK);
 	return (FLAG_FAILURE);
@@ -54,7 +56,7 @@ int			ft_echo(t_env *env, t_list *lst)
 		//status = 0
 		return (0);
 	}
-	else if (flag == FLAG_FAILURE)
+	else if (flag == FLAG_FAILURE || flag == NO_FLAG)
 	{
 		i = 1;
 		while (lst->tab_cmd[i])
