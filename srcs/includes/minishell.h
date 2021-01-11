@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/11 14:19:11 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/11 15:27:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ int					check_input_start(t_user *start);
 void				error_output_token(int error, char *str, char c);
 void				init_quotes_to_fix(t_quote *quote);
 int					find_char(char *str, char c);
-void				clean_end_spaces(char **str);
 char				**add_str_to_tab(char **tab, char *str);
 void				init_quotes_to_fix(t_quote *quote);
 
