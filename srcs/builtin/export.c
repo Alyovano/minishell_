@@ -257,7 +257,7 @@ int			export_new_var(t_env *env, t_list *lst)
 	// Copie du nouveau tableau dans ENV
 	env->tab = copy_double_tab(new_tab);
 	printf("6\n");
-	//free_double_tab(new_tab);
+	free_double_tab(new_tab);
 	// debugg
 	// for (int test = 0; new_tab[test] ; test++)
     //     printf("Mon nouveau tableau :%s\n", new_tab[test]);
