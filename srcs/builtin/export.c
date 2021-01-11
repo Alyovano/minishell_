@@ -202,21 +202,20 @@ int			export_new_var(t_env *env, t_list *lst)
 	int j;
 	int position;
 
-	printf("1\n");
+	//printf("1\n");
 	new_tab = malloc(sizeof(new_tab) * (double_tab_size(env->tab) + double_tab_size(lst->tab_cmd)) + 2);
 	if (!new_tab)
 		malloc_error();
 	i = 0;
 	j = 1; // pcq le premier du tableau = "export"
-	printf("2\n");
+	//printf("2\n");
 	while (env->tab[i])
 	{
 		new_tab[i] = ft_strdup(env->tab[i]);
 		i++;
 	}
 	new_tab[i] = NULL;
-	printf("3\n");
-
+	//printf("3\n");
 	while (lst->tab_cmd[j])
 	{
 		position = check_if_exist(new_tab, lst->tab_cmd[j]);
@@ -237,10 +236,13 @@ int			export_new_var(t_env *env, t_list *lst)
 		}
 	}
 	new_tab[i] = NULL;
+
+
+
 	// Free le vieux tableau d'env
 	//free_double_tab(env->tab);
 	// ici ce free est grave chelou
-	// printf("4\n");
+	//printf("4\n");
 	// i = 0;
 	// while (env->tab[i])
 	// {
@@ -254,7 +256,7 @@ int			export_new_var(t_env *env, t_list *lst)
 	// free(env->tab);
 	// Ajout des nouvelles variables de l'input
 	//i = 1; 
-	printf("5\n");
+	//printf("5\n");
 	// Copie du nouveau tableau dans ENV
 	env->tab = copy_double_tab(new_tab);
 	printf("6\n");
@@ -267,28 +269,83 @@ int			export_new_var(t_env *env, t_list *lst)
 	return (0);
 }
 
+char		*requote_str(char *str)
+{
+	int		i;
+	int		j;
+	char	*new;
+	int		token;
+
+	new = malloc((sizeof(char*) * ft_strlen(str)) + 3);
+	if (!new)
+		malloc_error();
+	i = 0;
+	j = 0;
+	token = 0;
+	while (str[i])
+	{
+		new[i + j] = str[i];
+		if (token == 0 && str[i] == '=')
+		{
+			token = 1;
+			j = 1;
+			new[i + j] = '"';
+		}
+		i++;
+	}
+	if (token == 1)
+	{
+		new[i + j] = '"';
+		new[i + j + 1] = 0;
+	}
+	else
+		new[i] = 0;
+	free(str);
+	return (new); 
+}
+
+void		requote_arg(t_list *lst)
+{
+	//char *tmp;
+	int i;
+
+	i = 0;
+	while (lst->tab_cmd[i])
+	{
+		lst->tab_cmd[i] = delete_quote(lst->tab_cmd[i]);
+		// tmp = delete_quote(lst->tab_cmd[i]);
+		// free(lst->tab_cmd[i]);
+		lst->tab_cmd[i] = requote_str(lst->tab_cmd[i]);
+		// free(tmp);
+		i++;
+	}
+}
+
 int         ft_export(t_env *env, t_list *lst)
 {
+	int quote_add;
     env->swap_token = 0;
-	printf("Premiere case == %s\n", lst->tab_cmd[0]);
+
+	quote_add = 0;
     if (double_tab_size(lst->tab_cmd) == 1)
     {
         env->export = copy_double_tab(env->tab);
+		while (env->export[quote_add])
+		{
+			env->export[quote_add] = delete_quote(env->export[quote_add]);
+			env->export[quote_add] = requote_str(env->export[quote_add]);
+			quote_add++;
+		}
         sort_export(env);
         export_without_args(env);
         free_double_tab(env->export);
-		 // status = 0 ici
         return (NO_ARGS);
     }
     else
     {
-		printf("else\n");
+		requote_arg(lst);
 		export_new_var(env, lst);
-        for (int test = 0; env->tab[test] ; test++)
-            printf("Mon nouveau tableau :%s\n", env->tab[test]);
-		// status = 0 ici aussi
-		printf("HORS CHAMPS\n");
-		return (ARGS); // pour le moment
+		return (ARGS);
     }
 	// status = 1 ici
     return (-1);
