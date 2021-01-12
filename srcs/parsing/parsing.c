@@ -68,25 +68,28 @@ int				parsing_input(char *input, t_user *start, t_env *env)
 	if (!input || !*input)
 		return (0);
 	if (!(quote = malloc(sizeof(quote))))
-		return (-1);
+		malloc_error();
 	if (!(start->user_input = ft_strdup(input)))
-		return (-1);
+		malloc_error();
 	token_to_parse_init(start);
 	error = check_input_start(start);
 	if (error < 0)
 	{
+		free(quote);
 		error_output_token(error, NULL, '\0');
 		return (-1);
 	}
 	error = input_to_tab(start, quote);
 	if (error < 0)
 	{
+		free(quote);
 		error_output_token(error, NULL, '\0');
 		return (-1);
 	}
 	error = check_pipe(start->user_input, quote);
 	if (error < 0)
 	{
+		free(quote);
 		error_output_token(error, NULL, '\0');
 		return (-1);
 	}
@@ -94,12 +97,17 @@ int				parsing_input(char *input, t_user *start, t_env *env)
 	clean_line(start, quote);
 	add_environnement_var(start, quote, env);
 	if (parsing_redirrect(start) == -1)
+	{
+		free(quote);
 		return (-1);
+	}
 	split_pipe(start, quote);
 	if (quote->verif != 0)
 	{
+		free(quote);
 		error_output_token(-5, NULL, '\0');
 		return (-1);
 	}
+	free(quote);
 	return (0);
 }
