@@ -34,7 +34,7 @@ void		catch_signal(void)
 int			verif_ret(int ret, char *user_input)
 {
 	(void)user_input;
-	if (ret == 0 && user_input[0] == 0)
+	if (ret == 0)
 	{
 		write(1, "exit\n", 5);
 		exit(EXIT_SUCCESS);
