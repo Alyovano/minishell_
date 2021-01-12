@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:47:44 by user42            #+#    #+#             */
-/*   Updated: 2021/01/12 11:42:51 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/12 12:43:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int		get_nb_clean(char *str, t_quote *q)
 
 	i = 0;
 	len = ft_strlen(str);
-	ft_printf("STR LEN: %d\n", len);
 	q->squote = -1;
 	q->dquote = -1;
 	while (str[i])
@@ -102,7 +101,6 @@ int		get_nb_clean(char *str, t_quote *q)
 		}
 		i++;
 	}
-	ft_printf("LEN AFTER CLEAN: %d\n", len);
 	return (len);
 }
 
@@ -129,7 +127,6 @@ int		last_clean(t_list *lst)
 					free(lst->tab_cmd[i]);
 					lst->tab_cmd[i] = ft_strdup(tmp);
 					free(tmp);
-					ft_printf("REALOOOOC: |%s|\n", lst->tab_cmd[i]);
 				}
 			}
 			i++;

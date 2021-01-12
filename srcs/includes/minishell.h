@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/12 09:51:04 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/12 12:42:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ void				init_quotes_to_fix(t_quote *quote);
 int					find_char(char *str, char c);
 char				**add_str_to_tab(char **tab, char *str);
 void				init_quotes_to_fix(t_quote *quote);
-void				clean_end_spaces(char **str);
 
 /*
 **          Split
@@ -218,10 +217,7 @@ char				*verify_quote_integrity(char *input);
 int					conditionning(t_user *start);
 int					execution(t_user *start, t_env *env);
 int					dispatch_cmd(t_list *lst, t_env *env);
-void				clean_builtin(t_list *lst);
 void				check_flags(t_list *lst);
-void				clean_quote(char **str);
-void				clean_args(t_list *lst);
 int					exec_pipe(t_list *lst, t_env *env, int size);
 int					exec_execve(t_list *lst, t_env *env, char *path);
 int					cmd_valididy(char *cmd, t_env *env);

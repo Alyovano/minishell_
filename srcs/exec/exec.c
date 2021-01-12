@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2021/01/12 11:07:05 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/12 12:43:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,6 @@ int		execution(t_user *start, t_env *env)
 	while (start->line)
 	{
 		lst = start->line->content;
-		clean_builtin(lst);
-		check_flags(lst);
 		last_clean(lst);
 		if (lst->tab_cmd[0] && ft_strcmp("exit", lst->tab_cmd[0]) == 0)
 			ft_exit(env, lst, start);
