@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/12 12:42:40 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/12 15:28:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ int					init_double_tab_cmd(t_user *start);
 int					input_to_tab_verif(t_user *start, t_quote *quote, int i);
 void				is_split_tokenize(t_user *start, int i);
 char				split_tokenize(t_user *start, t_quote *quote);
-int					is_space_empty(char *str);
 char				**tokenize_realloc(char **tab);
 
 /*
