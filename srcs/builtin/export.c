@@ -94,7 +94,6 @@
 //             token->j++;
 //     }
 //     tmp[token->i] = NULL;
-//     free_copy(arg_tab, env);
 //     return (tmp);
 // }
 
@@ -202,20 +201,17 @@ int			export_new_var(t_env *env, t_list *lst)
 	int j;
 	int position;
 
-	//printf("1\n");
 	new_tab = malloc(sizeof(new_tab) * (double_tab_size(env->tab) + double_tab_size(lst->tab_cmd)) + 2);
 	if (!new_tab)
 		malloc_error();
 	i = 0;
 	j = 1; // pcq le premier du tableau = "export"
-	//printf("2\n");
 	while (env->tab[i])
 	{
 		new_tab[i] = ft_strdup(env->tab[i]);
 		i++;
 	}
 	new_tab[i] = NULL;
-	//printf("3\n");
 	while (lst->tab_cmd[j])
 	{
 		position = check_if_exist(new_tab, lst->tab_cmd[j]);
