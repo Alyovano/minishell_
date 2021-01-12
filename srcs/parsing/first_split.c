@@ -33,7 +33,7 @@ int			init_double_tab_cmd(t_user *start)
 	start->user_cmd_tab = malloc(sizeof(start->user_cmd_tab)
 					* (start->split_nb + 1));
 	if (!start->user_cmd_tab)
-		return (-1);
+		malloc_error();
 	while (i < start->split_nb + 1)
 	{
 		start->user_cmd_tab[i] = 0;

@@ -80,6 +80,7 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
                     }
                 }
             }
+            free(user_input);
             //end_loop_free(start, user_input, used);
         }
     }
