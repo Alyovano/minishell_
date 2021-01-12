@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/08 12:55:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/12 09:28:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,7 +259,7 @@ int			export_new_var(t_env *env, t_list *lst)
 	//printf("5\n");
 	// Copie du nouveau tableau dans ENV
 	env->tab = copy_double_tab(new_tab);
-	printf("6\n");
+	//printf("6\n");
 	free_double_tab(new_tab);
 	// debugg
 	// for (int test = 0; new_tab[test] ; test++)

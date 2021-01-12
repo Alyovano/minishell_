@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/11 15:27:25 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/12 09:51:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ int					exec_main(t_list *lst, t_env *env);
 char				**get_path(char **env, char *builtin);
 char				*check_path(char **paths, char *path);
 void				set_gerrno(t_list *lst, t_env *env);
+int					last_clean(t_list *lst);
 
 /*
 **         Built-in

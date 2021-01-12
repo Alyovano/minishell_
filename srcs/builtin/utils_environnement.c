@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/08 12:55:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/12 09:26:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int     catch_env_var(char *arg, char *env_line)
     {
 		// printf("%d\n", i);
 		// printf("%c\n", split[0][i]);
-		printf("env line = %s\n", env_line);
-		printf("str arg = %s\n", split[0]);
+		//printf("env line = %s\n", env_line);
+		//printf("str arg = %s\n", split[0]);
         if (split[0][i] != env_line[i])
             break ;
         i++;

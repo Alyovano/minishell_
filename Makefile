@@ -9,7 +9,7 @@ PARSING = $(addprefix srcs/parsing/, backslash.c parsing.c \
 QUOTE = $(addprefix srcs/quote/, algo_quote_actuel.c multilines_quote.c)
 EXEC = $(addprefix srcs/exec/, exec.c dispatch.c check_builtin.c \
 			check_flags.c exec_main.c exec_type.c \
-			in_out_setup.c split_tokenize.c)
+			in_out_setup.c split_tokenize.c last_clean.c)
 REDIRRECT = $(addprefix srcs/redirrect/, redirrect.c double_tab.c \
 			init_redirrect.c error_redirrect.c path_redirrect.c \
 			path_redirrect2.c next_redirrect.c remove_redirrect.c)
