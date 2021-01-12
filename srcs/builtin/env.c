@@ -63,6 +63,7 @@ int         ft_env(t_env *env, t_list *lst)
 	i = 0;
 	while (env->tab[i])
 	{
+		env->tab[i] = delete_quote(env->tab[i]);
 		ft_printf("%s\n", env->tab[i]);
 		i++;
 	}
