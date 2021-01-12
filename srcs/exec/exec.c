@@ -6,17 +6,43 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2021/01/12 12:43:01 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/12 15:11:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void		get_path2(char ***paths, char **path, char *builtin)
+{
+	int		i;
+	char	*temp;
+
+	i = 0;
+	while ((*paths)[i])
+	{
+		if ((*paths)[i][ft_strlen((*paths)[i]) - 1] != '/')
+		{
+			temp = ft_strjoin((*paths)[i], "/");
+			*path = ft_strjoin(temp, builtin);
+			free(temp);
+		}
+		else
+		{
+			temp = ft_strdup((*paths)[i]);
+			*path = ft_strjoin(temp, builtin);
+			free(temp);
+		}
+		free((*paths)[i]);
+		(*paths)[i] = ft_strdup(*path);
+		free(*path);
+		i++;
+	}
+}
+
 char		**get_path(char **env, char *builtin)
 {
 	char	**paths;
 	char	*path;
-	char	*temp;
 	int		i;
 
 	i = 0;
@@ -37,26 +63,7 @@ char		**get_path(char **env, char *builtin)
 		free(paths);
 		return (NULL);
 	}
-	i = 0;
-	while (paths[i])
-	{
-		if (paths[i][ft_strlen(paths[i]) - 1] != '/')
-		{
-			temp = ft_strjoin(paths[i], "/");
-			path = ft_strjoin(temp, builtin);
-			free(temp);
-		}
-		else
-		{
-			temp = ft_strdup(paths[i]);
-			path = ft_strjoin(temp, builtin);
-			free(temp);
-		}
-		free(paths[i]);
-		paths[i] = ft_strdup(path);
-		free(path);
-		i++;
-	}
+	get_path2(&paths, &path, builtin);
 	return (paths);
 }
 
@@ -87,7 +94,7 @@ char		*check_path(char **paths, char *path)
 ** Ajout du flag dans execve pour tester le comportement
 */
 
-int		exec_execve(t_list *lst, t_env *env, char *path)
+int			exec_execve(t_list *lst, t_env *env, char *path)
 {
 	if (execve(path, lst->tab_cmd, env->tab) == -1)
 		return (-2);
@@ -100,7 +107,7 @@ int		exec_execve(t_list *lst, t_env *env, char *path)
 ** Debug with: debug(lst);
 */
 
-int		execution(t_user *start, t_env *env)
+int			execution(t_user *start, t_env *env)
 {
 	t_list	*lst;
 
