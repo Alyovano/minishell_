@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/11 10:36:08 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/13 13:47:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,32 +59,11 @@ void	set_fd_in_out(int id, int size, t_list *lst)
 		lst->stdin_fd = 1;
 	}
 }
-/*
-int		print_tabbbbbssssss(t_user *start, t_quote *quote)
-{
-	int i;
-
-	i = 0;
-	if (init_double_tab_cmd(start) == -1)
-		return (-1);
-	cut_input_to_tab(start, quote);
-	while (start->user_cmd_tab[i])
-	{
-		ft_printf("Conteeennnnt: %s\n", start->user_cmd_tab[i++]);
-	}
-	return (0);
-}*/
 
 /*
-** Last split to store data in t_list
-** builtin, flags, argu
-** "echo" is the only builtin to manage with flags
-** for other elements, everything after builtin goes to argu
+** Function to split lst->content in multiple tokens in lst->tab_cmd
+** tab_cms[0] = builtin
 */
-
-//TO DO
-// clean code
-// remove lst->builtin and replace with lst->tab_cmd[0]
 
 void	last_split(t_list *lst, int id, int size)
 {
@@ -107,6 +86,7 @@ void	last_split(t_list *lst, int id, int size)
 	lst->tab_cmd = tokenize_realloc(start.user_cmd_tab);
 	set_fd_in_out(id, size, lst);
 	free(start.user_input); // add, pour mon exit
+	free_double_tab(start.user_cmd_tab);
 }
 
 /*

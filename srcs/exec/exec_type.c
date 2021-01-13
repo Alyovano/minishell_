@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 15:19:08 by user42            #+#    #+#             */
-/*   Updated: 2021/01/08 12:55:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/13 13:32:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ void	exec_type2(t_env *env, t_list *lst)
 			error_output_token(-9, path, '\0');
 		else
 			error_output_token(-8, lst->tab_cmd[0], '\0');
+		free(path);
 		exit(EXIT_FAILURE);
 	}
+	free(path);
 	exit(EXIT_SUCCESS);
 }
 
@@ -59,6 +61,7 @@ void	exec_type3(t_env *env, t_list *lst)
 			error_output_token(-8, lst->tab_cmd[0], '\0');
 		else
 			error_output_token(-6, lst->tab_cmd[0], '\0');
+		free(path);
 		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);

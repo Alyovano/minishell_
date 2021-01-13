@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:12:49 by user42            #+#    #+#             */
-/*   Updated: 2021/01/12 15:29:06 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/13 12:34:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,8 @@ int		cut_input_to_tab_tokenize(t_user *start, t_quote *quote)
 ** tab_cmd[n] --> argu
 */
 
-char	split_tokenize(t_user *start, t_quote *quote)
+void	split_tokenize(t_user *start, t_quote *quote)
 {
-	if (init_double_tab_cmd(start) == -1)
-		return (-1);
+	init_double_tab_cmd(start);
 	cut_input_to_tab_tokenize(start, quote);
-	return (0);
 }

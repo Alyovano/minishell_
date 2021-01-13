@@ -6,13 +6,13 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2021/01/12 15:11:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/13 13:36:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void		get_path2(char ***paths, char **path, char *builtin)
+void		get_path2(char ***paths, char *path, char *builtin)
 {
 	int		i;
 	char	*temp;
@@ -23,18 +23,17 @@ void		get_path2(char ***paths, char **path, char *builtin)
 		if ((*paths)[i][ft_strlen((*paths)[i]) - 1] != '/')
 		{
 			temp = ft_strjoin((*paths)[i], "/");
-			*path = ft_strjoin(temp, builtin);
-			free(temp);
+			path = ft_strjoin(temp, builtin);
 		}
 		else
 		{
 			temp = ft_strdup((*paths)[i]);
-			*path = ft_strjoin(temp, builtin);
-			free(temp);
+			path = ft_strjoin(temp, builtin);
 		}
+		free(temp);
 		free((*paths)[i]);
-		(*paths)[i] = ft_strdup(*path);
-		free(*path);
+		(*paths)[i] = ft_strdup(path);
+		free(path);
 		i++;
 	}
 }
@@ -63,7 +62,7 @@ char		**get_path(char **env, char *builtin)
 		free(paths);
 		return (NULL);
 	}
-	get_path2(&paths, &path, builtin);
+	get_path2(&paths, path, builtin);
 	return (paths);
 }
 

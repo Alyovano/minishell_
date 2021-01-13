@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/12 15:28:16 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/13 13:08:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ typedef struct		s_dollar
 **                 Des fonctions
 */
 
-int					free_all(t_user *start, t_quote *quote);
+void				free_all(t_user *start);
 int					parsing_input(char *input, t_user *start, t_env *env);
 int					quote_get_len_and_validity(t_user *start,
 					t_quote *quote, int i);
@@ -151,7 +151,7 @@ int					first_split_dirty_line(t_user *start, t_quote *quote);
 int					init_double_tab_cmd(t_user *start);
 int					input_to_tab_verif(t_user *start, t_quote *quote, int i);
 void				is_split_tokenize(t_user *start, int i);
-char				split_tokenize(t_user *start, t_quote *quote);
+void				split_tokenize(t_user *start, t_quote *quote);
 char				**tokenize_realloc(char **tab);
 
 /*

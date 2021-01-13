@@ -1,18 +1,32 @@
 #include "../includes/minishell.h"
 
-// int     free_all(t_user *start, t_quote *quote)
-// {
-//     if (start)
-//     {
-//         if (start->user_input)
-//             free(start->user_input);
-//         // i = (double_tab_size(start->user_env) + 1);
-//         // free(start->user_env[0]);
-//         // free(start->user_env[i]);
-//         if (start->user_env)
-//             free(start->user_env);
-//         free(start);
-//     }
-//     if (quote)
-//        free(quote);
-// }
+void		free_all(t_user *start)
+{
+	void	*tmp;
+	t_list	*lst;
+
+	tmp = start->line;
+
+	//free_double_tab(env->tab); // CE TABLEAU EST MAUDIT
+	free_double_tab(start->user_cmd_tab);
+	while (start->line)
+	{
+		lst = start->line->content;
+		while (lst)
+		{
+			free(lst->content);
+			free_double_tab(lst->in_types);
+			free_double_tab(lst->in);
+			free_double_tab(lst->out_types);
+			free_double_tab(lst->out);
+			free_double_tab(lst->tab_cmd);
+			lst = lst->next;
+		}
+		start->line = start->line->next;
+	}
+	start->line = tmp;
+	free(start->line);
+	free(lst);
+	//free(start->user_input);
+	//free(env);
+}
