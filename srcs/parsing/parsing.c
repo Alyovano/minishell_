@@ -92,7 +92,7 @@ int				parsing_input(char *input, t_user *start, t_env *env)
 		free(quote);
 		error_output_token(error, NULL, '\0');
 		return (-1);
-	}
+	} // LEAKS FREE
 	first_split_dirty_line(start, quote);
 	clean_line(start, quote);
 	add_environnement_var(start, quote, env);

@@ -11,19 +11,17 @@
 // 2 
 // Cette fonction nous fait actuellement crash
 
-int     end_loop_free(t_user *start, char *str, int token_used)
+int     end_and_free(t_user *start)
 {
     int i;
 
     i = 0;
-    while (token_used == 1 && start->user_cmd_tab[i])
+    while (start->user_cmd_tab[i])
     {
         free(start->user_cmd_tab[i]);
         i++;
     }
-    if (token_used == 1)
-        free(start->user_cmd_tab);
-    free(str);
+    free(start->user_cmd_tab);
     return (0);
 }
 
@@ -78,10 +76,10 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
                     {
                         execution(start, env);
                     }
+                   // end_and_free(start);
                 }
             }
             free(user_input);
-            //end_loop_free(start, user_input, used);
         }
     }
     

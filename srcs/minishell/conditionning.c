@@ -106,6 +106,7 @@ void	last_split(t_list *lst, int id, int size)
 	split_tokenize(&start, &quote);
 	lst->tab_cmd = tokenize_realloc(start.user_cmd_tab);
 	set_fd_in_out(id, size, lst);
+	free(start.user_input); // add, pour mon exit
 }
 
 /*

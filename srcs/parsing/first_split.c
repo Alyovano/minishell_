@@ -112,8 +112,7 @@ int				cut_input_to_tab(t_user *start, t_quote *quote)
 
 int				first_split_dirty_line(t_user *start, t_quote *quote)
 {
-	if (init_double_tab_cmd(start) == -1)
-		return (-1);
+	init_double_tab_cmd(start);
 	cut_input_to_tab(start, quote);
 	return (0);
 }
