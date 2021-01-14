@@ -8,7 +8,7 @@ void		free_all(t_user *start)
 	tmp = start->line;
 
 	//free_double_tab(env->tab); // CE TABLEAU EST MAUDIT
-	free_double_tab(start->user_cmd_tab);
+	//free_double_tab(start->user_cmd_tab);
 	while (start->line)
 	{
 		lst = start->line->content;

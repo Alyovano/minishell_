@@ -77,7 +77,7 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
                         execution(start, env);
                     }
 					
-                   //free_all(start);
+                   free_all(start);
                 }
             }
             free(user_input);

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 10:49:03 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/14 09:09:28 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,14 @@ int				parsing_input(char *input, t_user *start, t_env *env)
 		return (-1);
 	}
 	split_pipe(start, quote);
+	//free_double_tab(start->user_cmd_tab);
+	int i = 0;
+	while (start->user_cmd_tab[i])
+	{
+		ft_printf("i: %d\n", i);
+		free(start->user_cmd_tab[i++]);
+	}
+	//free(start->user_cmd_tab);
 	if (quote->verif != 0)
 	{
 		free(quote);
