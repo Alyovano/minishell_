@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/14 09:14:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/14 09:28:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int			ft_exit(t_env *env, t_list *lst, t_user *start)
 
 	ft_printf("exit\n");
 	free_all(start);
+	free_double_tab(env->tab);
 	//free_double_tab(env->tab); // CE TABLEAU EST MAUDIT
 	//free_double_tab(start->user_cmd_tab); free tab marche, mais pas le tab principal
 	/*
