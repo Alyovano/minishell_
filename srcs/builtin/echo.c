@@ -34,43 +34,38 @@ int			check_echo_flag(char *str)
 	return (FLAG_FAILURE);
 }
 
+void		echo_print(t_list *lst, int i)
+{
+	while (lst->tab_cmd[i])
+	{
+		if (lst->tab_cmd[i + 1] == NULL)
+			ft_printf("%s", lst->tab_cmd[i]);
+		else
+			ft_printf("%s ", lst->tab_cmd[i]);
+		i++;
+	}
+}
+
 int			ft_echo(t_env *env, t_list *lst)
 {
-	(void)env;
 	int flag;
 	int i;
 
+	(void)env;
 	flag = check_echo_flag(lst->tab_cmd[1]);
 	i = 0;
 	if (flag == FLAG_OK)
 	{
 		i = 2;
-		while (lst->tab_cmd[i])
-		{
-			if (lst->tab_cmd[i + 1] == NULL)
-				ft_printf("%s", lst->tab_cmd[i]);
-			else
-				ft_printf("%s ", lst->tab_cmd[i]);
-			i++;
-		}
-		//status = 0
+		echo_print(lst, i);
 		return (0);
 	}
 	else if (flag == FLAG_FAILURE || flag == NO_FLAG)
 	{
 		i = 1;
-		while (lst->tab_cmd[i])
-		{
-			if (lst->tab_cmd[i + 1] == NULL)
-				ft_printf("%s", lst->tab_cmd[i]);
-			else
-				ft_printf("%s ", lst->tab_cmd[i]);
-			i++;
-		}
+		echo_print(lst, i);
 		write(1, "\n", 1);
-		// status = 0;
 		return (0);
 	}
-	//status = 1;
 	return (1);
 }
