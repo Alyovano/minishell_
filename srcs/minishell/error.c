@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 10:41:36 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:57:57 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,20 @@ void		malloc_error(void)
 	exit(EXIT_FAILURE);
 }
 
+/*
+** Function to set gerrno
+** variable that contains $? value
+*/
+
 void		set_gerrno(t_list *lst, t_env *env)
 {
-	int		error;
-	struct stat		test;
+	int			error;
+	struct stat	test;
 
 	if (find_char(lst->tab_cmd[0], '/') == 1)
 	{
-		//check path
 		if (stat(lst->tab_cmd[0], &test) == -1)
 		{
-			//error = errno;
 			g_errno = 1;
 		}
 	}
@@ -36,16 +39,16 @@ void		set_gerrno(t_list *lst, t_env *env)
 	{
 		error = errno;
 		if (error == 13 || get_path(env->tab, lst->tab_cmd[0]) == NULL)
-			g_errno = 1; //error_output_token(-9 / -8, path, '\0');
+			g_errno = 1;
 		else
-			g_errno = 127; //error_output_token(-6, lst->tab_cmd[0], '\0');
+			g_errno = 127;
 	}
 	else
 		g_errno = 0;
 }
 
 /*
-** Modification de la fonction error_output_token pour permettre l'envoi de 
+** Modification de la fonction error_output_token pour permettre l'envoi de
 ** chaine de caractères pour imprimer une erreur
 */
 

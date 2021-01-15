@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/13 13:47:16 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:53:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	last_split(t_list *lst, int id, int size)
 	i = 0;
 	start.user_input = ft_strdup(lst->content);
 	start.split_nb = 1;
-	while (start.user_input[i]) //get nb elements
+	while (start.user_input[i])
 	{
 		quote.squote = 0;
 		quote.dquote = 0;
@@ -85,7 +85,7 @@ void	last_split(t_list *lst, int id, int size)
 	split_tokenize(&start, &quote);
 	lst->tab_cmd = tokenize_realloc(start.user_cmd_tab);
 	set_fd_in_out(id, size, lst);
-	free(start.user_input); // add, pour mon exit
+	free(start.user_input);
 	free_double_tab(start.user_cmd_tab);
 }
 

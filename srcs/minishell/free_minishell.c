@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_minishell.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/15 10:58:13 by user42            #+#    #+#             */
+/*   Updated: 2021/01/15 10:58:16 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void		free_all(t_user *start)
@@ -6,9 +18,6 @@ void		free_all(t_user *start)
 	t_list	*lst;
 
 	tmp = start->line;
-
-	//free_double_tab(env->tab); // CE TABLEAU EST MAUDIT
-	//free_double_tab(start->user_cmd_tab);
 	while (start->line)
 	{
 		lst = start->line->content;
@@ -27,6 +36,4 @@ void		free_all(t_user *start)
 	start->line = tmp;
 	free(start->line);
 	free(lst);
-	//free(start->user_input);
-	//free(env);
 }

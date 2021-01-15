@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 18:23:02 by alyovano          #+#    #+#             */
-/*   Updated: 2021/01/11 10:34:55 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:52:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 typedef struct		s_list
 {
 	void			*content;
-	//char			*builtin;
-	//char			*flag;
-	//char			*argu;
 	char			**tab_cmd;
 	int				fd[2];
 	int				stdin_fd;

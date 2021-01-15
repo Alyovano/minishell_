@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 10:11:18 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:52:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		get_backslash(char *str, int i)
 ** function to check backslash in end of lst->tab[i]
 */
 
-int			check_backslash(t_list *start)
+int		check_backslash(t_list *start)
 {
 	int		i;
 	int		j;
