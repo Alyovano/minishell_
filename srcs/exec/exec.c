@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2021/01/13 13:36:29 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:13:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,11 @@ int			execution(t_user *start, t_env *env)
 {
 	t_list	*lst;
 
+	if (check_backslash(start->line) == -1)
+	{
+		error_output_token(-5, NULL, '\0');
+		return (-1);
+	}
 	while (start->line)
 	{
 		lst = start->line->content;

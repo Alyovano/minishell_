@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/13 13:08:54 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:12:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void				init_quotes_to_fix(t_quote *quote);
 int					find_char(char *str, char c);
 char				**add_str_to_tab(char **tab, char *str);
 void				init_quotes_to_fix(t_quote *quote);
+int					check_backslash(t_list *start);
 
 /*
 **          Split

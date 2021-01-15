@@ -55,7 +55,7 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
                 }
             }
         }
-		// Un free pour le testeur aussi ? 
+		// Un free pour le testeur aussi ? Non on va le virer je crois (la partie du testeur)
     }
     else
     {
@@ -77,14 +77,12 @@ int     minishell_loop(t_user *start, t_env *env, char *argv)
                         execution(start, env);
                     }
 					
-                   free_all(start);
+                	free_all(start);
                 }
             }
             free(user_input);
         }
     }
-    
-    
     return (0);
 }
 

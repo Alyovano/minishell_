@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_line.c                                       :+:      :+:    :+:   */
+/*   backslash.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
-/*   Updated: 2020/10/22 13:20:04 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:11:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,35 @@ int		get_backslash(char *str, int i)
 	while (str[--i] && str[i] == '\\')
 		nb_backslash++;
 	return (nb_backslash % 2);
+}
+
+/*
+** function to check backslash in end of lst->tab[i]
+*/
+
+int			check_backslash(t_list *start)
+{
+	int		i;
+	int		j;
+	t_list	*lst;
+
+	while (start)
+	{
+		lst = start->content;
+		while (lst->next != NULL)
+			lst = lst->next;
+		i = double_tab_size(lst->tab_cmd) - 1;
+		j = ft_strlen(lst->tab_cmd[i]);
+		while (lst->tab_cmd[i][--j] && (lst->tab_cmd[i][j] == ' ' \
+											|| lst->tab_cmd[i][j] == '\\'))
+		{
+			if (lst->tab_cmd[i][j] == '\\' && \
+								get_backslash(lst->tab_cmd[i], j + 1) == 1)
+				return (-1);
+			else if (lst->tab_cmd[i][j] == '\\')
+				break ;
+		}
+		start = start->next;
+	}
+	return (0);
 }
