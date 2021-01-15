@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 15:24:24 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 15:25:02 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:42:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ int		set_input(t_list *lst, t_fd *fds, int i)
 			close(fds->fdin);
 		i++;
 	}
-	dup2(fds->fdin, 0);
+	if (dup2(fds->fdin, 0) == -1)
+	{
+		error_output_token(-11, NULL, '\0');
+		return (-1);
+	}
 	close(fds->fdin);
 	return (0);
 }
@@ -50,7 +54,7 @@ int		set_input(t_list *lst, t_fd *fds, int i)
 ** redirrect output at the end
 */
 
-void	set_output(t_list *lst, t_fd *fds, int i)
+int		set_output(t_list *lst, t_fd *fds, int i)
 {
 	while (lst->out[i])
 	{
@@ -64,8 +68,13 @@ void	set_output(t_list *lst, t_fd *fds, int i)
 			close(fds->fdout);
 		i++;
 	}
-	dup2(fds->fdout, 1);
+	if (dup2(fds->fdout, 1) == -1)
+	{
+		error_output_token(-11, NULL, '\0');
+		return (-1);
+	}
 	close(fds->fdout);
+	return (0);
 }
 
 /*
@@ -81,12 +90,18 @@ int		in_out_setup(t_fd *fds, t_list *lst)
 	i = 0;
 	fds->tmpin = dup(0);
 	fds->tmpout = dup(1);
+	if (fds->tmpin == -1 || fds->tmpout == -1)
+	{
+		error_output_token(-11, NULL, '\0');
+		return (-1);
+	}
 	if (lst->in[0] == NULL || lst->out[0] == NULL)
 		pipe(lst->fd);
 	if (lst->in[0] != NULL)
 		if (set_input(lst, fds, i) == -1)
 			return (-1);
 	if (lst->out[0] != NULL)
-		set_output(lst, fds, i);
+		if (set_output(lst, fds, i) == -1)
+			return (-1);
 	return (0);
 }

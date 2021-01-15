@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 10:12:40 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:36:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ int					read_redirrect(char *str, int i, t_list *lst, char *type);
 int					next_redirrect(char *str, int i, t_quote *q);
 char				*remove_redirrect(char *str);
 int					remove_redirrect_alloc(t_list *lst);
-void				exec_type(int size, int old_fd[2], t_env *env, t_list *lst);
+int					exec_type(int size, int old_fd[2], t_env *env, t_list *lst);
 int					in_out_setup(t_fd *fds, t_list *lst);
 
 /*

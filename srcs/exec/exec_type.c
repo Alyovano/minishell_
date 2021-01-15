@@ -6,24 +6,33 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 15:19:08 by user42            #+#    #+#             */
-/*   Updated: 2021/01/13 13:32:29 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:37:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	exec_type1(int old_fd[2], t_list *lst)
+int		exec_type1(int old_fd[2], t_list *lst)
 {
 	if (lst->stdout_fd && lst->out[0] == NULL)
 	{
-		dup2(lst->fd[1], STDOUT_FILENO);
+		if (dup2(lst->fd[1], STDOUT_FILENO) == -1)
+		{
+			error_output_token(-11, NULL, '\0');
+			return (-1);
+		}
 		close(lst->fd[0]);
 	}
 	if (lst->stdin_fd && lst->in[0] == NULL)
 	{
-		dup2(old_fd[0], STDIN_FILENO);
+		if (dup2(old_fd[0], STDIN_FILENO) == -1)
+		{
+			error_output_token(-11, NULL, '\0');
+			return (-1);
+		}
 		close(old_fd[1]);
 	}
+	return (0);
 }
 
 void	exec_type2(t_env *env, t_list *lst)
@@ -74,12 +83,14 @@ void	exec_type3(t_env *env, t_list *lst)
 ** TYPE 3: find cmd in builtin or $PATH
 */
 
-void	exec_type(int size, int old_fd[2], t_env *env, t_list *lst)
+int		exec_type(int size, int old_fd[2], t_env *env, t_list *lst)
 {
 	if (size != 1)
-		exec_type1(old_fd, lst);
+		if (exec_type1(old_fd, lst) == -1)
+			return (-1);
 	if (find_char(lst->tab_cmd[0], '/') == 1)
 		exec_type2(env, lst);
 	else
 		exec_type3(env, lst);
+	return (0);
 }

@@ -6,11 +6,25 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 14:53:07 by user42            #+#    #+#             */
-/*   Updated: 2021/01/11 15:21:16 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:42:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int		exec_close(t_list *lst, t_fd *fds)
+{
+	if (lst->out[0] == NULL || lst->in[0] == NULL)
+		close(lst->fd[1]);
+	if (dup2(fds->tmpin, 0) == -1 || dup2(fds->tmpout, 1) == -1)
+	{
+		error_output_token(-11, NULL, '\0');
+		return (-1);
+	}
+	close(fds->tmpin);
+	close(fds->tmpout);
+	return (0);
+}
 
 int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 {
@@ -25,15 +39,17 @@ int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 	else
 	{
 		lst->pid = fork();
+		if (lst->pid == -1)
+		{
+			error_output_token(-10, NULL, '\0');
+			return (-1);
+		}
 		if (lst->pid == 0)
-			exec_type(size, old_fd, env, lst);
+			if (exec_type(size, old_fd, env, lst) == -1)
+				return (-1);
 	}
-	if (lst->out[0] == NULL || lst->in[0] == NULL)
-		close(lst->fd[1]);
-	dup2(fds.tmpin, 0);
-	dup2(fds.tmpout, 1);
-	close(fds.tmpin);
-	close(fds.tmpout);
+	if (exec_close(lst, &fds) == -1)
+		return (-1);
 	return (1);
 }
 

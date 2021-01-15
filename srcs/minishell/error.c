@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/11 15:18:48 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:41:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,16 @@ void		error_output_token(int error, char *str, char c)
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": Permission non accordée\n", STDERR_FILENO);
 		g_errno = 1;
+	}
+	else if (error == -10)
+	{
+		ft_putstr_fd("Minishell: fork error\n", STDERR_FILENO);
+		g_errno = 444;
+	}
+	else if (error == -11)
+	{
+		ft_putstr_fd("Minishell: dup error\n", STDERR_FILENO);
+		g_errno = 444;
 	}
 	//Ici ca va free comme jaja  --> free dans minishell avant de reprendre boucle while
 }
