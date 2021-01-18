@@ -137,11 +137,6 @@ int		check_dollar_or_not_dollar(t_user *start,
 	return (0);
 }
 
-/*
-** PLACER LES FREE
-** free(dol) avant le return
-*/
-
 int		add_environnement_var(t_user *start, t_quote *quote, t_env *env)
 {
 	int			i;

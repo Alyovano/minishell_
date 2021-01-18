@@ -64,7 +64,7 @@ int				parsing_input(char *input, t_user *start, t_env *env)
 		return (-1);
 	first_split_dirty_line(start, &quote);
 	clean_line(start, &quote);
-	add_environnement_var(start, &quote, env);
+	//add_environnement_var(start, &quote, env);
 	if (parsing_input_verif2(start) == -1)
 		return (-1);
 	return (0);

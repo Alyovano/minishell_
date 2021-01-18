@@ -53,7 +53,6 @@ char		*requote_str(char *str)
 	return (trs.new);
 }
 
-
 void		requote_arg(t_list *lst)
 {
 	int i;

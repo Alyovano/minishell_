@@ -89,6 +89,7 @@ void		export_new_var_copy(t_export_new_var *a, t_list *lst)
 	}
 	else
 	{
+		g_errno = 1;
 		ft_printf("minishell: export: « %s » : identifiant non valable\n",
 			lst->tab_cmd[a->j]);
 		a->j++;
