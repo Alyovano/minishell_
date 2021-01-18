@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 10:36:22 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/18 09:04:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ int					input_to_tab_verif(t_user *start, t_quote *quote, int i);
 void				is_split_tokenize(t_user *start, int i);
 void				split_tokenize(t_user *start, t_quote *quote);
 char				**tokenize_realloc(char **tab);
+void				init_quotes(t_quote *quote, int squote, int dquote);
 
 /*
 **          Pipe '|'

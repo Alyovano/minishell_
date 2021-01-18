@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 13:20:17 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 10:49:03 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/18 09:12:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** but str[i] == ';' is replaced with '|'
 */
 
-static int			maybe_split(char *str, int i)
+static int		maybe_split(char *str, int i)
 {
 	if (str[i] == '|')
 	{
@@ -32,7 +32,7 @@ static int			maybe_split(char *str, int i)
 ** but t_user *start is replaced by char *str
 */
 
-static int			quote_get_len_and_validity2(char *str, t_quote *quote, int i)
+static int		quote_get_len_and_validity2(char *str, t_quote *quote, int i)
 {
 	quote->len = 0;
 	quote->verif = 0;
@@ -67,7 +67,7 @@ static int			quote_get_len_and_validity2(char *str, t_quote *quote, int i)
 ** a t_list cmd is created in place of char **tab for previus split
 */
 
-static t_list			*cut_input_to_tab(t_quote *quote, char *str)
+static t_list	*cut_input_to_tab(t_quote *quote, char *str)
 {
 	int		k;
 	int		i;
@@ -123,7 +123,7 @@ static t_list			*cut_input_to_tab(t_quote *quote, char *str)
 	return (cmd);
 }
 
-int				find_char(char *str, char c)
+int		find_char(char *str, char c)
 {
 	int i;
 
@@ -148,7 +148,7 @@ int				find_char(char *str, char c)
 ** t_lsit start_line-> content = lst1, lst2
 */
 
-void			split_pipe(t_user *start, t_quote *quote)
+void	split_pipe(t_user *start, t_quote *quote)
 {
 	t_list	*tmp;
 	int		i;
@@ -165,6 +165,4 @@ void			split_pipe(t_user *start, t_quote *quote)
 		}
 		i++;
 	}
-    // if (start->user_cmd_tab[0])
-    //     print_list(start);
 }
