@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:53:39 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 10:49:02 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/18 09:07:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int		get_redir_pipe(char *elem, t_quote *quote)
 
 	i = 0;
 	nb = 0;
-	quote->squote = -1;
-	quote->dquote = -1;
+	init_quotes(quote, -1, -1);
 	while (elem[i])
 	{
 		if (elem[i] == '\'' && (get_backslash(elem, i) == 0))
@@ -54,8 +53,7 @@ char	*rm_redir_pipe(char *elem, t_quote *quote, int nb)
 	tmp = malloc(sizeof(char) * (ft_strlen(elem) - nb));
 	if (tmp == NULL)
 		malloc_error();
-	quote->squote = -1;
-	quote->dquote = -1;
+	init_quotes(quote, -1, -1);
 	while (elem[j])
 	{
 		tmp[i] = elem[j];

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 10:45:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 10:49:01 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/18 09:06:05 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ void	get_clean_line(char *str, t_quote *quote, char **ret)
 
 	i = 0;
 	j = 0;
-	quote->squote = -1;
-	quote->dquote = -1;
+	init_quotes(quote, -1, -1);
 	while (str[i])
 	{
 		if (str[i] == '\'' && (get_backslash(str, i) == 0))

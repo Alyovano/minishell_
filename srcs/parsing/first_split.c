@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 10:49:02 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/18 09:04:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ int			maybe_split(t_user *start, int i)
 ** directement a l'interieur du tableau, des erreurs peuvent encore passer
 ** + norme |!|
 */
+
+void			init_quotes(t_quote *quote, int squote, int dquote)
+{
+	quote->squote = squote;
+	quote->dquote = dquote;
+}
 
 void			init_quotes_to_fix(t_quote *quote)
 {
