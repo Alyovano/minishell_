@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 10:25:55 by user42            #+#    #+#             */
-/*   Updated: 2021/01/18 10:28:10 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/18 12:51:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void			cut_to_tab_quotes(t_quote *quote, char *str, int *i)
 	}
 }
 
-t_list			*cut_input_to_tab2(t_int_pack *pack, char *str, t_quote *q)
+t_list			*cut_input_to_tab_pipe2(t_int_pack *pack, char *str, t_quote *q)
 {
 	char		*temp;
 	t_list		*cmd;
@@ -122,7 +122,7 @@ t_list			*cut_input_to_tab_pipe(t_quote *quote, char *str)
 	pack.k = 0;
 	pack.i = 0;
 	pack.j = 0;
-	cmd = cut_input_to_tab2(&pack, str, quote);
+	cmd = cut_input_to_tab_pipe2(&pack, str, quote);
 	if (str[pack.i] == 0 && quote->verif == 0)
 	{
 		temp = ft_str_n_dup(str + pack.j, pack.i - pack.j);

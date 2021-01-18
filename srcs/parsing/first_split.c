@@ -6,24 +6,11 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
-/*   Updated: 2021/01/18 09:04:41 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/18 12:54:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-char		*ft_str_n_dup(const char *s1, int size)
-{
-	size_t	longueur;
-	char	*tab;
-
-	longueur = size + 1;
-	tab = malloc(sizeof(char) * longueur);
-	if (tab == NULL)
-		malloc_error();
-	ft_strlcpy(tab, s1, longueur);
-	return (tab);
-}
 
 int			init_double_tab_cmd(t_user *start)
 {
@@ -59,20 +46,28 @@ int			maybe_split(t_user *start, int i)
 ** + norme |!|
 */
 
-void			init_quotes(t_quote *quote, int squote, int dquote)
+void		cut_input_to_tab2(t_user *start, t_quote *quote, int *i)
 {
-	quote->squote = squote;
-	quote->dquote = dquote;
+	init_quotes_to_fix(quote);
+	if (start->user_input[*i] == '\''
+	&& (get_backslash(start->user_input, *i) == 0))
+	{
+		quote->squote = 1;
+		quote_get_len_and_validity(start, quote, *i + 1);
+		*i += quote->len;
+		quote->squote = 0;
+	}
+	if (start->user_input[*i] == '"'
+	&& (get_backslash(start->user_input, *i) == 0))
+	{
+		quote->dquote = 1;
+		quote_get_len_and_validity(start, quote, *i + 1);
+		*i += quote->len;
+		quote->dquote = 0;
+	}
 }
 
-void			init_quotes_to_fix(t_quote *quote)
-{
-	quote->verif = 0;
-	quote->squote = 0;
-	quote->dquote = 0;
-}
-
-int				cut_input_to_tab(t_user *start, t_quote *quote)
+int			cut_input_to_tab(t_user *start, t_quote *quote)
 {
 	int k;
 	int i;
@@ -83,23 +78,7 @@ int				cut_input_to_tab(t_user *start, t_quote *quote)
 	j = 0;
 	while (start->user_input[i])
 	{
-		init_quotes_to_fix(quote);
-		if (start->user_input[i] == '\''
-		&& (get_backslash(start->user_input, i) == 0))
-		{
-			quote->squote = 1;
-			quote_get_len_and_validity(start, quote, i + 1);
-			i += quote->len;
-			quote->squote = 0;
-		}
-		if (start->user_input[i] == '"'
-		&& (get_backslash(start->user_input, i) == 0))
-		{
-			quote->dquote = 1;
-			quote_get_len_and_validity(start, quote, i + 1);
-			i += quote->len;
-			quote->dquote = 0;
-		}
+		cut_input_to_tab2(start, quote, &i);
 		if (maybe_split(start, i) == 0)
 		{
 			start->user_cmd_tab[k] = ft_str_n_dup(start->user_input + j, i - j);
@@ -116,7 +95,7 @@ int				cut_input_to_tab(t_user *start, t_quote *quote)
 	return (0);
 }
 
-int				first_split_dirty_line(t_user *start, t_quote *quote)
+int			first_split_dirty_line(t_user *start, t_quote *quote)
 {
 	init_double_tab_cmd(start);
 	cut_input_to_tab(start, quote);
