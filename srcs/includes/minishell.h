@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/18 12:42:51 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/18 14:41:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,12 +218,6 @@ void				init_quotes_to_fix(t_quote *quote);
 void				init_quotes_to_fix(t_quote *quote);
 
 /*
-** Quote multilignes (Bonus ?)
-*/
-
-char				*verify_quote_integrity(char *input);
-
-/*
 **          Redirrections
 */
 
@@ -255,6 +249,8 @@ int					catch_env_var(char *arg, char *env_line);
 int					add_environnement_var(t_user *start,
 					t_quote *quote, t_env *env);
 char				*check_var_in_env(char *var_name, t_env *env);
+int					str_check(char *str_envi, char *to_catch);
+int					check_simple_quote(t_user *start, t_quote *q, int j, int i);
 
 /*
 **    Preparation a l'execution
@@ -314,13 +310,6 @@ void				malloc_error(void);
 
 void				catch_signal(void);
 void				sig_handler(int value);
-
-/*
-** Prompt
-*/
-
-void				prompt(void);
-void				print_promt(char *cwd);
 int					verif_ret(int ret, char *user_input);
 
 /*

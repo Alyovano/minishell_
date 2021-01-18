@@ -6,119 +6,13 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 10:45:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 10:49:02 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/18 14:42:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char		*ft_strn_dup(const char *s1, int len)
-{
-	size_t	longueur;
-	char	*tab;
-
-	longueur = len;
-	if (!(tab = malloc(sizeof(char) * longueur)))
-		malloc_error();
-	ft_strlcpy(tab, s1, longueur);
-	return (tab);
-}
-
-int			simple_quote_get_len_and_validity(t_user *start,
-								t_quote *quote, int i, int j)
-{
-	quote->len = 0;
-	while (start->user_cmd_tab[i][j]
-	&& (quote->squote % 2 != 0 || quote->dquote % 2 != 0))
-	{
-		if (start->user_cmd_tab[i][j] == '"')
-		{
-			if (get_backslash(start->user_cmd_tab[i], j) == 0
-			&& quote->squote % 2 == 0)
-				quote->dquote++;
-		}
-		else if (start->user_cmd_tab[i][j] == '\'')
-		{
-			if (quote->squote % 2 == 0 && quote->dquote % 2 == 0)
-			{
-				if (get_backslash(start->user_cmd_tab[i], j) == 0)
-					quote->squote++;
-			}
-			else if (quote->squote % 1 == 0 && quote->dquote % 2 == 0)
-				quote->squote++;
-		}
-		j++;
-		quote->len++;
-	}
-	return (quote->len - 1);
-}
-
-/*
-**  ce token (quote->dollar_quote) permet de savoir
-**  si on est pas deja dans une doucle quote
-**	pcq si c'est le cas meme entre simple quote, il faudrait afficher
-**	la var d'envi --- exemple de piege possible
-**	input> " '$USER' "
-**	output> "'alyovano'"
-*/
-
-int			free_dol(t_dollar *dol, char *one, char *two)
-{
-	if (dol->var_content)
-		free(dol->var_content);
-	if (dol->before_str)
-		free(dol->before_str);
-	if (dol->after_str)
-		free(dol->after_str);
-	if (one)
-		free(one);
-	if (two)
-		free(two);
-	return (0);
-}
-
-int			check_simple_quote(t_user *start, t_quote *quote, int j, int i)
-{
-	if (start->user_cmd_tab[i][j] == '\''
-	&& (get_backslash(start->user_cmd_tab[i], j) == 0)
-	&& quote->dollar_quote % 2 == 0)
-	{
-		quote->squote = 1;
-		simple_quote_get_len_and_validity(start, quote, i, j + 1);
-		j += quote->len;
-		quote->squote = 0;
-	}
-	if (start->user_cmd_tab[i][j] == '"'
-	&& (get_backslash(start->user_cmd_tab[i], j) == 0))
-	{
-		quote->dollar_quote += 1;
-	}
-	return (j);
-}
-
-int			str_check(char *str_envi, char *to_catch)
-{
-	int i;
-	int len;
-	int check;
-
-	i = 0;
-	check = 0;
-	len = ft_strlen(to_catch);
-	while (i < len)
-	{
-		if (to_catch[i] == str_envi[i])
-		{
-			check++;
-		}
-		i++;
-	}
-	if (check == len && str_envi[i] == '=')
-		return (0);
-	return (1);
-}
-
-char		*check_var_in_env(char *var_name, t_env *env)
+char	*check_var_in_env(char *var_name, t_env *env)
 {
 	int		i;
 	int		token_copy;
@@ -137,7 +31,8 @@ char		*check_var_in_env(char *var_name, t_env *env)
 		i++;
 	}
 	if (token_copy == 1)
-		new = ft_substr(env->tab[i], ft_strlen(var_name) + 1, ft_strlen(env->tab[i]));
+		new = ft_substr(env->tab[i], ft_strlen(var_name) + 1, \
+											ft_strlen(env->tab[i]));
 	else
 		new = ft_strdup("");
 	return (new);
@@ -150,12 +45,13 @@ char		*check_var_in_env(char *var_name, t_env *env)
 */
 
 // ne pas oublier de placer les free ici
-int			dollar_var_name(t_user *start, int i, int j, t_dollar *dol, t_env *env)
+
+int		dollar_var_name(t_user *start, int i, int j, t_dollar *dol, t_env *env)
 {
-	int tmp;
-	int k;
-	char *one;
-	char *two;
+	int		tmp;
+	int		k;
+	char	*one;
+	char	*two;
 
 	j += 1;
 	tmp = j;
@@ -184,18 +80,19 @@ int			dollar_var_name(t_user *start, int i, int j, t_dollar *dol, t_env *env)
 ** Retourne la taille de la valeur de $?
 */
 
-int			previous_return_value(t_user *start, int i, int j, t_dollar *dol)
+int		previous_return_value(t_user *start, int i, int j, t_dollar *dol)
 {
-	int int_size;
-	char *value;
-	char *one;
-	char *two;
+	int		int_size;
+	char	*value;
+	char	*one;
+	char	*two;
 
 	int_size = 0;
 	value = ft_itoa(g_errno);
 	j += 1;
 	dol->before_str = ft_substr(start->user_cmd_tab[i], 0, j - 1);
-	dol->after_str = ft_substr(start->user_cmd_tab[i], j + 1, ft_strlen(start->user_cmd_tab[i]));
+	dol->after_str = ft_substr(start->user_cmd_tab[i], j + 1, \
+									ft_strlen(start->user_cmd_tab[i]));
 	one = ft_strjoin(dol->before_str, value);
 	two = ft_strjoin(one, dol->after_str);
 	free(start->user_cmd_tab[i]);
@@ -208,7 +105,7 @@ int			previous_return_value(t_user *start, int i, int j, t_dollar *dol)
 ** j = check_simple_quote(start, quote, j, i);// jump sur la char apres la squote
 */
 
-int				check_dollar_or_not_dollar(t_user *start,
+int		check_dollar_or_not_dollar(t_user *start,
 						t_quote *quote, int i, t_dollar *dol, t_env *env)
 {
 	int j;
@@ -245,7 +142,7 @@ int				check_dollar_or_not_dollar(t_user *start,
 ** free(dol) avant le return
 */
 
-int				add_environnement_var(t_user *start, t_quote *quote, t_env *env)
+int		add_environnement_var(t_user *start, t_quote *quote, t_env *env)
 {
 	int			i;
 	t_dollar	*dol;
