@@ -1,3 +1,16 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/01/18 12:22:19 by alyovano          #+#    #+#              #
+#    Updated: 2021/01/18 13:37:23 by user42           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
 BUILTIN = $(addprefix srcs/builtin/, export.c unset.c pwd.c echo.c exit.c \
 			cd.c env.c utils.c utils_environnement.c export_whitout_argument.c)
 MINISHELL = $(addprefix srcs/minishell/, minishell.c error.c conditionning.c \
