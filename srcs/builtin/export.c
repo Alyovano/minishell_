@@ -31,6 +31,42 @@
 ** la buitin - export dans ce cas-ci, et ca ne fait pas partie de l'argu
 */
 
+int			is_valid_char(char c)
+{
+	if (c == '[' || c == ']' || c == '!'
+		|| c == '@' || c == '#' || c == '$' || c == '%'
+		|| c == '^' || c == '&' || c == '*' || c == '{'
+		|| c == '}' || c == '.' || c == ',' || c == '?'
+		|| c == ':')
+		return (-1);
+	return (0);
+}
+
+int			is_valid_name(char *str)
+{
+	int i;
+	int alphabet_token;
+
+	i = 0;
+	alphabet_token = 0;
+	while (str[i])
+	{
+		if (is_valid_char(str[i]) == 0)
+		{
+			if (i == 0 && ft_isdigit(str[i]) == 1)
+				return (-1);
+			if (ft_isalpha(str[i]) == 1)
+				alphabet_token = 1;
+		}
+		else
+			return (-1);
+		i++;
+	}
+	if (alphabet_token == 0)
+		return (-1);
+	return (0);
+}
+
 int			export_new_var(t_env *env, t_list *lst)
 {
 	char **new_tab;
@@ -52,21 +88,29 @@ int			export_new_var(t_env *env, t_list *lst)
 	new_tab[i] = NULL;
 	while (lst->tab_cmd[j])
 	{
-		position = check_if_exist(new_tab, lst->tab_cmd[j]);
-		if (position != -1)
+		if (is_valid_name(lst->tab_cmd[j]) == 0)
 		{
-			tmp = replace_var_value(new_tab[position], lst->tab_cmd[j]);
-			free(new_tab[position]);
-			new_tab[position] = ft_strdup(tmp);
-			free(tmp);
-			j++;
+			position = check_if_exist(new_tab, lst->tab_cmd[j]);
+			if (position != -1)
+			{
+				tmp = replace_var_value(new_tab[position], lst->tab_cmd[j]);
+				free(new_tab[position]);
+				new_tab[position] = ft_strdup(tmp);
+				free(tmp);
+				j++;
+			}
+			else
+			{
+				new_tab[i] = ft_strdup(lst->tab_cmd[j]);
+				j++;
+				i++;
+				new_tab[i] = NULL;
+			}
 		}
 		else
 		{
-			new_tab[i] = ft_strdup(lst->tab_cmd[j]);
+			ft_printf("minishell: export: « %s » : identifiant non valable\n", lst->tab_cmd[j]);
 			j++;
-			i++;
-			new_tab[i] = NULL;
 		}
 	}
 	new_tab[i] = NULL;
