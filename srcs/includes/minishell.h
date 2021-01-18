@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/18 09:04:59 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/18 10:31:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,17 @@ typedef struct		s_export_new_var
 }					t_export_new_var;
 
 /*
+** (s_int_pack)
+*/
+
+typedef struct		s_int_pack
+{
+	int				i;
+	int				j;
+	int				k;
+}					t_int_pack;
+
+/*
 **                 Des fonctions
 */
 
@@ -178,6 +189,7 @@ void				init_quotes(t_quote *quote, int squote, int dquote);
 
 int					check_pipe(char *str, t_quote *quote);
 void				split_pipe(t_user *start, t_quote *quote);
+t_list				*cut_input_to_tab_pipe(t_quote *quote, char *str);
 
 /*
 **          Semicolon; Chevron<>  Backslash\\
