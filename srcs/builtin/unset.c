@@ -65,23 +65,6 @@ char			**copy_unset_tab(char **src)
     return (new_tab);
 }
 
-int				is_valid_var_name(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (ft_isalpha(str[i]) == 0) // Pourri - a changer
-		{
-			if (str[i] != '_')		// Pourri - a changer
-				return (-1);
-		}
-		i++;
-	}
-	return (0);
-}
-
 char			**check_var_name(char **arg)
 {
 	int i;
@@ -95,7 +78,7 @@ char			**check_var_name(char **arg)
 		malloc_error();
 	while (arg[i])
 	{
-		if (is_valid_var_name(arg[i]) == -1)
+		if (is_valid_name(arg[i]) == -1)
 		{
 			ft_printf("minishell: unset: « %s » : identifiant non valable\n", arg[i]);
 			i++;
@@ -136,21 +119,30 @@ int				ft_unset(t_env *env, t_list *lst)
 	i = 0;
 	while (lst->tab_cmd[i])
 	{
-		j = 0;
-		while (env->tab[j])
+		if (is_valid_name(lst->tab_cmd[i]) == 0) 
 		{
-			if (catch_env_varr(lst->tab_cmd[i], env->tab[j]) == 0)
+			j = 0;
+			while (env->tab[j])
 			{
-				free(env->tab[j]);
-				env->tab[j] = ft_strdup("123456789");
+				if (catch_env_varr(lst->tab_cmd[i], env->tab[j]) == 0)
+				{
+					free(env->tab[j]);
+					env->tab[j] = ft_strdup("123456789");
+				}
+				j++;
 			}
-			j++;
+			i++;
 		}
-		i++;
+		else
+		{
+			ft_printf("minishell: unset: « %s » : identifiant non valable\n", lst->tab_cmd[i]);
+			i++;
+		}
+		
 	}
 	new_tab = copy_unset_tab(env->tab);
-	//free_double_tab(env->tab);
+	free_double_tab(env->tab);
 	env->tab = copy_double_tab(new_tab);
-	//free_double_tab(new_tab);
+	free_double_tab(new_tab);
 	return (0);
 }
