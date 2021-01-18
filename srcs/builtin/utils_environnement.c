@@ -64,7 +64,7 @@ int				check_if_exist(char **tab, char *arg)
 ** Cette fonction ne verifie pas son existence
 */
 
-char			*replace_var_value(char *tmp, char *arg)
+char			*change_value(char *tmp, char *arg)
 {
 	int i;
 

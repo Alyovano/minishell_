@@ -18,7 +18,7 @@
 ** Si pas d'argu : il print le tableau
 ** Si argu, il le parse, et ajoute le(s) vars si elles sont valides
 ** dans un cas invalide il retourne une erreur
-**/
+*/
 
 /*
 ** Prend l'argument, la nombre de de coupe (size) et
@@ -27,20 +27,9 @@
 */
 
 /*
-** j start a 1 parce que la case 0 de lst->tab_cmd[] c'est le nom de 
+** j start a 1 parce que la case 0 de lst->tab_cmd[] c'est le nom de
 ** la buitin - export dans ce cas-ci, et ca ne fait pas partie de l'argu
 */
-
-int			is_valid_char(char c)
-{
-	if (c == '[' || c == ']' || c == '!'
-		|| c == '@' || c == '#' || c == '$' || c == '%'
-		|| c == '^' || c == '&' || c == '*' || c == '{'
-		|| c == '}' || c == '.' || c == ',' || c == '?'
-		|| c == ':')
-		return (-1);
-	return (0);
-}
 
 int			is_valid_name(char *str)
 {
@@ -67,156 +56,90 @@ int			is_valid_name(char *str)
 	return (0);
 }
 
-int			export_new_var(t_env *env, t_list *lst)
+void		init_export_new_var(t_export_new_var *a, t_list *lst, t_env *env)
 {
-	char **new_tab;
-	char *tmp;
-	int i;
-	int j;
-	int position;
-
-	new_tab = malloc(sizeof(new_tab) * (double_tab_size(env->tab) + double_tab_size(lst->tab_cmd)) + 2);
-	if (!new_tab)
+	a->new_tab = malloc(sizeof(a->new_tab) *
+		(double_tab_size(env->tab) + double_tab_size(lst->tab_cmd)) + 2);
+	if (a->new_tab == NULL)
 		malloc_error();
-	i = 0;
-	j = 1;
-	while (env->tab[i])
+	a->i = 0;
+	a->j = 1;
+}
+
+void		export_new_var_copy(t_export_new_var *a, t_list *lst)
+{
+	if (is_valid_name(lst->tab_cmd[a->j]) == 0)
 	{
-		new_tab[i] = ft_strdup(env->tab[i]);
-		i++;
-	}
-	new_tab[i] = NULL;
-	while (lst->tab_cmd[j])
-	{
-		if (is_valid_name(lst->tab_cmd[j]) == 0)
+		a->position = check_if_exist(a->new_tab, lst->tab_cmd[a->j]);
+		if (a->position != -1)
 		{
-			position = check_if_exist(new_tab, lst->tab_cmd[j]);
-			if (position != -1)
-			{
-				tmp = replace_var_value(new_tab[position], lst->tab_cmd[j]);
-				free(new_tab[position]);
-				new_tab[position] = ft_strdup(tmp);
-				free(tmp);
-				j++;
-			}
-			else
-			{
-				new_tab[i] = ft_strdup(lst->tab_cmd[j]);
-				j++;
-				i++;
-				new_tab[i] = NULL;
-			}
+			a->tmp = change_value(a->new_tab[a->position], lst->tab_cmd[a->j]);
+			free(a->new_tab[a->position]);
+			a->new_tab[a->position] = ft_strdup(a->tmp);
+			free(a->tmp);
+			a->j++;
 		}
 		else
 		{
-			ft_printf("minishell: export: « %s » : identifiant non valable\n", lst->tab_cmd[j]);
-			j++;
+			a->new_tab[a->i] = ft_strdup(lst->tab_cmd[a->j]);
+			a->j++;
+			a->i++;
+			a->new_tab[a->i] = NULL;
 		}
 	}
-	new_tab[i] = NULL;
+	else
+	{
+		ft_printf("minishell: export: « %s » : identifiant non valable\n",
+			lst->tab_cmd[a->j]);
+		a->j++;
+	}
+}
 
-	// Free le vieux tableau d'env
+int			export_new_var(t_env *env, t_list *lst)
+{
+	t_export_new_var a;
+
+	init_export_new_var(&a, lst, env);
+	while (env->tab[a.i])
+	{
+		a.new_tab[a.i] = ft_strdup(env->tab[a.i]);
+		a.i++;
+	}
+	a.new_tab[a.i] = NULL;
+	while (lst->tab_cmd[a.j])
+		export_new_var_copy(&a, lst);
+	a.new_tab[a.i] = NULL;
 	//free_double_tab(env->tab);
-	// ici ce free est grave chelou
-	//printf("4\n");
-	// i = 0;
-	// while (env->tab[i])
-	// {
-	// 	printf("%d\n", i);
-	// 	printf("La str a free :%s\n", env->tab[i]);
-	// 	if (i != 1)
-	// 		free(env->tab[i]);
-	// 	printf("FREE OK\n");
-	// 	i++;
-	// }
-	// free(env->tab);
-
-	// Copie du nouveau tableau dans ENV
-	env->tab = copy_double_tab(new_tab);
-	free_double_tab(new_tab);
+	env->tab = copy_double_tab(a.new_tab);
+	free_double_tab(a.new_tab);
 	return (0);
 }
 
-char		*requote_str(char *str)
-{
-	int		i;
-	int		j;
-	char	*new;
-	int		token;
-
-	new = malloc((sizeof(char*) * ft_strlen(str)) + 3);
-	if (!new)
-		malloc_error();
-	i = 0;
-	j = 0;
-	token = 0;
-	while (str[i])
-	{
-		new[i + j] = str[i];
-		if (token == 0 && str[i] == '=')
-		{
-			token = 1;
-			j = 1;
-			new[i + j] = '"';
-		}
-		i++;
-	}
-	if (token == 1)
-	{
-		new[i + j] = '"';
-		new[i + j + 1] = 0;
-	}
-	else
-		new[i] = 0;
-	free(str);
-	return (new); 
-}
-
-void		requote_arg(t_list *lst)
-{
-	int i;
-
-	i = 0;
-	while (lst->tab_cmd[i])
-	{
-		lst->tab_cmd[i] = delete_quote(lst->tab_cmd[i]);
-		lst->tab_cmd[i] = requote_str(lst->tab_cmd[i]);
-		i++;
-	}
-}
-
-/*
-** CERTAINES VAR DOIVENT ETRE REFUSEES CAR
-** ELLES COMPORTENT DES []$%#@!
-** TO DO
-*/
-
-int         ft_export(t_env *env, t_list *lst)
+int			ft_export(t_env *env, t_list *lst)
 {
 	int quote_add;
-    env->swap_token = 0;
 
+	env->swap_token = 0;
 	quote_add = 0;
-    if (double_tab_size(lst->tab_cmd) == 1)
-    {
-        env->export = copy_double_tab(env->tab);
+	if (double_tab_size(lst->tab_cmd) == 1)
+	{
+		env->export = copy_double_tab(env->tab);
 		while (env->export[quote_add])
 		{
 			env->export[quote_add] = delete_quote(env->export[quote_add]);
 			env->export[quote_add] = requote_str(env->export[quote_add]);
 			quote_add++;
 		}
-        sort_export(env);
-        export_without_args(env);
-        free_double_tab(env->export);
-        return (NO_ARGS);
-    }
-    else
-    {
+		sort_export(env);
+		export_without_args(env);
+		free_double_tab(env->export);
+		return (NO_ARGS);
+	}
+	else
+	{
 		requote_arg(lst);
 		export_new_var(env, lst);
 		return (ARGS);
-    }
-	// status = 1 ici
-    return (-1);
+	}
+	return (-1);
 }
