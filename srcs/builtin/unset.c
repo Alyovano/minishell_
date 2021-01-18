@@ -12,64 +12,38 @@
 
 #include "../includes/minishell.h"
 
-/*
-** s1 = Mon argu a chercher dans le tableau
-** s2 = la ligne du tableau 
-**
-** return 0 -> La var existe dans le tableau
-** return 1 -> Cette var n'est pas dans le tableau
-*/
-
-int				catch_env_varr(char *arg, char *env_line)
-{
-    unsigned int i;
-
-    i = 0;
-	if (!env_line && !env_line[i])
-		return (-1);
-    while (arg[i] && env_line[i])
-    {
-        if (arg[i] != env_line[i])
-            break ;
-        i++;
-    }
-    if ((env_line[i] == '\0' || env_line[i] == '=') && i == ft_strlen(arg))
-        return (0);
-    return (1);
-}
-
 char			**copy_unset_tab(char **src)
 {
-    char **new_tab;
-    int size;
-    int i;
-	int j;
+	char	**new_tab;
+	int		size;
+	int		i;
+	int		j;
 
-    i = 0;
+	i = 0;
 	j = 0;
-    size = double_tab_size(src);
-    new_tab = malloc(sizeof(char**) * (size + 1));
-    if (!new_tab)
+	size = double_tab_size(src);
+	new_tab = malloc(sizeof(char**) * (size + 1));
+	if (!new_tab)
 		malloc_error();
-    new_tab[size] = 0;
-    while (src[i])
-    {
+	new_tab[size] = 0;
+	while (src[i])
+	{
 		if (ft_strcmp("123456789", src[i]) != 0)
 		{
-        	new_tab[j] = ft_strdup(src[i]);
+			new_tab[j] = ft_strdup(src[i]);
 			j++;
 		}
-        i++;
-    }
+		i++;
+	}
 	new_tab[j] = NULL;
-    return (new_tab);
+	return (new_tab);
 }
 
 char			**check_var_name(char **arg)
 {
-	int i;
-	int j;
-	char **tmp;
+	int		i;
+	int		j;
+	char	**tmp;
 
 	i = 0;
 	j = 0;
@@ -79,10 +53,8 @@ char			**check_var_name(char **arg)
 	while (arg[i])
 	{
 		if (is_valid_name(arg[i]) == -1)
-		{
-			ft_printf("minishell: unset: « %s » : identifiant non valable\n", arg[i]);
-			i++;
-		}
+			ft_printf("minishell: unset: « %s » : identifiant non valable\n",
+				arg[i++]);
 		else
 		{
 			tmp[j] = ft_strdup(arg[i]);
@@ -99,50 +71,58 @@ char			**check_var_name(char **arg)
 ** Unset creer un nouveau tableau sans les variables detruire par user
 ** Le code "123456789" indique a la fonction quelle var
 ** va etre delete dans la creation du suivant
-** ce nom ne porte pas a confusion puisqu'il ne peut pas etre utilise 
+** ce nom ne porte pas a confusion puisqu'il ne peut pas etre utilise
 ** par user -> check_var_name(tmp); bloque son accessibilite
 */
 
+void			init_unset(t_export_new_var *a, t_list *lst)
+{
+	a->i = 0;
+	a->j = 0;
+	while (lst->tab_cmd[a->i])
+	{
+		lst->tab_cmd[a->i] = delete_quote(lst->tab_cmd[a->i]);
+		a->i++;
+	}
+	a->i = 0;
+}
+
+void			delete_env_var(t_list *lst, t_export_new_var *a, t_env *env)
+{
+	a->j = 0;
+	while (env->tab[a->j])
+	{
+		if (catch_env_varr(lst->tab_cmd[a->i], env->tab[a->j]) == 0)
+		{
+			free(env->tab[a->j]);
+			env->tab[a->j] = ft_strdup("123456789");
+		}
+		a->j++;
+	}
+	a->i++;
+}
+
 int				ft_unset(t_env *env, t_list *lst)
 {
-	char	**new_tab;
-	int		i;
-	int 	j;
+	t_export_new_var a;
 
-	i = 0;
-	j = 0;
-	while (lst->tab_cmd[i])
+	init_unset(&a, lst);
+	while (lst->tab_cmd[a.i])
 	{
-		lst->tab_cmd[i] = delete_quote(lst->tab_cmd[i]);
-		i++;
-	}
-	i = 0;
-	while (lst->tab_cmd[i])
-	{
-		if (is_valid_name(lst->tab_cmd[i]) == 0) 
+		if (is_valid_name(lst->tab_cmd[a.i]) == 0)
 		{
-			j = 0;
-			while (env->tab[j])
-			{
-				if (catch_env_varr(lst->tab_cmd[i], env->tab[j]) == 0)
-				{
-					free(env->tab[j]);
-					env->tab[j] = ft_strdup("123456789");
-				}
-				j++;
-			}
-			i++;
+			delete_env_var(lst, &a, env);
 		}
 		else
 		{
-			ft_printf("minishell: unset: « %s » : identifiant non valable\n", lst->tab_cmd[i]);
-			i++;
+			ft_printf("minishell: unset: « %s » : identifiant non valable\n",
+				lst->tab_cmd[a.i]);
+			a.i++;
 		}
-		
 	}
-	new_tab = copy_unset_tab(env->tab);
+	a.new_tab = copy_unset_tab(env->tab);
 	free_double_tab(env->tab);
-	env->tab = copy_double_tab(new_tab);
-	free_double_tab(new_tab);
+	env->tab = copy_double_tab(a.new_tab);
+	free_double_tab(a.new_tab);
 	return (0);
 }
