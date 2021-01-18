@@ -96,13 +96,6 @@ typedef struct		s_fd
 	int				fdout;
 }					t_fd;
 
-typedef struct		s_token_env
-{
-	int				i;
-	int				j;
-	int				k;
-}					t_token_env;
-
 /*
 ** (s_dollar)
 ** Pcq cet algo requier trop de variable a deplacer pour la norme 42
@@ -123,22 +116,45 @@ typedef struct		s_dollar
 	int				index;
 }					t_dollar;
 
+
+/*
+** 		Structures secondaires (Norme | Proprete du code)
+*/
+
+typedef struct		s_token_env
+{
+	int				i;
+	int				j;
+	int				k;
+}					t_token_env;
+
+typedef struct		s_requote_str
+{
+	char			*new;
+	int				i;
+	int				j;
+	int				token;
+}					t_requote_str;
+
+typedef struct		s_export_new_var
+{
+	char			**new_tab;
+	char			*tmp;
+	int				i;
+	int				j;
+	int				position;
+}					t_export_new_var;
+
 /*
 **                 Des fonctions
 */
 
 void				free_all(t_user *start);
 int					parsing_input(char *input, t_user *start, t_env *env);
-int					quote_get_len_and_validity(t_user *start,
-					t_quote *quote, int i);
-int					quote_len(char *str);
-char				*delete_quote(char *str);
 int					check_input_start(t_user *start);
 void				error_output_token(int error, char *str, char c);
-void				init_quotes_to_fix(t_quote *quote);
 int					find_char(char *str, char c);
 char				**add_str_to_tab(char **tab, char *str);
-void				init_quotes_to_fix(t_quote *quote);
 int					check_backslash(t_list *start);
 
 /*
@@ -174,6 +190,26 @@ int					is_this_redirectable_reverse(t_user *start,
 					t_quote *quote, int i);
 
 /*
+**                 Quotes
+*/
+
+int					quote_get_len_and_validity(t_user *start,
+					t_quote *quote, int i);
+int					quote_len(char *str);
+char				*delete_quote(char *str);
+void				init_requote_str(t_requote_str *trs, char *str);
+char				*requote_str(char *str);
+void				requote_arg(t_list *lst);
+void				init_quotes_to_fix(t_quote *quote);
+void				init_quotes_to_fix(t_quote *quote);
+
+/*
+** Quote multilignes (Bonus ?)
+*/
+
+char				*verify_quote_integrity(char *input);
+
+/*
 **          Redirrections
 */
 
@@ -204,12 +240,6 @@ int					catch_env_varr(char *arg, char *env_line);
 int					add_environnement_var(t_user *start,
 					t_quote *quote, t_env *env);
 char				*check_var_in_env(char *var_name, t_env *env);
-
-/*
-** Quote multilignes (Bonus ?)
-*/
-
-char				*verify_quote_integrity(char *input);
 
 /*
 **    Preparation a l'execution
@@ -251,10 +281,11 @@ char				**parsing_arg(char **arg_tab);
 char				*first_clear_arg(char *str);
 char				*clear_arg(char *str);
 int					catch_env_var(char *arg, char *env_line);
-char				*replace_var_value(char *tmp, char *arg);
+char				*change_value(char *tmp, char *arg);
 int					sort_export(t_env *env);
 int					export_without_args(t_env *env);
 int					is_valid_name(char *str);
+int					is_valid_char(char c);
 
 /*
 ** malloc error
