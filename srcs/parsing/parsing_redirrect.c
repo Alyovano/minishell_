@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:53:39 by user42            #+#    #+#             */
-/*   Updated: 2021/01/18 09:07:18 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/18 12:45:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ char	*rm_redir_pipe(char *elem, t_quote *quote, int nb)
 	int		j;
 	char	*tmp;
 
-	i = 0;
-	j = 0;
+	i = -1;
+	j = -1;
 	tmp = malloc(sizeof(char) * (ft_strlen(elem) - nb));
 	if (tmp == NULL)
 		malloc_error();
 	init_quotes(quote, -1, -1);
-	while (elem[j])
+	while (elem[++j])
 	{
-		tmp[i] = elem[j];
+		tmp[++i] = elem[j];
 		if (elem[j] == '\'' && (get_backslash(elem, j) == 0))
 			quote->squote *= -1;
 		if (elem[j] == '"' && (get_backslash(elem, j) == 0))
@@ -66,8 +66,6 @@ char	*rm_redir_pipe(char *elem, t_quote *quote, int nb)
 			if (elem[j] == '>' && elem[j + 1] == '|')
 				j++;
 		}
-		i++;
-		j++;
 	}
 	tmp[i] = '\0';
 	return (tmp);
@@ -109,7 +107,6 @@ int		parsing_redirrect(t_user *start)
 	i = 0;
 	while (start->user_cmd_tab[i])
 	{
-		//ft_printf("Before: |%s|\n", start->user_cmd_tab[i]);
 		nb_redirr_pipe = get_redir_pipe(start->user_cmd_tab[i], &quote);
 		if (syntax_error_redirect(start->user_cmd_tab[i], &quote) == -1)
 			return (-1);
@@ -120,7 +117,6 @@ int		parsing_redirrect(t_user *start)
 			start->user_cmd_tab[i] = rm_redir_pipe(tmp, &quote, nb_redirr_pipe);
 			free(tmp);
 		}
-		//ft_printf("Result: |%s|\n", start->user_cmd_tab[i]);
 		i++;
 	}
 	return (0);

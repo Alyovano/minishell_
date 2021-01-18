@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/18 11:32:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/18 12:42:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ typedef struct		s_dollar
 	int				len;
 	int				index;
 }					t_dollar;
-
 
 /*
 ** 		Structures secondaires (Norme | Proprete du code)
