@@ -13,9 +13,30 @@
 #include "../includes/minishell.h"
 
 /*
-** size = check_arg_nb(arg) + 1; compte le nombre de coupe
-** a appliquer a l'argument (combien de ligne va-t-on add au tableau env)
+** s1 = Mon argu a chercher dans le tableau
+** s2 = la ligne du tableau
+**
+** return 0 -> La var existe dans le tableau
+** return 1 -> Cette var n'est pas dans le tableau
 */
+
+int				catch_env_varr(char *arg, char *env_line)
+{
+	unsigned int i;
+
+	i = 0;
+	if (!env_line && !env_line[i])
+		return (-1);
+	while (arg[i] && env_line[i])
+	{
+		if (arg[i] != env_line[i])
+			break ;
+		i++;
+	}
+	if ((env_line[i] == '\0' || env_line[i] == '=') && i == ft_strlen(arg))
+		return (0);
+	return (1);
+}
 
 int				catch_env_var(char *arg, char *env_line)
 {
