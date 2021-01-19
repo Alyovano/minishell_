@@ -82,7 +82,7 @@ int			ft_cd(t_env *env, t_list *lst)
 	char *tmp;
 
 	tmp = getcwd(NULL, 0);
-	if (!lst->tab_cmd[1][0] || !lst->tab_cmd[1])
+	if (double_tab_size(lst->tab_cmd) == 1)
 	{
 		go_home(tmp, "HOME", env);
 		free(tmp);
