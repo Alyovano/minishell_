@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/19 10:02:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 10:09:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,22 +89,6 @@ void	last_split(t_list *lst, int id, int size)
 	free_double_tab(start.user_cmd_tab);
 }
 
-/*
-** Function to show every element of t_list
-*/
-
-void	debug(t_list *lst)
-{
-	ft_printf("\n\nDebug line: \n-----------------------------\n\n");
-	while (lst)
-	{
-		ft_printf("Content: |%s|\n", (char *)lst->content);
-		ft_printf("Stdin ? : |%d|\n\n", lst->stdin_fd);
-		ft_printf("Stdout ?: |%d|\n\n", lst->stdout_fd);
-		lst = lst->next;
-	}
-}
-
 void	init_lst(t_list *lst)
 {
 	lst->in_types = NULL;
@@ -139,9 +123,8 @@ int		conditionning(t_user *start)
 			init_lst(lst);
 			if (remove_redirrect_alloc(lst) == -1)
 				return (-1);
-			last_split(lst, i, size);
+			last_split(lst, i++, size);
 			lst = lst->next;
-			i++;
 		}
 		start->line = start->line->next;
 	}

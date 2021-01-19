@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 09:24:42 by user42            #+#    #+#             */
-/*   Updated: 2020/10/23 09:29:37 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 10:09:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,20 @@ void		print(void *line)
 void		print_list(t_user *start)
 {
 	ft_lstiter(start->line, &print);
+}
+
+/*
+** Function to show every element of t_list
+*/
+
+void	debug(t_list *lst)
+{
+	ft_printf("\n\nDebug line: \n-----------------------------\n\n");
+	while (lst)
+	{
+		ft_printf("Content: |%s|\n", (char *)lst->content);
+		ft_printf("Stdin ? : |%d|\n\n", lst->stdin_fd);
+		ft_printf("Stdout ?: |%d|\n\n", lst->stdout_fd);
+		lst = lst->next;
+	}
 }
