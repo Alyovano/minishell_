@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
-/*   Updated: 2021/01/18 11:33:04 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 09:41:31 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int				parsing_input(char *input, t_user *start, t_env *env)
 {
 	t_quote quote;
 
+	(void)env; //add_environnement_var
 	if (!input || !*input)
 		return (0);
 	if (parsing_input_verif1(input, start) == -1)
