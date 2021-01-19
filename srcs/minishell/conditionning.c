@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 10:53:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 10:02:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,15 @@ void	debug(t_list *lst)
 	}
 }
 
+void	init_lst(t_list *lst)
+{
+	lst->in_types = NULL;
+	lst->out_types = NULL;
+	lst->in = NULL;
+	lst->out = NULL;
+	lst->tab_cmd = NULL;
+}
+
 /*
 ** Function to prepare for exectution
 ** last split to update t_list (builtin, flag, argu)
@@ -127,6 +136,7 @@ int		conditionning(t_user *start)
 		size = ft_lstsize(lst);
 		while (lst)
 		{
+			init_lst(lst);
 			if (remove_redirrect_alloc(lst) == -1)
 				return (-1);
 			last_split(lst, i, size);
