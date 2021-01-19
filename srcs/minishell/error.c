@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/19 11:56:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 14:27:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void		set_gerrno(t_list *lst, t_env *env)
 {
 	int			error;
 	struct stat	test;
+	char		**paths;
 
 	if (find_char(lst->tab_cmd[0], '/') == 1)
 	{
@@ -38,10 +39,12 @@ void		set_gerrno(t_list *lst, t_env *env)
 	else if (cmd_valididy(lst->tab_cmd[0], env) == 0)
 	{
 		error = errno;
-		if (error == 13 || get_path(env->tab, lst->tab_cmd[0]) == NULL)
+		paths = get_path(env->tab, lst->tab_cmd[0]);
+		if (error == 13 || paths == NULL)
 			g_errno = 1;
 		else
 			g_errno = 127;
+		free(paths);
 	}
 	else
 		g_errno = 0;

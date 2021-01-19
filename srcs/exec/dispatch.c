@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/08 12:55:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 14:36:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 int		cmd_valididy(char *cmd, t_env *env)
 {
 	char		*path;
+	char		**paths;
 
-	path = check_path(get_path(env->tab, cmd), NULL);
+	paths = get_path(env->tab, cmd);
+	path = check_path(paths, NULL);
 	if (ft_strcmp(cmd, "echo") == 0 || \
 		ft_strcmp(cmd, "cd") == 0 || \
 		ft_strcmp(cmd, "pwd") == 0 || \
@@ -29,10 +31,16 @@ int		cmd_valididy(char *cmd, t_env *env)
 		ft_strcmp(cmd, "env") == 0 || \
 		ft_strcmp(cmd, "exit") == 0 || \
 		ft_strcmp(cmd, "$?") == 0)
+	{
+		free_double_tab(paths);
+		//free(path);
 		return (1);
+	}
 	if (path != NULL)
 	{
-		free(path);
+		if (paths)
+			free_double_tab(paths);
+		//free(path);
 		return (1);
 	}
 	free(path);
