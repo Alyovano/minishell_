@@ -246,8 +246,7 @@ int					in_out_setup(t_fd *fds, t_list *lst);
 
 int					catch_env_varr(char *arg, char *env_line);
 int					catch_env_var(char *arg, char *env_line);
-int					add_environnement_var(t_user *start,
-					t_quote *quote, t_env *env);
+int					add_environnement_var(t_list *lst, t_env *env);
 char				*check_var_in_env(char *var_name, t_env *env);
 int					str_check(char *str_envi, char *to_catch);
 int					check_simple_quote(t_user *start, t_quote *q, int j, int i);

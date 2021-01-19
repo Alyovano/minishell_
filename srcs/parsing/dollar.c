@@ -35,6 +35,7 @@ char	*check_var_in_env(char *var_name, t_env *env)
 											ft_strlen(env->tab[i]));
 	else
 		new = ft_strdup("");
+	printf("check_var_in_env\n");
 	return (new);
 }
 
@@ -46,7 +47,7 @@ char	*check_var_in_env(char *var_name, t_env *env)
 
 // ne pas oublier de placer les free ici
 
-int		dollar_var_name(t_user *start, int i, int j, t_dollar *dol, t_env *env)
+int		dollar_var_name(t_list *lst, int i, int j, t_dollar *dol, t_env *env)
 {
 	int		tmp;
 	int		k;
@@ -56,22 +57,26 @@ int		dollar_var_name(t_user *start, int i, int j, t_dollar *dol, t_env *env)
 	j += 1;
 	tmp = j;
 	k = 0;
-	while (start->user_cmd_tab[i][j + k] && start->user_cmd_tab[i][j + k] != ' '
-	&& start->user_cmd_tab[i][j + k] != '\'' && start->user_cmd_tab[i][j + k] != '"'
-	&& start->user_cmd_tab[i][j + k] != '=' && start->user_cmd_tab[i][j + k] != '.')
+	printf("dollar_var_name debut\n");
+	while (lst->tab_cmd[i][j + k] && lst->tab_cmd[i][j + k] != ' '
+	&& lst->tab_cmd[i][j + k] != '\'' && lst->tab_cmd[i][j + k] != '"'
+	&& lst->tab_cmd[i][j + k] != '=' && lst->tab_cmd[i][j + k] != '.')
 		k++;
-	dol->var_name = ft_substr(start->user_cmd_tab[i], tmp, k);
+	dol->var_name = ft_substr(lst->tab_cmd[i], tmp, k);
 	dol->var_content = check_var_in_env(dol->var_name, env);
-	dol->before_str = ft_substr(start->user_cmd_tab[i], 0, j - 1);
-	dol->after_str = ft_substr(start->user_cmd_tab[i], j + k, ft_strlen(start->user_cmd_tab[i]));
+	dol->before_str = ft_substr(lst->tab_cmd[i], 0, j - 1);
+	dol->after_str = ft_substr(lst->tab_cmd[i], j + k, ft_strlen(lst->tab_cmd[i]));
 	one = ft_strjoin(dol->before_str, dol->var_content);
 	two = ft_strjoin(one, dol->after_str);
-	free(start->user_cmd_tab[i]);
-	start->user_cmd_tab[i] = ft_strdup(two);
+	if (lst->tab_cmd[i])
+		free(lst->tab_cmd[i]);
+	lst->tab_cmd[i] = ft_strdup(two);
 	tmp = ft_strlen(one);
-	//free_dol(dol, one, two);
-	// if (dol->var_name != NULL)
-	// 	free(dol->var_name);
+	if (one)
+		free(one);
+	if (two)
+		free(two);
+	printf("dollar_var_name fin\n");
 	return (tmp);
 }
 
@@ -80,7 +85,7 @@ int		dollar_var_name(t_user *start, int i, int j, t_dollar *dol, t_env *env)
 ** Retourne la taille de la valeur de $?
 */
 
-int		previous_return_value(t_user *start, int i, int j, t_dollar *dol)
+int		previous_return_value(t_list *lst, int i, int j, t_dollar *dol)
 {
 	int		int_size;
 	char	*value;
@@ -90,14 +95,16 @@ int		previous_return_value(t_user *start, int i, int j, t_dollar *dol)
 	int_size = 0;
 	value = ft_itoa(g_errno);
 	j += 1;
-	dol->before_str = ft_substr(start->user_cmd_tab[i], 0, j - 1);
-	dol->after_str = ft_substr(start->user_cmd_tab[i], j + 1, \
-									ft_strlen(start->user_cmd_tab[i]));
+	printf("previous_return_value debut\n");
+	dol->before_str = ft_substr(lst->tab_cmd[i], 0, j - 1);
+	dol->after_str = ft_substr(lst->tab_cmd[i], j + 1, \
+									ft_strlen(lst->tab_cmd[i]));
 	one = ft_strjoin(dol->before_str, value);
 	two = ft_strjoin(one, dol->after_str);
-	free(start->user_cmd_tab[i]);
-	start->user_cmd_tab[i] = ft_strdup(two);
+	free(lst->tab_cmd[i]);
+	lst->tab_cmd[i] = ft_strdup(two);
 	int_size = ft_strlen(one);
+	printf("previous_return_value fin\n");
 	return (int_size);
 }
 
@@ -105,53 +112,87 @@ int		previous_return_value(t_user *start, int i, int j, t_dollar *dol)
 ** j = check_simple_quote(start, quote, j, i);// jump sur la char apres la squote
 */
 
-int		check_dollar_or_not_dollar(t_user *start,
-						t_quote *quote, int i, t_dollar *dol, t_env *env)
+int		check_dollar_or_not_dollar(t_list *lst, int i, t_quote *quote, t_dollar *dol, t_env *env)
 {
 	int j;
 	int token;
 
 	j = 0;
 	quote->dollar_quote = 0;
-	while (start->user_cmd_tab[i][j])
+	printf("check_dollar_or_not_dollar debut\n");
+	while (lst->tab_cmd[i][j])
 	{
 		token = 0;
-		j = check_simple_quote(start, quote, j, i);
-		if (start->user_cmd_tab[i][j] == '$' &&
-					(get_backslash(start->user_cmd_tab[i], j) == 0)
-					&& (start->user_cmd_tab[i][j + 1])
-					&& (start->user_cmd_tab[i][j + 1] != ' ')
-					&& (start->user_cmd_tab[i][j + 1] != '"'))
+		if (lst->tab_cmd[i][j] == '$' &&
+			(get_backslash(lst->tab_cmd[i], j) == 0)
+			&& (lst->tab_cmd[i][j + 1])
+			&& (lst->tab_cmd[i][j + 1] != ' ')
+			&& (lst->tab_cmd[i][j + 1] != '"'))
 		{
-			if (start->user_cmd_tab[i][j + 1] && (start->user_cmd_tab[i][j + 1] == '?'))
+			if (lst->tab_cmd[i][j + 1] == '?')
 			{
 				token = 1;
-				j = previous_return_value(start, i, j, dol);
+				j = previous_return_value(lst, i, j, dol);
 			}
 			else
-				j = dollar_var_name(start, i, j, dol, env);
+			{
+				j = dollar_var_name(lst, i, j, dol, env);
+			}
+			
 		}
 		if (token != 1)
 			j++;
 	}
+	// while (start->user_cmd_tab[i][j])
+	// {
+	// 	token = 0;
+	// 	j = check_simple_quote(start, quote, j, i);
+	// 	if (start->user_cmd_tab[i][j] == '$' &&
+	// 				(get_backslash(start->user_cmd_tab[i], j) == 0)
+	// 				&& (start->user_cmd_tab[i][j + 1])
+	// 				&& (start->user_cmd_tab[i][j + 1] != ' ')
+	// 				&& (start->user_cmd_tab[i][j + 1] != '"'))
+	// 	{
+	// 		if (start->user_cmd_tab[i][j + 1] && (start->user_cmd_tab[i][j + 1] == '?'))
+	// 		{
+	// 			token = 1;
+	// 			j = previous_return_value(start, i, j, dol);
+	// 		}
+	// 		else
+	// 			j = dollar_var_name(start, i, j, dol, env);
+	// 	}
+	// 	if (token != 1)
+	// 		j++;
+	// }
+	printf("check_dollar_or_not_dollar fin\n");
 	return (0);
 }
 
-int		add_environnement_var(t_user *start, t_quote *quote, t_env *env)
+int		add_environnement_var(t_list *lst, t_env *env)
 {
 	int			i;
 	t_dollar	*dol;
+	t_list		*tmp;
+	t_quote		quote;
 
 	dol = malloc(sizeof(dol));
 	if (!dol)
 		malloc_error();
 	i = 0;
 	dol->start_cut = 0;
-	while (start->user_cmd_tab[i])
+	tmp = lst;
+	while (lst)
 	{
-		check_dollar_or_not_dollar(start, quote, i, dol, env);
-		i++;
+		while (lst->tab_cmd[i])
+		{
+			check_dollar_or_not_dollar(lst, i, &quote, dol, env);
+			printf("index %d, %s\n", i, lst->tab_cmd[i]);
+			i++;
+		}
+		lst = lst->next;
 	}
+	lst = tmp;
 	free(dol);
+	printf("Sortie\n");
 	return (0);
 }

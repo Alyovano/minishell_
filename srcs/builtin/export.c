@@ -140,6 +140,8 @@ int			ft_export(t_env *env, t_list *lst)
 	{
 		requote_arg(lst);
 		export_new_var(env, lst);
+		// for (int i = 0 ; lst->tab_cmd[i]; i++)
+		// 	lst->tab_cmd[i] = delete_quote(lst->tab_cmd[i]);
 		return (ARGS);
 	}
 	return (-1);

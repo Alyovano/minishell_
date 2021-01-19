@@ -119,10 +119,13 @@ int			execution(t_user *start, t_env *env)
 	{
 		lst = start->line->content;
 		last_clean(lst);
+		add_environnement_var(lst, env);
+		printf("1\n");
 		if (lst->tab_cmd[0] && ft_strcmp("exit", lst->tab_cmd[0]) == 0)
 			ft_exit(env, lst, start);
 		else if (exec_main(lst, env) == -1)
 			return (-1);
+		printf("2\n");
 		start->line = start->line->next;
 	}
 	return (0);

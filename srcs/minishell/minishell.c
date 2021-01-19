@@ -83,12 +83,6 @@ int		main(int argc, char **argv, char **environnement)
 	if (!(env = malloc(sizeof(env))))
 		malloc_error();
 	env->tab = copy_double_tab(environnement);
-	// for (int i = 0 ; environnement[i] ; i++)
-	// {
-	// 	printf("%s\n", environnement[i]);
-	// 	if (environnement[i][0] == '\0')
-	// 		printf("COUCOUUUUUUUUUUUUUUUUUU55555555555555555555555555555555555\n");
-	// }
 	if (argc == 3 && ft_strcmp(argv[1], "-c") == 0)
 		minishell_loop_test(start, env, argv[2]);
 	else
