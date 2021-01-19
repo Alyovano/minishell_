@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 10:57:57 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 11:56:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,18 @@ void		error_output_token(int error, char *str, char c)
 	}
 	else if (error == -7)
 	{
-		ft_putstr_fd("bash: erreur de syntaxe près du symbole inattendu « ", STDERR_FILENO);
-		ft_putchar_fd(c, STDERR_FILENO);
-		ft_putstr_fd(" »\n", STDERR_FILENO);
+		if (str == NULL)
+		{
+			ft_putstr_fd("bash: erreur de syntaxe près du symbole inattendu « ", STDERR_FILENO);
+			ft_putchar_fd(c, STDERR_FILENO);
+			ft_putstr_fd(" »\n", STDERR_FILENO);
+		}
+		else
+		{
+			ft_putstr_fd("bash: erreur de syntaxe près du symbole inattendu « ", STDERR_FILENO);
+			ft_putstr_fd(str, STDERR_FILENO);
+			ft_putstr_fd(" »\n", STDERR_FILENO);
+		}
 		g_errno = 2;
 	}
 	else if (error == -8)

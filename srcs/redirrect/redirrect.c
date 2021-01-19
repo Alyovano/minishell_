@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:51:22 by user42            #+#    #+#             */
-/*   Updated: 2021/01/18 09:08:26 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/19 11:58:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ int		check_next_redirrect(int *i, char *tmp)
 }
 
 int		get_redirrect2(int *i, char *tmp, t_list *lst)
-{
+{/*
 	if (check_next_redirrect(i, tmp) == -1)
-		return (-1);
+		return (-1);*/
 	if (tmp[*i] == '>' && tmp[*i + 1] == '>')
 	{
 		(*i) += write_redirrect(tmp, *i + 2, lst, "APPEND");
@@ -108,9 +108,19 @@ int		get_redirrect(t_list *lst, t_quote *quote)
 
 	i = 0;
 	tmp = ft_strdup(lst->content);
-	init_quotes(quote, -1, -1);
+	init_quotes(quote, -1, -1);/*
 	if (redirrect_error(tmp) == -1)
-		return (-1);
+		return (-1);*/
+	while (tmp[i])
+	{
+		if (check_next_redirrect(&i, tmp) == -1)
+		{
+			return (-1);
+		}
+		i++;
+	}
+	//return (1);
+	i = 0;
 	while (tmp[i])
 	{
 		if ((tmp[i] == '\'' || tmp[i] == '"') && get_backslash(tmp, i) == 0)
