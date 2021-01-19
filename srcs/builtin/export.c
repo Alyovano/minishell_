@@ -113,6 +113,13 @@ int			export_new_var(t_env *env, t_list *lst)
 	//free_double_tab(env->tab);
 	env->tab = copy_double_tab(a.new_tab);
 	free_double_tab(a.new_tab);
+	a.i = 0;
+	while (env->tab[a.i])
+	{
+		//free(env->tab[a.i]);
+		env->tab[a.i] = delete_quote(env->tab[a.i]);
+		a.i++;
+	}
 	return (0);
 }
 
@@ -140,8 +147,6 @@ int			ft_export(t_env *env, t_list *lst)
 	{
 		requote_arg(lst);
 		export_new_var(env, lst);
-		// for (int i = 0 ; lst->tab_cmd[i]; i++)
-		// 	lst->tab_cmd[i] = delete_quote(lst->tab_cmd[i]);
 		return (ARGS);
 	}
 	return (-1);

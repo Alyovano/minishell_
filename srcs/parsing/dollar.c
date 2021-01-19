@@ -158,6 +158,7 @@ int		add_environnement_var(t_list *lst, t_env *env)
 		while (lst->tab_cmd[i])
 		{
 			check_dollar_or_not_dollar(lst, i, &quote, dol, env);
+			//printf("%s\n", env->tab[i]);
 			i++;
 		}
 		lst = lst->next;
