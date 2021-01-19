@@ -23,7 +23,8 @@ int				parsing_input_verif1(char *input, t_user *start)
 	t_quote quote;
 	int		error;
 
-	if (!(start->user_input = ft_strdup(input)))
+	start->user_input = ft_strdup(input);
+	if (start->user_input == NULL)
 		malloc_error();
 	token_to_parse_init(start);
 	error = check_input_start(start);

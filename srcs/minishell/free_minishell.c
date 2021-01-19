@@ -45,6 +45,7 @@ void		free_all(t_user *start)
 		start->line = start->line->next;
 	}
 	start->line = tmp;
+	free(start->user_input);
 	free(start->line);
 	free(lst);
 }
