@@ -58,7 +58,7 @@ int				parsing_input(char *input, t_user *start, t_env *env)
 {
 	t_quote quote;
 
-	(void)env; //add_environnement_var
+	(void)env;
 	if (!input || !*input)
 		return (0);
 	if (parsing_input_verif1(input, start) == -1)

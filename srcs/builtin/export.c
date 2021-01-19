@@ -31,6 +31,21 @@
 ** la buitin - export dans ce cas-ci, et ca ne fait pas partie de l'argu
 */
 
+void		free_double_tab_env(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (*tab && tab[i])
+	{
+		if (i != 1)
+			free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+
 int			is_valid_name(char *str)
 {
 	int i;
@@ -110,13 +125,12 @@ int			export_new_var(t_env *env, t_list *lst)
 	while (lst->tab_cmd[a.j])
 		export_new_var_copy(&a, lst);
 	a.new_tab[a.i] = NULL;
-	//free_double_tab(env->tab);
+	free_double_tab_env(env->tab);
 	env->tab = copy_double_tab(a.new_tab);
-	free_double_tab(a.new_tab);
+	free_double_tab_env(a.new_tab);
 	a.i = 0;
 	while (env->tab[a.i])
 	{
-		//free(env->tab[a.i]);
 		env->tab[a.i] = delete_quote(env->tab[a.i]);
 		a.i++;
 	}
