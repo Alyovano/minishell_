@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/19 14:27:03 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 15:17:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		error_output_token(int error, char *str, char c)
 	else if (error == -3)
 	{
 		ft_putstr_fd("Minishell cannot do that: No multilines : « < »\n", STDERR_FILENO);
-		g_errno = 2;
+		g_errno = 444;
 	}
 	else if (error == -4)
 		ft_putstr_fd("bash: erreur de syntaxe près du symbole inattendu « newline »\n", STDERR_FILENO);
