@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/19 10:09:00 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 10:14:44 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Function to get amount of char till specified character
 ** EX. get_len_till_char(0, ' ', "echo lol" -> return 4
 */
-
+/*
 int		get_len_till_char(int start, char c, char *str)
 {
 	t_quote quote;
@@ -39,7 +39,7 @@ int		get_len_till_char(int start, char c, char *str)
 	if (str[start] == '\0')
 		return (start);
 	return (0);
-}
+}*/
 
 void	set_fd_in_out(int id, int size, t_list *lst)
 {
@@ -72,6 +72,7 @@ void	last_split(t_list *lst, int id, int size)
 	t_quote		quote;
 
 	i = 0;
+	//ft_printf("lst->content %s\n", lst->content);
 	start.user_input = ft_strdup(lst->content);
 	start.split_nb = 1;
 	while (start.user_input[i])
@@ -82,11 +83,21 @@ void	last_split(t_list *lst, int id, int size)
 		is_split_tokenize(&start, i);
 		i++;
 	}
-	split_tokenize(&start, &quote);
+	split_tokenize(&start, &quote);	
+	/*
+	if (ft_strlen(start.user_cmd_tab[0]) == 6)
+	{
+		//free(start.user_cmd_tab[0]);
+		start.user_cmd_tab[0] = ft_strdup("exportd");
+	}*/
 	lst->tab_cmd = tokenize_realloc(start.user_cmd_tab);
 	set_fd_in_out(id, size, lst);
 	free(start.user_input);
-	free_double_tab(start.user_cmd_tab);
+	i = 0;
+	while (start.user_cmd_tab[i])
+		free(start.user_cmd_tab[i++]);
+	free(start.user_cmd_tab);
+	//free_double_tab(start.user_cmd_tab);
 }
 
 void	init_lst(t_list *lst)

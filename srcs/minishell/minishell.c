@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 11:09:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 11:12:32 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 10:29:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	minishell_loop_test(t_user *start, t_env *env, char *argv)
 	if (argv != NULL)
 	{
 		used = 0;
+		g_reg = 0;
 		user_input = ft_strdup(argv);
 		if (ft_strcmp(user_input, "") != 0)
 		{
@@ -64,12 +65,14 @@ void	minishell_loop(t_user *start, t_env *env)
 			used = 1;
 			if (parsing_input(user_input, start, env) != -1)
 			{
+				free(user_input);
 				if (conditionning(start) != -1)
+				{
 					execution(start, env);
+				}
 				free_all(start);
 			}
 		}
-		free(user_input);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/12 09:28:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 10:26:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,14 @@ int			export_new_var(t_env *env, t_list *lst)
 	while (lst->tab_cmd[a.j])
 		export_new_var_copy(&a, lst);
 	a.new_tab[a.i] = NULL;
-	free_double_tab_env(env->tab);
+	//free_double_tab_env(env->tab); index 0 fait crash
+	int i = 1;
+	while (env->tab[i])
+	{
+		ft_printf("i %d\n", i);
+		free(env->tab[i++]);
+	}
+	free(env->tab);
 	env->tab = copy_double_tab(a.new_tab);
 	free_double_tab_env(a.new_tab);
 	a.i = 0;
