@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 14:23:38 by user42            #+#    #+#             */
-/*   Updated: 2021/01/18 14:25:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 14:37:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*delete_quote(char *str)
 
 	i = 0;
 	j = 0;
-	tmp = malloc(sizeof(char*) * (ft_strlen(str) + 1));
+	tmp = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (tmp == NULL)
 		malloc_error();
 	while (str[i])

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/12 09:28:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 14:33:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char			*clear_arg(char *str)
 
 	i = 0;
 	j = 0;
-	tmp = malloc(sizeof(char*) * (ft_strlen(str) + 1));
+	tmp = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (str[i] == ' ')
 		i += 1;
 	while (str[i])

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/08 12:55:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 14:33:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char			**copy_unset_tab(char **src)
 	i = 0;
 	j = 0;
 	size = double_tab_size(src);
-	new_tab = malloc(sizeof(char**) * (size + 1));
+	new_tab = malloc(sizeof(char *) * (size + 1));
 	if (!new_tab)
 		malloc_error();
 	new_tab[size] = 0;
@@ -47,7 +47,7 @@ char			**check_var_name(char **arg)
 
 	i = 0;
 	j = 0;
-	tmp = malloc(sizeof(char**) * (double_tab_size(arg) + 1));
+	tmp = malloc(sizeof(char *) * (double_tab_size(arg) + 1));
 	if (!tmp)
 		malloc_error();
 	while (arg[i])

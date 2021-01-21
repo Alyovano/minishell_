@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/12 09:28:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 14:25:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		init_requote_str(t_requote_str *trs, char *str)
 {
-	trs->new = malloc((sizeof(char*) * ft_strlen(str)) + 3);
+	trs->new = malloc((sizeof(char) * (ft_strlen(str)) + 3));
 	if (trs->new == NULL)
 		malloc_error();
 	trs->i = 0;
