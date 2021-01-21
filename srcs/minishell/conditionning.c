@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/21 10:14:44 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 13:49:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,10 @@ void	last_split(t_list *lst, int id, int size)
 		start.user_cmd_tab[0] = ft_strdup("exportd");
 	}*/
 	lst->tab_cmd = tokenize_realloc(start.user_cmd_tab);
+	lst->pid = -1;
 	set_fd_in_out(id, size, lst);
 	free(start.user_input);
-	i = 0;
-	while (start.user_cmd_tab[i])
-		free(start.user_cmd_tab[i++]);
-	free(start.user_cmd_tab);
-	//free_double_tab(start.user_cmd_tab);
+	free_double_tab(start.user_cmd_tab);
 }
 
 void	init_lst(t_list *lst)

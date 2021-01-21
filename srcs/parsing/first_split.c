@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
-/*   Updated: 2021/01/18 12:54:59 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 13:33:57 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			init_double_tab_cmd(t_user *start)
 	int i;
 
 	i = 0;
-	start->user_cmd_tab = malloc(sizeof(start->user_cmd_tab)
+	start->user_cmd_tab = malloc(sizeof(char *)
 					* (start->split_nb + 1));
 	if (!start->user_cmd_tab)
 		malloc_error();

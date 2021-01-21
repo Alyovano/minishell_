@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 14:53:07 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 10:42:20 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 13:50:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,11 @@ void	exec_main2(void *ptr, t_list *lst)
 	lst = ptr;
 	while (lst)
 	{
-		g_reg = 1;
-		waitpid(lst->pid, &status, 8 | WUNTRACED);
+		if (lst->pid != -1)
+		{
+			g_reg = 1;
+			waitpid(lst->pid, &status, 8 | WUNTRACED);
+		}
 		lst = lst->next;
 	}
 }

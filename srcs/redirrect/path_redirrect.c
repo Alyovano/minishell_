@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 09:36:15 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 10:50:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 13:42:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	get_file_init(int *j, char **tmp, t_quote *q, char *str)
 	*j = 0;
 	q->dquote = -1;
 	q->squote = -1;
-	*tmp = malloc(sizeof(char) * ft_strlen(str));
+	*tmp = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!(*tmp))
 		malloc_error();
 }

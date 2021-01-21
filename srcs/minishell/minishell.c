@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 11:09:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/21 10:29:47 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 13:44:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ int		main(int argc, char **argv, char **environnement)
 	t_user	*start;
 	t_env	*env;
 
-	if (!(start = malloc(sizeof(start))))
+	if (!(start = malloc(sizeof(t_user))))
 		malloc_error();
-	if (!(env = malloc(sizeof(env))))
+	if (!(env = malloc(sizeof(t_env))))
 		malloc_error();
 	env->tab = copy_double_tab(environnement);
 	if (argc == 3 && ft_strcmp(argv[1], "-c") == 0)

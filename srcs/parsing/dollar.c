@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 10:45:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/18 14:42:40 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 13:30:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int		add_environnement_var(t_list *lst, t_env *env)
 	t_list		*tmp;
 	t_quote		quote;
 
-	dol = malloc(sizeof(dol));
+	dol = malloc(sizeof(t_dollar));
 	if (!dol)
 		malloc_error();
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 13:10:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/05 13:38:48 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 13:27:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*remove_redirrect(char *str)
 
 	i = 0;
 	j = 0;
-	ret = malloc(sizeof(char) * ft_strlen(str));
+	ret = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!ret)
 		malloc_error();
 	while (str[i])
