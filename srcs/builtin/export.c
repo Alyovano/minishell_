@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/21 13:42:38 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/21 14:01:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 ** la buitin - export dans ce cas-ci, et ca ne fait pas partie de l'argu
 */
 
+/* No need naymore bug fixed ! :D
 void		free_double_tab_env(char **tab)
 {
 	int i;
@@ -43,7 +44,7 @@ void		free_double_tab_env(char **tab)
 		i++;
 	}
 	free(tab);
-}
+}*/
 
 
 int			is_valid_name(char *str)
@@ -125,9 +126,9 @@ int			export_new_var(t_env *env, t_list *lst)
 	while (lst->tab_cmd[a.j])
 		export_new_var_copy(&a, lst);
 	a.new_tab[a.i] = NULL;
-	free_double_tab_env(env->tab);
+	free_double_tab(env->tab);
 	env->tab = copy_double_tab(a.new_tab);
-	free_double_tab_env(a.new_tab);
+	free_double_tab(a.new_tab);
 	a.i = 0;
 	while (env->tab[a.i])
 	{
