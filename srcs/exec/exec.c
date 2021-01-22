@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 10:13:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 11:16:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,9 @@ int			exec_execve(t_list *lst, t_env *env, char *path)
 int			execution(t_user *start, t_env *env)
 {
 	t_list	*lst;
+	void	*tmp;
 
+	tmp = start->line;
 	if (check_backslash(start->line) == -1)
 	{
 		error_output_token(-5, NULL, '\0');
@@ -126,5 +128,6 @@ int			execution(t_user *start, t_env *env)
 			return (-1);
 		start->line = start->line->next;
 	}
+	start->line = tmp;
 	return (0);
 }

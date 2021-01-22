@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 10:58:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/19 09:55:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 11:12:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,14 @@ void		free_all(t_user *start)
 		while (lst)
 		{
 			mega_free(lst);
+			free(lst);
 			lst = lst->next;
 		}
+		free(start->line);
 		start->line = start->line->next;
 	}
-	start->line = tmp;
+	//free(tmp);
+	(void)tmp;
 	free(start->user_input);
-	free(start->line);
-	free(lst);
+	//free(start->line);
 }
