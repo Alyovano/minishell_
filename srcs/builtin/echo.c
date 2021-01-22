@@ -56,7 +56,9 @@ int			ft_echo(t_env *env, t_list *lst)
 	i = 0;
 	if (flag == FLAG_OK)
 	{
-		i = 2;
+		i = 1;
+		while (check_echo_flag(lst->tab_cmd[i]) == FLAG_OK)
+			i++;
 		echo_print(lst, i);
 		return (0);
 	}
