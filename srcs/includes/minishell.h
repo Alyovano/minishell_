@@ -297,6 +297,8 @@ int					sort_export(t_env *env);
 int					export_without_args(t_env *env);
 int					is_valid_name(char *str);
 int					is_valid_char(char c);
+int					export_new_var(t_env *env, t_list *lst);
+int					free_dol(t_dollar *dol, char *one, char *two);
 
 /*
 ** malloc error
@@ -319,5 +321,11 @@ int					verif_ret(int ret, char *user_input);
 void				print_list(t_user *start);
 void				debug(t_list *lst);
 void				print_in_out(t_list *lst);
+
+/*
+** Errors
+*/
+
+int					dirr_error(char *path);
 
 #endif
