@@ -19,6 +19,8 @@ void		unkillable_var(t_env *env, char *path)
 
 	i = double_tab_size(env->tab);
 	new = malloc(sizeof(char *) * (i + 2));
+	if (new == NULL)
+		malloc_error();
 	i = 0;
 	while (env->tab[i])
 	{
