@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 10:45:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/22 14:19:22 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 15:49:11 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ int		add_environnement_var(t_list *lst, t_env *env)
 	tmp = lst;
 	while (lst)
 	{
+		i = 0;
 		while (lst->tab_cmd[i])
 		{
 			check_dollar_or_not_dollar(lst, i, &quote, dol, env);
