@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 10:45:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/21 13:30:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 14:19:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int		dollar_var_name(t_list *lst, int i, int j, t_dollar *dol, t_env *env)
 	k = 0;
 	while (lst->tab_cmd[i][j + k] && lst->tab_cmd[i][j + k] != ' '
 	&& lst->tab_cmd[i][j + k] != '\'' && lst->tab_cmd[i][j + k] != '"'
-	&& lst->tab_cmd[i][j + k] != '=' && lst->tab_cmd[i][j + k] != '.')
+	&& lst->tab_cmd[i][j + k] != '=' && lst->tab_cmd[i][j + k] != '.'
+	&& lst->tab_cmd[i][j + k] != '$')
 		k++;
 	dol->var_name = ft_substr(lst->tab_cmd[i], tmp, k);
 	dol->var_content = check_var_in_env(dol->var_name, env);
@@ -67,7 +68,7 @@ int		dollar_var_name(t_list *lst, int i, int j, t_dollar *dol, t_env *env)
 	if (lst->tab_cmd[i])
 		free(lst->tab_cmd[i]);
 	lst->tab_cmd[i] = ft_strdup(two);
-	tmp = ft_strlen(one);
+	tmp = ft_strlen(one) - 1;
 	free_dol(dol, one, two);
 	return (tmp);
 }
