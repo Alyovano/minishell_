@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 10:58:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/22 13:42:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 15:20:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		free_all(t_user *start)
 {
 	t_list	*lst;
 
-	while (start->line && start->to_free >= 1)
+	while (start->line && start->to_free >= 2)
 	{
 		lst = start->line->content;
 		while (lst)
@@ -44,5 +44,6 @@ void		free_all(t_user *start)
 		free(start->line);
 		start->line = start->line->next;
 	}
-	free(start->user_input);
+	if (start->to_free >= 1)
+		free(start->user_input);
 }

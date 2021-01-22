@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 11:15:45 by user42            #+#    #+#             */
-/*   Updated: 2021/01/22 13:37:24 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 15:19:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int				parsing_input_verif1(char *input, t_user *start)
 	int		error;
 
 	start->user_input = ft_strdup(input);
+	start->to_free = 1;
 	if (start->user_input == NULL)
 		malloc_error();
 	token_to_parse_init(start);
@@ -57,7 +58,7 @@ int				parsing_input_verif2(t_user *start)
 	if (parsing_redirrect(start) == -1)
 		return (-1);
 	split_pipe(start, &quote);
-	start->to_free = 1;
+	start->to_free = 2;
 	while (start->user_cmd_tab[i])
 		free(start->user_cmd_tab[i++]);
 	free(start->user_cmd_tab);
