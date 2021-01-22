@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/21 15:17:53 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 12:28:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		set_gerrno(t_list *lst, t_env *env)
 			g_errno = 1;
 		else
 			g_errno = 127;
-		free(paths);
+		free_double_tab(paths);
 	}
 	else
 		g_errno = 0;

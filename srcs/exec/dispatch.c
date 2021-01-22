@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/19 14:36:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 12:32:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int		cmd_valididy(char *cmd, t_env *env)
 		//free(path);
 		return (1);
 	}
+	free_double_tab(paths);
 	free(path);
 	return (0);
 }
@@ -56,6 +57,7 @@ int		dispatch_cmd(t_list *lst, t_env *env)
 {
 	int		ret;
 	char	*path;
+	char	**paths;
 
 	ret = 0;
 	if (ft_strcmp("export", lst->tab_cmd[0]) == 0)
@@ -72,8 +74,10 @@ int		dispatch_cmd(t_list *lst, t_env *env)
 		ft_env(env, lst);
 	else if (ft_strcmp("exit", lst->tab_cmd[0]) != 0)
 	{
-		path = check_path(get_path(env->tab, lst->tab_cmd[0]), NULL);
+		paths = get_path(env->tab, lst->tab_cmd[0]);
+		path = check_path(paths, NULL);
 		ret = exec_execve(lst, env, path);
+		free_double_tab(paths);
 	}
 	return (ret);
 }

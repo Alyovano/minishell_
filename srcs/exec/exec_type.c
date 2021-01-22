@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 15:19:08 by user42            #+#    #+#             */
-/*   Updated: 2021/01/15 10:37:48 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 12:28:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,22 @@ void	exec_type2(t_env *env, t_list *lst)
 void	exec_type3(t_env *env, t_list *lst)
 {
 	char	*path;
+	char	**paths;
 	int		error;
 
 	if (dispatch_cmd(lst, env) != 0)
 	{
-		path = check_path(get_path(env->tab, lst->tab_cmd[0]), NULL);
+		paths = get_path(env->tab, lst->tab_cmd[0]);
+		path = check_path(paths, NULL);
 		error = errno;
 		if (error == 13)
 			error_output_token(-9, path, '\0');
-		else if (get_path(env->tab, lst->tab_cmd[0]) == NULL)
+		else if (paths == NULL)
 			error_output_token(-8, lst->tab_cmd[0], '\0');
 		else
 			error_output_token(-6, lst->tab_cmd[0], '\0');
 		free(path);
+		free_double_tab(paths);
 		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
