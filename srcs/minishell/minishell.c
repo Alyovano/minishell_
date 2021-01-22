@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 11:09:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/21 13:44:48 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 09:45:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,9 @@ void	minishell_loop(t_user *start, t_env *env)
 				{
 					execution(start, env);
 				}
-				free_all(start);
+				
 			}
+			free_all(start);
 		}
 	}
 }
