@@ -44,8 +44,6 @@ char	*check_var_in_env(char *var_name, t_env *env)
 **Je suis pas sur dans la while pour : start->user_cmd_tab[i][j] != '='
 */
 
-// ne pas oublier de placer les free ici
-
 int		dollar_var_name(t_list *lst, int i, int j, t_dollar *dol, t_env *env)
 {
 	int		tmp;
@@ -70,10 +68,7 @@ int		dollar_var_name(t_list *lst, int i, int j, t_dollar *dol, t_env *env)
 		free(lst->tab_cmd[i]);
 	lst->tab_cmd[i] = ft_strdup(two);
 	tmp = ft_strlen(one);
-	if (one)
-		free(one);
-	if (two)
-		free(two);
+	free_dol(dol, one, two);
 	return (tmp);
 }
 

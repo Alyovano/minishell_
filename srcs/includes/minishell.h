@@ -296,6 +296,8 @@ int					sort_export(t_env *env);
 int					export_without_args(t_env *env);
 int					is_valid_name(char *str);
 int					is_valid_char(char c);
+int					export_new_var(t_env *env, t_list *lst);
+int				free_dol(t_dollar *dol, char *one, char *two);
 
 /*
 ** malloc error

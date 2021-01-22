@@ -12,13 +12,35 @@
 
 #include "../includes/minishell.h"
 
+void		unkillable_var(t_env *env, char *path)
+{
+	char		**new;
+	int			i;
+
+	i = double_tab_size(env->tab);
+	new = malloc(sizeof(char *) * (i + 2));
+	i = 0;
+	while (env->tab[i])
+	{
+		new[i] = ft_strdup(env->tab[i]);
+		i++;
+	}
+	new[i] = ft_strdup(path);
+	new[i + 1] = NULL;
+	free_double_tab(env->tab);
+	env->tab = copy_double_tab(new);
+	free_double_tab(new);
+}
+
 int			change_pwd(t_env *env)
 {
 	int		j;
+	int		token;
 	char	*tmp;
 	char	*tmp_s;
 
 	j = 0;
+	token = 0;
 	tmp = getcwd(NULL, 0);
 	tmp_s = ft_strjoin("PWD=", tmp);
 	while (env->tab[j])
@@ -27,9 +49,12 @@ int			change_pwd(t_env *env)
 		{
 			free(env->tab[j]);
 			env->tab[j] = ft_strdup(tmp_s);
+			token = 1;
 		}
 		j++;
 	}
+	if (token != 1)
+		unkillable_var(env, tmp_s);
 	free(tmp);
 	free(tmp_s);
 	return (0);
@@ -38,10 +63,12 @@ int			change_pwd(t_env *env)
 int			change_old_pwd(char *oldpwd, t_env *env)
 {
 	int		j;
+	int		token;
 	char	*tmp;
 	char	*tmp_s;
 
 	j = 0;
+	token = 0;
 	tmp = ft_strdup(oldpwd);
 	tmp_s = ft_strjoin("OLDPWD=", tmp);
 	while (env->tab[j])
@@ -50,9 +77,12 @@ int			change_old_pwd(char *oldpwd, t_env *env)
 		{
 			free(env->tab[j]);
 			env->tab[j] = ft_strdup(tmp_s);
+			token = 1;
 		}
 		j++;
 	}
+	if (token != 1)
+		unkillable_var(env, tmp_s);
 	free(tmp);
 	free(tmp_s);
 	return (0);

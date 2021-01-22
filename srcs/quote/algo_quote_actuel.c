@@ -96,6 +96,7 @@ char	*delete_quote(char *str)
 		i++;
 	}
 	tmp[j] = '\0';
-	free(str);
+	if (str)
+		free(str);
 	return (tmp);
 }
