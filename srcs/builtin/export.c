@@ -31,22 +31,6 @@
 ** la buitin - export dans ce cas-ci, et ca ne fait pas partie de l'argu
 */
 
-/* No need naymore bug fixed ! :D
-void		free_double_tab_env(char **tab)
-{
-	int i;
-
-	i = 0;
-	while (*tab && tab[i])
-	{
-		if (i != 1)
-			free(tab[i]);
-		i++;
-	}
-	free(tab);
-}*/
-
-
 int			is_valid_name(char *str)
 {
 	int i;
@@ -105,9 +89,7 @@ void		export_new_var_copy(t_export_new_var *a, t_list *lst)
 	}
 	else
 	{
-		g_errno = 1;
-		ft_printf("minishell: export: « %s » : identifiant non valable\n",
-			lst->tab_cmd[a->j]);
+		var_name_error(1, lst->tab_cmd[a->j]);
 		a->j++;
 	}
 }

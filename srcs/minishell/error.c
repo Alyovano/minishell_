@@ -22,6 +22,13 @@ void		malloc_error(void)
 ** Error output from CD builtin
 */
 
+void		var_name_error(int err, char *str)
+{
+	g_errno = err;
+	ft_printf("minishell: export: « %s » : identifiant non valable\n",
+		str);
+}
+
 int			dirr_error(char *path)
 {
 	g_errno = 1;
@@ -88,7 +95,7 @@ void		error_output_token(int error, char *str, char c)
 	else if (error == -5)
 	{
 		ft_putstr_fd("Minishell cannot do that: No multilines\n", STDERR_FILENO);
-		g_errno = 444; // arbitraire, ca existe pas dans bash cette 
+		g_errno = 444;
 	}
 	else if (error == -6)
 	{

@@ -299,6 +299,7 @@ int					is_valid_name(char *str);
 int					is_valid_char(char c);
 int					export_new_var(t_env *env, t_list *lst);
 int					free_dol(t_dollar *dol, char *one, char *two);
+int					change_pwd(t_env *env);
 
 /*
 ** malloc error
@@ -327,5 +328,6 @@ void				print_in_out(t_list *lst);
 */
 
 int					dirr_error(char *path);
+void				var_name_error(int err, char *str);
 
 #endif

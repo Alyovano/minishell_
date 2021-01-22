@@ -23,6 +23,7 @@ void	minishell_loop_test(t_user *start, t_env *env, char *argv)
 	char	*user_input;
 
 	(void)used;
+	change_pwd(env);
 	catch_signal();
 	if (argv != NULL)
 	{
@@ -52,6 +53,7 @@ void	minishell_loop(t_user *start, t_env *env)
 	char	*user_input;
 
 	(void)used;
+	change_pwd(env);
 	catch_signal();
 	while (1)
 	{
