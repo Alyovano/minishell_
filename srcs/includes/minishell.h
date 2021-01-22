@@ -321,4 +321,10 @@ void				print_list(t_user *start);
 void				debug(t_list *lst);
 void				print_in_out(t_list *lst);
 
+/*
+** Errors
+*/
+
+int					dirr_error(char *path);
+
 #endif

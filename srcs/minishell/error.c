@@ -19,6 +19,17 @@ void		malloc_error(void)
 }
 
 /*
+** Error output from CD builtin
+*/
+
+int			dirr_error(char *path)
+{
+	g_errno = 1;
+	ft_printf("bash: cd: %s: %s\n", path, strerror(errno));
+	return (0);
+}
+
+/*
 ** Function to set gerrno
 ** variable that contains $? value
 */

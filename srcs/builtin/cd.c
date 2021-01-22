@@ -102,13 +102,6 @@ int			go_home(char *tmp, char *var_name, t_env *env)
 	return (0);
 }
 
-int			dirr_error(char *path)
-{
-	g_errno = 1;
-	ft_printf("bash: cd: %s: %s\n", path, strerror(errno));
-	return (0);
-}
-
 int			ft_cd(t_env *env, t_list *lst)
 {
 	char *tmp;
