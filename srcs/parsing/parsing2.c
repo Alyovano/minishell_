@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 11:15:45 by user42            #+#    #+#             */
-/*   Updated: 2021/01/21 10:31:23 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 13:37:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int				parsing_input_verif2(t_user *start)
 	if (parsing_redirrect(start) == -1)
 		return (-1);
 	split_pipe(start, &quote);
+	start->to_free = 1;
 	while (start->user_cmd_tab[i])
 		free(start->user_cmd_tab[i++]);
 	free(start->user_cmd_tab);

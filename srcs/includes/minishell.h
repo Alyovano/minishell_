@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/18 14:41:00 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 13:36:57 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct		s_user
 	char			*user_input;
 	int				split_nb;
 	int				chevron_nb;
+	int				to_free;
 	t_list			*line;
 }					t_user;
 

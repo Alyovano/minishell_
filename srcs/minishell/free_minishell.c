@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 10:58:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/22 11:12:16 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/22 13:42:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ void		mega_free(t_list *lst)
 
 void		free_all(t_user *start)
 {
-	void	*tmp;
 	t_list	*lst;
 
-	tmp = start->line;
-	while (start->line)
+	while (start->line && start->to_free >= 1)
 	{
 		lst = start->line->content;
 		while (lst)
@@ -46,8 +44,5 @@ void		free_all(t_user *start)
 		free(start->line);
 		start->line = start->line->next;
 	}
-	//free(tmp);
-	(void)tmp;
 	free(start->user_input);
-	//free(start->line);
 }
