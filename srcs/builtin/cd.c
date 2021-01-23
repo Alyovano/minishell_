@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/08 12:55:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 13:26:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int			ft_cd(t_env *env, t_list *lst)
 		change_old_pwd(tmp, env);
 		change_pwd(env);
 	}
-	else
+	else if (lst->tab_cmd[1][0] != '\0')
 		dirr_error(lst->tab_cmd[1]);
 	free(tmp);
 	return (0);
