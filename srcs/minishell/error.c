@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/22 12:28:12 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 09:57:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		set_gerrno(t_list *lst, t_env *env)
 	{
 		if (stat(lst->tab_cmd[0], &test) == -1)
 		{
-			g_errno = 1;
+			g_errno = 127;
 		}
 	}
 	else if (cmd_valididy(lst->tab_cmd[0], env) == 0)
