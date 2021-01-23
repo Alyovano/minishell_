@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 10:45:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 13:59:03 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 16:47:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int		dollar_var_name(t_list *lst, int i, int j, t_dollar *dol, t_env *env)
 	dol->var_name = ft_substr(lst->tab_cmd[i], tmp, k);
 	dol->var_content = check_var_in_env(dol->var_name, env);
 	dol->before_str = ft_substr(lst->tab_cmd[i], 0, j - 1);
-	dol->after_str = ft_substr(lst->tab_cmd[i], j + k, ft_strlen(lst->tab_cmd[i]));
+	dol->after_str = ft_substr(lst->tab_cmd[i], j + k, \
+										ft_strlen(lst->tab_cmd[i]));
 	one = ft_strjoin(dol->before_str, dol->var_content);
 	two = ft_strjoin(one, dol->after_str);
 	if (lst->tab_cmd[i])
@@ -102,7 +103,8 @@ int		previous_return_value(t_list *lst, int i, int j, t_dollar *dol)
 }
 
 /*
-** j = check_simple_quote(start, quote, j, i);// jump sur la char apres la squote
+** j = check_simple_quote(start, quote, j, i);
+** jump sur la char apres la squote
 */
 
 int		check_dollar_or_not_dollar(t_list *lst, int i, t_quote *quote, t_dollar *dol, t_env *env)
@@ -116,20 +118,16 @@ int		check_dollar_or_not_dollar(t_list *lst, int i, t_quote *quote, t_dollar *do
 	while (lst->tab_cmd[i][j])
 	{
 		token = 0;
-		if (lst->tab_cmd[i][j] == '\'' && get_backslash(lst->tab_cmd[i], j) == 0 && quote->dquote == -1)
-		{
+		if (lst->tab_cmd[i][j] == '\'' && get_backslash(lst->tab_cmd[i], j) == 0 && \
+																quote->dquote == -1)
 			quote->squote *= -1;
-		}
 		else if (lst->tab_cmd[i][j] == '"' && get_backslash(lst->tab_cmd[i], j) == 0)
-		{
 			quote->dquote *= -1;
-		}
 		if (lst->tab_cmd[i][j] == '$' &&
 			(get_backslash(lst->tab_cmd[i], j) == 0)
 			&& (lst->tab_cmd[i][j + 1])
 			&& (lst->tab_cmd[i][j + 1] != ' ')
-			&& quote->squote == -1) //&& (lst->tab_cmd[i][j + 1] != '"'))
-			
+			&& quote->squote == -1)
 		{
 			if (lst->tab_cmd[i][j + 1] == '?')
 			{

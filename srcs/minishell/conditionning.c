@@ -6,40 +6,11 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/21 13:49:22 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 16:31:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*
-** Function to get amount of char till specified character
-** EX. get_len_till_char(0, ' ', "echo lol" -> return 4
-*/
-/*
-int		get_len_till_char(int start, char c, char *str)
-{
-	t_quote quote;
-
-	quote.squote = -1;
-	quote.dquote = -1;
-	while (str[start])
-	{
-		if (str[start] == '\'' && (get_backslash(str, start) == 0))
-			quote.squote *= -1;
-		if (str[start] == '"' && (get_backslash(str, start) == 0))
-			quote.dquote *= -1;
-		if (quote.dquote == -1 && quote.squote == -1)
-		{
-			if (str[start] == c)
-				return (start);
-		}
-		start++;
-	}
-	if (str[start] == '\0')
-		return (start);
-	return (0);
-}*/
 
 void	set_fd_in_out(int id, int size, t_list *lst)
 {
@@ -72,7 +43,6 @@ void	last_split(t_list *lst, int id, int size)
 	t_quote		quote;
 
 	i = 0;
-	//ft_printf("lst->content %s\n", lst->content);
 	start.user_input = ft_strdup(lst->content);
 	start.split_nb = 1;
 	while (start.user_input[i])
@@ -83,13 +53,7 @@ void	last_split(t_list *lst, int id, int size)
 		is_split_tokenize(&start, i);
 		i++;
 	}
-	split_tokenize(&start, &quote);	
-	/*
-	if (ft_strlen(start.user_cmd_tab[0]) == 6)
-	{
-		//free(start.user_cmd_tab[0]);
-		start.user_cmd_tab[0] = ft_strdup("exportd");
-	}*/
+	split_tokenize(&start, &quote);
 	lst->tab_cmd = tokenize_realloc(start.user_cmd_tab);
 	lst->pid = -1;
 	set_fd_in_out(id, size, lst);

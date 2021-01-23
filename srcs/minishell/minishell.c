@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 11:09:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/22 14:59:34 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 16:38:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,24 @@
 
 void	minishell_loop_test(t_user *start, t_env *env, char *argv)
 {
-	int		used;
 	char	*user_input;
 
-	(void)used;
 	change_pwd(env);
 	catch_signal();
 	if (argv != NULL)
 	{
-		used = 0;
 		g_reg = 0;
 		user_input = ft_strdup(argv);
 		if (ft_strcmp(user_input, "") != 0)
 		{
-			used = 1;
 			if (parsing_input(user_input, start, env) != -1)
 			{
 				if (conditionning(start) != -1)
 				{
 					execution(start, env);
 				}
-				free_all(start);
 			}
+			free_all(start);
 		}
 		free(user_input);
 	}
@@ -48,32 +44,26 @@ void	minishell_loop_test(t_user *start, t_env *env, char *argv)
 
 void	minishell_loop(t_user *start, t_env *env)
 {
-	int		used;
 	int		ret;
 	char	*user_input;
 
-	(void)used;
 	change_pwd(env);
 	catch_signal();
 	while (1)
 	{
-		used = 0;
 		g_reg = 0;
 		ft_printf("Minishell> ");
 		ret = get_next_line(0, &user_input);
 		verif_ret(ret, user_input);
 		if (ft_strcmp(user_input, "") != 0)
 		{
-			used = 1;
 			if (parsing_input(user_input, start, env) != -1)
 			{
 				if (conditionning(start) != -1)
 				{
 					execution(start, env);
 				}
-				
 			}
-			
 			free_all(start);
 		}
 		free(user_input);

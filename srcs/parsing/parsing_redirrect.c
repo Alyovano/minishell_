@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:53:39 by user42            #+#    #+#             */
-/*   Updated: 2021/01/19 11:39:53 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 16:44:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,6 @@ char	*rm_redir_pipe(char *elem, t_quote *quote, int nb)
 	return (tmp);
 }
 
-int		syntax_error_redirect(char *elem, t_quote *quote)
-{
-	int i;
-
-	i = 0;
-	quote->squote = -1;
-	quote->dquote = -1;
-	while (elem[i])
-	{
-		if (elem[i] == '\'' && (get_backslash(elem, i) == 0))
-			quote->squote *= -1;
-		if (elem[i] == '"' && (get_backslash(elem, i) == 0))
-			quote->dquote *= -1;
-		if (quote->dquote == -1 && quote->squote == -1)
-		{/*
-			if (elem[i] == '<' && elem[i + 1] == ' ' && elem[i + 2] == '>')
-			{
-				error_output_token(-2, NULL, '\0');
-				return (-1);
-			}*/
-		}
-		i++;
-	}
-	return (0);
-}
-
 int		parsing_redirrect(t_user *start)
 {
 	t_quote	quote;
@@ -108,8 +82,6 @@ int		parsing_redirrect(t_user *start)
 	while (start->user_cmd_tab[i])
 	{
 		nb_redirr_pipe = get_redir_pipe(start->user_cmd_tab[i], &quote);
-		if (syntax_error_redirect(start->user_cmd_tab[i], &quote) == -1)
-			return (-1);
 		if (nb_redirr_pipe > 0)
 		{
 			tmp = ft_strdup(start->user_cmd_tab[i]);

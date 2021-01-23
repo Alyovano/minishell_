@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
-/*   Updated: 2021/01/22 15:16:56 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 16:43:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,7 @@ int				input_to_tab(t_user *start, t_quote *quote)
 		quote->dquote = 0;
 		i = input_to_tab_verif(start, quote, i);
 		if (is_this_splitable(start, quote, i) == -1)
-			return (-1);/*
-		if (is_this_redirectable(start, quote, i) == -1)
-			return (-2);
-		if (is_this_redirectable_reverse(start, quote, i) == -1)
-			return (-3);*/
+			return (-1);
 		i++;
 	}
 	return (0);

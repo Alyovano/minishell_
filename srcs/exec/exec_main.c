@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 14:53:07 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 11:38:46 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 16:29:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,24 @@ int		exec_redirrect(t_list *lst, t_env *env, int old_fd[2], int size)
 	return (1);
 }
 
+void	exec_waitpid(t_list *lst, int *status)
+{
+	if (lst->pid != -1)
+	{
+		if (g_reg == -1)
+		{
+			while (lst)
+			{
+				kill(lst->pid, SIGKILL);
+				lst = lst->next;
+			}
+			return ;
+		}
+		g_reg = 1;
+		waitpid(lst->pid, status, 8 | WUNTRACED);
+	}
+}
+
 void	exec_main2(void *ptr, t_list *lst)
 {
 	int		status;
@@ -66,20 +84,7 @@ void	exec_main2(void *ptr, t_list *lst)
 	lst = ptr;
 	while (lst)
 	{
-		if (lst->pid != -1)
-		{
-			if (g_reg == -1)
-			{
-				while (lst)
-				{
-					kill(lst->pid, SIGKILL);
-					lst = lst->next;
-				}
-				return ;
-			}
-			g_reg = 1;
-			waitpid(lst->pid, &status, 8 | WUNTRACED);
-		}
+		exec_waitpid(lst, &status);
 		if (lst->next == NULL && g_errno != 127 && lst->pid != -1)
 			g_errno = status / 256;
 		lst = lst->next;

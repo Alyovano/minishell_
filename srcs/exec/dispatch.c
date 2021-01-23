@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 12:38:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 16:26:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,15 @@ int		cmd_valididy(char *cmd, t_env *env)
 		ft_strcmp(cmd, "exit") == 0 || \
 		ft_strcmp(cmd, "$?") == 0)
 	{
-		if (paths)
-			free_double_tab(paths);
-		//free(path);
+		free_paths(paths);
 		return (1);
 	}
 	if (path != NULL)
 	{
-		if (paths)
-			free_double_tab(paths);
-		//free(path);
+		free_paths(paths);
 		return (1);
 	}
-	if (paths)
-		free_double_tab(paths);
+	free_paths(paths);
 	free(path);
 	return (0);
 }
@@ -79,8 +74,7 @@ int		dispatch_cmd(t_list *lst, t_env *env)
 		paths = get_path(env->tab, lst->tab_cmd[0]);
 		path = check_path(paths, NULL);
 		ret = exec_execve(lst, env, path);
-		if (paths)
-			free_double_tab(paths);
+		free_paths(paths);
 	}
 	return (ret);
 }

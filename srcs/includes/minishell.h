@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 15:12:26 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 16:45:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,6 @@ typedef struct		s_int_pack
 **                 Des fonctions
 */
 
-void				free_all(t_user *start);
 int					parsing_input(char *input, t_user *start, t_env *env);
 int					check_input_start(t_user *start);
 void				error_output_token(int error, char *str, char c);
@@ -170,6 +169,13 @@ int					check_backslash(t_list *start);
 int					parsing_input_verif1(char *input, t_user *start);
 int					parsing_input_verif2(t_user *start);
 int					input_to_tab(t_user *start, t_quote *quote);
+
+/*
+**			FREE
+*/
+
+void				free_all(t_user *start);
+void				free_paths(char **paths);
 
 /*
 **          Split

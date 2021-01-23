@@ -6,11 +6,17 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 10:58:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/22 15:20:40 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 16:20:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void		free_paths(char **paths)
+{
+	if (paths)
+		free_double_tab(paths);
+}
 
 void		mega_free(t_list *lst)
 {
