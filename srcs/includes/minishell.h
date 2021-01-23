@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 09:44:20 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 15:12:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,5 +330,6 @@ void				print_in_out(t_list *lst);
 
 int					dirr_error(char *path);
 void				var_name_error(int err, char *str);
+void				unset_error(char *str);
 
 #endif

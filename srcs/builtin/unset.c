@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:06:18 by user42            #+#    #+#             */
-/*   Updated: 2021/01/21 14:33:18 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 15:12:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ char			**check_var_name(char **arg)
 	while (arg[i])
 	{
 		if (is_valid_name(arg[i]) == -1)
-			ft_printf("minishell: unset: « %s » : identifiant non valable\n",
-				arg[i++]);
+			unset_error(arg[i++]);
 		else
 		{
 			tmp[j] = ft_strdup(arg[i]);
@@ -115,8 +114,7 @@ int				ft_unset(t_env *env, t_list *lst)
 		}
 		else
 		{
-			ft_printf("minishell: unset: « %s » : identifiant non valable\n",
-				lst->tab_cmd[a.i]);
+			unset_error(lst->tab_cmd[a.i]);
 			a.i++;
 		}
 	}

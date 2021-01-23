@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 12:40:05 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 15:26:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ void		malloc_error(void)
 	exit(EXIT_FAILURE);
 }
 
+void		print_trio_error(char *s1, char *s2, char *s3)
+{
+	ft_putstr_fd(s1, STDERR_FILENO);
+	ft_putstr_fd(s2, STDERR_FILENO);
+	ft_putstr_fd(s3, STDERR_FILENO);
+}
+
 /*
 ** Error output from CD builtin
 */
@@ -25,15 +32,21 @@ void		malloc_error(void)
 void		var_name_error(int err, char *str)
 {
 	g_errno = err;
-	ft_printf("minishell: export: « %s » : identifiant non valable\n",
-		str);
+	print_trio_error("minishell: export: « ", str, " » : identifiant non valable\n");
 }
 
 int			dirr_error(char *path)
 {
 	g_errno = 1;
-	ft_printf("bash: cd: %s: %s\n", path, strerror(errno));
+	print_trio_error("bash: cd: ", path, ": ");
+	ft_putstr_fd(strerror(errno), STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
 	return (0);
+}
+
+void		unset_error(char *str)
+{
+	print_trio_error("minishell: unset: « ", str, "» : identifiant non valable\n");
 }
 
 /*
