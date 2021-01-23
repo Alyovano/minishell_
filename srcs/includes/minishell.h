@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/22 13:36:57 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 09:44:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,6 +299,7 @@ int					is_valid_name(char *str);
 int					is_valid_char(char c);
 int					export_new_var(t_env *env, t_list *lst);
 int					free_dol(t_dollar *dol, char *one, char *two);
+int					free_dol2(t_dollar *dol, char *one, char *two);
 int					change_pwd(t_env *env);
 
 /*

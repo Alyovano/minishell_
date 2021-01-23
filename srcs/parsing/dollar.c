@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 10:45:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/22 15:49:11 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 09:43:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int		previous_return_value(t_list *lst, int i, int j, t_dollar *dol)
 	free(lst->tab_cmd[i]);
 	lst->tab_cmd[i] = ft_strdup(two);
 	int_size = ft_strlen(one);
+	free_dol2(dol, one, two);
+	free(value);
 	return (int_size);
 }
 
