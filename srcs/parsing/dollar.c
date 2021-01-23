@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 10:45:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 13:03:01 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/23 13:59:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,23 @@ int		check_dollar_or_not_dollar(t_list *lst, int i, t_quote *quote, t_dollar *do
 
 	j = 0;
 	quote->dollar_quote = 0;
+	init_quotes(quote, -1, -1);
 	while (lst->tab_cmd[i][j])
 	{
 		token = 0;
+		if (lst->tab_cmd[i][j] == '\'' && get_backslash(lst->tab_cmd[i], j) == 0 && quote->dquote == -1)
+		{
+			quote->squote *= -1;
+		}
+		else if (lst->tab_cmd[i][j] == '"' && get_backslash(lst->tab_cmd[i], j) == 0)
+		{
+			quote->dquote *= -1;
+		}
 		if (lst->tab_cmd[i][j] == '$' &&
 			(get_backslash(lst->tab_cmd[i], j) == 0)
 			&& (lst->tab_cmd[i][j + 1])
 			&& (lst->tab_cmd[i][j + 1] != ' ')
-			&& (!(j != 0 && lst->tab_cmd[i][j - 1] == '\''))) //&& (lst->tab_cmd[i][j + 1] != '"'))
+			&& quote->squote == -1) //&& (lst->tab_cmd[i][j + 1] != '"'))
 			
 		{
 			if (lst->tab_cmd[i][j + 1] == '?')
@@ -131,7 +140,6 @@ int		check_dollar_or_not_dollar(t_list *lst, int i, t_quote *quote, t_dollar *do
 			{
 				j = dollar_var_name(lst, i, j, dol, env);
 			}
-			
 		}
 		if (token != 1)
 			j++;
