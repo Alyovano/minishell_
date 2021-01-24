@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 10:45:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 16:47:17 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/24 15:30:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,62 +44,41 @@ char	*check_var_in_env(char *var_name, t_env *env)
 **Je suis pas sur dans la while pour : start->user_cmd_tab[i][j] != '='
 */
 
-int		dollar_var_name(t_list *lst, int i, int j, t_dollar *dol, t_env *env)
+int		dollar_var_name(t_list *lst, t_int_pack *p, t_dollar *dol, t_env *env)
 {
-	int		tmp;
 	int		k;
 	char	*one;
 	char	*two;
+	char	*tmp;
 
-	j += 1;
-	tmp = j;
+	tmp = ft_strdup(lst->tab_cmd[p->i]);
+	p->j += 1;
 	k = 0;
-	while (lst->tab_cmd[i][j + k] && lst->tab_cmd[i][j + k] != ' '
-	&& lst->tab_cmd[i][j + k] != '\'' && lst->tab_cmd[i][j + k] != '"'
-	&& lst->tab_cmd[i][j + k] != '=' && lst->tab_cmd[i][j + k] != '.'
-	&& lst->tab_cmd[i][j + k] != '$')
+	while (tmp[p->j + k] && tmp[p->j + k] != ' ' && tmp[p->j + k] != '\''
+	&& tmp[p->j + k] != '"' && tmp[p->j + k] != '=' && tmp[p->j + k] != '.'
+	&& tmp[p->j + k] != '$')
 		k++;
-	dol->var_name = ft_substr(lst->tab_cmd[i], tmp, k);
+	dol->var_name = ft_substr(tmp, p->j, k);
 	dol->var_content = check_var_in_env(dol->var_name, env);
-	dol->before_str = ft_substr(lst->tab_cmd[i], 0, j - 1);
-	dol->after_str = ft_substr(lst->tab_cmd[i], j + k, \
-										ft_strlen(lst->tab_cmd[i]));
+	dol->before_str = ft_substr(tmp, 0, p->j - 1);
+	dol->after_str = ft_substr(tmp, p->j + k, ft_strlen(tmp));
 	one = ft_strjoin(dol->before_str, dol->var_content);
 	two = ft_strjoin(one, dol->after_str);
-	if (lst->tab_cmd[i])
-		free(lst->tab_cmd[i]);
-	lst->tab_cmd[i] = ft_strdup(two);
-	tmp = ft_strlen(one) - 1;
+	free(tmp);
+	if (lst->tab_cmd[p->i])
+		free(lst->tab_cmd[p->i]);
+	lst->tab_cmd[p->i] = ft_strdup(two);
+	p->j = ft_strlen(one) - 1;
 	free_dol(dol, one, two);
-	return (tmp);
+	return (p->j);
 }
 
-/*
-** remplace $? par la valeur de retour precedente
-** Retourne la taille de la valeur de $?
-*/
-
-int		previous_return_value(t_list *lst, int i, int j, t_dollar *dol)
+void	dol_or_not_dol2(t_list *lst, t_int_pack *p, t_dollar *dol, t_env *env)
 {
-	int		int_size;
-	char	*value;
-	char	*one;
-	char	*two;
-
-	int_size = 0;
-	value = ft_itoa(g_errno);
-	j += 1;
-	dol->before_str = ft_substr(lst->tab_cmd[i], 0, j - 1);
-	dol->after_str = ft_substr(lst->tab_cmd[i], j + 1, \
-									ft_strlen(lst->tab_cmd[i]));
-	one = ft_strjoin(dol->before_str, value);
-	two = ft_strjoin(one, dol->after_str);
-	free(lst->tab_cmd[i]);
-	lst->tab_cmd[i] = ft_strdup(two);
-	int_size = ft_strlen(one);
-	free_dol2(dol, one, two);
-	free(value);
-	return (int_size);
+	if (lst->tab_cmd[p->i][p->j + 1] == '?')
+		p->j = prev_return_value(lst, p->i, p->j, dol);
+	else
+		p->j = dollar_var_name(lst, p, dol, env);
 }
 
 /*
@@ -107,40 +86,28 @@ int		previous_return_value(t_list *lst, int i, int j, t_dollar *dol)
 ** jump sur la char apres la squote
 */
 
-int		check_dollar_or_not_dollar(t_list *lst, int i, t_quote *quote, t_dollar *dol, t_env *env)
+int		ch_dollar_or_not_dollar(t_list *lst, int i, t_dollar *dol, t_env *env)
 {
-	int j;
-	int token;
+	char		*cmd;
+	t_quote		quote;
+	t_int_pack	p;
 
-	j = 0;
-	quote->dollar_quote = 0;
-	init_quotes(quote, -1, -1);
-	while (lst->tab_cmd[i][j])
+	p.j = -1;
+	p.i = i;
+	quote.dollar_quote = 0;
+	init_quotes(&quote, -1, -1);
+	while (lst->tab_cmd[p.i][++(p.j)])
 	{
-		token = 0;
-		if (lst->tab_cmd[i][j] == '\'' && get_backslash(lst->tab_cmd[i], j) == 0 && \
-																quote->dquote == -1)
-			quote->squote *= -1;
-		else if (lst->tab_cmd[i][j] == '"' && get_backslash(lst->tab_cmd[i], j) == 0)
-			quote->dquote *= -1;
-		if (lst->tab_cmd[i][j] == '$' &&
-			(get_backslash(lst->tab_cmd[i], j) == 0)
-			&& (lst->tab_cmd[i][j + 1])
-			&& (lst->tab_cmd[i][j + 1] != ' ')
-			&& quote->squote == -1)
-		{
-			if (lst->tab_cmd[i][j + 1] == '?')
-			{
-				token = 1;
-				j = previous_return_value(lst, i, j, dol);
-			}
-			else
-			{
-				j = dollar_var_name(lst, i, j, dol, env);
-			}
-		}
-		if (token != 1)
-			j++;
+		cmd = ft_strdup(lst->tab_cmd[p.i]);
+		if (cmd[p.j] == '\'' && get_backslash(cmd, p.j) == 0 \
+										&& quote.dquote == -1)
+			quote.squote *= -1;
+		else if (cmd[p.j] == '"' && get_backslash(cmd, p.j) == 0)
+			quote.dquote *= -1;
+		if (cmd[p.j] == '$' && (get_backslash(cmd, p.j) == 0) \
+			&& (cmd[p.j + 1]) && (cmd[p.j + 1] != ' ') && quote.squote == -1)
+			dol_or_not_dol2(lst, &p, dol, env);
+		free(cmd);
 	}
 	return (0);
 }
@@ -150,7 +117,6 @@ int		add_environnement_var(t_list *lst, t_env *env)
 	int			i;
 	t_dollar	*dol;
 	t_list		*tmp;
-	t_quote		quote;
 
 	dol = malloc(sizeof(t_dollar));
 	if (!dol)
@@ -163,7 +129,7 @@ int		add_environnement_var(t_list *lst, t_env *env)
 		i = 0;
 		while (lst->tab_cmd[i])
 		{
-			check_dollar_or_not_dollar(lst, i, &quote, dol, env);
+			ch_dollar_or_not_dollar(lst, i, dol, env);
 			i++;
 		}
 		lst = lst->next;

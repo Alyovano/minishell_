@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 16:45:20 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/24 15:30:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,8 @@ int					input_to_tab(t_user *start, t_quote *quote);
 
 void				free_all(t_user *start);
 void				free_paths(char **paths);
+int					free_dol(t_dollar *dol, char *one, char *two);
+int					free_dol2(t_dollar *dol, char *one, char *two);
 
 /*
 **          Split
@@ -257,6 +259,7 @@ int					add_environnement_var(t_list *lst, t_env *env);
 char				*check_var_in_env(char *var_name, t_env *env);
 int					str_check(char *str_envi, char *to_catch);
 int					check_simple_quote(t_user *start, t_quote *q, int j, int i);
+int					prev_return_value(t_list *lst, int i, int j, t_dollar *dol);
 
 /*
 **    Preparation a l'execution
@@ -304,8 +307,6 @@ int					export_without_args(t_env *env);
 int					is_valid_name(char *str);
 int					is_valid_char(char c);
 int					export_new_var(t_env *env, t_list *lst);
-int					free_dol(t_dollar *dol, char *one, char *two);
-int					free_dol2(t_dollar *dol, char *one, char *two);
 int					change_pwd(t_env *env);
 
 /*

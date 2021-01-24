@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/18 12:22:19 by alyovano          #+#    #+#              #
-#    Updated: 2021/01/18 14:40:10 by user42           ###   ########.fr        #
+#    Updated: 2021/01/24 15:30:39 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,9 @@ MINISHELL = $(addprefix srcs/minishell/, minishell.c error.c conditionning.c \
 			signaux.c free_minishell.c)
 PARSING = $(addprefix srcs/parsing/, backslash.c parsing.c parsing2.c \
 			first_split.c clean_line.c semicolon.c chevron.c \
-			clean_spaces.c check_start.c dollar.c dollar2.c parsing_redirrect.c \
-			split_pipe.c split_pipe2.c debug_print_lst.c pipe.c parsing_utils.c)
+			clean_spaces.c check_start.c dollar.c dollar2.c dollar3.c \
+			parsing_redirrect.c split_pipe.c split_pipe2.c debug_print_lst.c \
+			pipe.c parsing_utils.c)
 QUOTE = $(addprefix srcs/quote/, algo_quote_actuel.c requote_or_rmquote.c)
 EXEC = $(addprefix srcs/exec/, exec.c dispatch.c exec_main.c exec_type.c \
 			in_out_setup.c split_tokenize.c tokenize_realloc.c last_clean.c)
