@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/25 09:27:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 10:53:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,10 @@ void		sig_handler(int sig)
 	}
 }
 
-void	do_nothing(int nb)
-{
-	(void)nb;
-	if (write(STDOUT_FILENO, " \b\b \b", 5) < 0)
-		return ;
-	return ;
-}
-
 void		catch_signal(void)
 {
 	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, do_nothing);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 /*
