@@ -46,25 +46,44 @@ void		exit_get_out(t_env *env, t_list *lst, t_user *start, int __status)
 
 }
 
-// int			exit_arg_check(t_list *lst)
-// {
-// 	int i;
+int			numeric_arg(char *str)
+{
+	int i;
 
-// 	i = 1;
-// 	while (lst->tab_cmd[i])
-// 	{
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isdigit(str[i]) != 1)
+			return (-1);
+		i++;
+	}
+	return (0);
+}
 
-// 	}
-// }
+int			exit_arg_check(t_list *lst)
+{
+	int i;
+
+	while (lst->tab_cmd[i])
+	{
+		numeric_arg(lst->tab_cmd[i]);
+		i++;
+	}
+	return (0);
+}
 
 void		ft_exit(t_env *env, t_list *lst, t_user *start)
 {
 	(void)env;
 	if (double_tab_size(lst->tab_cmd) == 1)
 		exit_get_out(env, lst, start, 0);
-	// else
-	// {
-	// 	exit_arg_check(lst);
-	// }
-
+	else if (numeric_arg(lst->tab_cmd[1]) == 0 && double_tab_size(lst->tab_cmd) == 2)
+		exit_get_out(env, lst, start, ft_atoi(lst->tab_cmd[1]));
+	else if (numeric_arg(lst->tab_cmd[1]) == 0 && double_tab_size(lst->tab_cmd) > 2)
+		ft_printf("bash: exit: trop d'arguments\n");
+	else
+	{
+		ft_printf("bash: exit: %s : argument numérique nécessaire\n", lst->tab_cmd[1]);
+		exit_get_out(env, lst, start, 2);
+	}
 }
