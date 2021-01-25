@@ -6,49 +6,19 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 11:09:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 16:38:47 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 14:33:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*
-** Function pour faire fonctionner le testeur de cacharles
-** on peu la delete avant de passer en correction si on veut
-*/
-
-void	minishell_loop_test(t_user *start, t_env *env, char *argv)
-{
-	char	*user_input;
-
-	change_pwd(env);
-	catch_signal();
-	if (argv != NULL)
-	{
-		g_reg = 0;
-		user_input = ft_strdup(argv);
-		if (ft_strcmp(user_input, "") != 0)
-		{
-			if (parsing_input(user_input, start, env) != -1)
-			{
-				if (conditionning(start) != -1)
-				{
-					execution(start, env);
-				}
-			}
-			free_all(start);
-		}
-		free(user_input);
-	}
-}
-
-void	escape_minishell()
+void	escape_minishell(void)
 {
 	write(1, "exit\n", 5);
 	exit(EXIT_FAILURE);
 }
 
-char	*get_input()
+char	*get_input(void)
 {
 	char *buf;
 	char *tmp;
@@ -110,14 +80,16 @@ int		main(int argc, char **argv, char **environnement)
 	t_user	*start;
 	t_env	*env;
 
+	if (argc >= 2)
+	{
+		ft_printf("bash: %s: Aucun fochier ou dossier de ce type\n", argv[1]);
+		exit(127);
+	}
 	if (!(start = malloc(sizeof(t_user))))
 		malloc_error();
 	if (!(env = malloc(sizeof(t_env))))
 		malloc_error();
 	env->tab = copy_double_tab(environnement);
-	if (argc == 3 && ft_strcmp(argv[1], "-c") == 0)
-		minishell_loop_test(start, env, argv[2]);
-	else
-		minishell_loop(start, env);
+	minishell_loop(start, env);
 	return (0);
 }

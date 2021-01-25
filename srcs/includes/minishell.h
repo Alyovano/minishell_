@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/25 07:57:29 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 14:35:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,14 +325,6 @@ void				malloc_error(void);
 void				catch_signal(void);
 void				sig_handler(int value);
 int					verif_ret(int ret, char *user_input);
-
-/*
-** Debug (delete before last push)
-*/
-
-void				print_list(t_user *start);
-void				debug(t_list *lst);
-void				print_in_out(t_list *lst);
 
 /*
 ** Errors
