@@ -34,7 +34,8 @@
 **	free(env);
 */
 
-void		exit_get_out(t_env *env, t_list *lst, t_user *start, int status)
+void		exit_get_out(t_env *env, t_list *lst, t_user *start,
+									int status)
 {
 	(void)lst;
 	ft_printf("exit\n");
@@ -50,6 +51,8 @@ int			numeric_arg(char *str)
 	int i;
 
 	i = 0;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
 	while (str[i])
 	{
 		if (ft_isdigit(str[i]) != 1)
@@ -81,11 +84,18 @@ void		ft_exit(t_env *env, t_list *lst, t_user *start)
 		exit_get_out(env, lst, start, ft_atoi(lst->tab_cmd[1]));
 	else if (numeric_arg(lst->tab_cmd[1]) == 0
 			&& double_tab_size(lst->tab_cmd) > 2)
-		ft_printf("bash: exit: trop d'arguments\n");
+	{
+		g_errno = 1;
+		ft_printf("exit\n");
+		ft_putstr_fd("bash: exit: trop d'arguments\n", STDERR_FILENO);
+	}
 	else
 	{
-		ft_printf("bash: exit: %s : argument numérique nécessaire\n",
-		lst->tab_cmd[1]);
+		g_errno = 1;
+		ft_printf("exit\n");
+		ft_putstr_fd("bash: exit: ", STDERR_FILENO);
+		ft_putstr_fd(lst->tab_cmd[1], STDERR_FILENO);
+		ft_putstr_fd(" : argument numérique nécessaire\n", STDERR_FILENO);
 		exit_get_out(env, lst, start, 2);
 	}
 }
