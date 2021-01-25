@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 16:31:08 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 16:06:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,12 @@ void	init_lst(t_list *lst)
 	lst->tab_cmd = NULL;
 }
 
-/*
-** Function to prepare for exectution
-** last split to update t_list (builtin, flag, argu)
-*/
-
-int		conditionning(t_user *start)
+int		conditionning2(t_user *start)
 {
-	t_list	*lst;
-	void	*ptr;
 	int		i;
+	t_list	*lst;
 	int		size;
 
-	ptr = start->line;
-	if (!start->user_cmd_tab)
-		return (-1);
 	while (start->line)
 	{
 		i = 0;
@@ -95,11 +86,30 @@ int		conditionning(t_user *start)
 			init_lst(lst);
 			if (remove_redirrect_alloc(lst) == -1)
 				return (-1);
+			if (ft_strcmp(lst->content, "") == 0)
+				return (create_files(start));
 			last_split(lst, i++, size);
 			lst = lst->next;
 		}
 		start->line = start->line->next;
 	}
+	return (0);
+}
+
+/*
+** Function to prepare for exectution
+** last split to update t_list (builtin, flag, argu)
+*/
+
+int		conditionning(t_user *start)
+{
+	void	*ptr;
+
+	ptr = start->line;
+	if (!start->user_cmd_tab)
+		return (-1);
+	if (conditionning2(start) == -1)
+		return (-1);
 	start->line = ptr;
 	return (0);
 }

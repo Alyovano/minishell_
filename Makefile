@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/18 12:22:19 by alyovano          #+#    #+#              #
-#    Updated: 2021/01/25 14:35:24 by user42           ###   ########.fr        #
+#    Updated: 2021/01/25 15:57:19 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 BUILTIN = $(addprefix srcs/builtin/, export.c unset.c pwd.c echo.c exit.c \
 			cd.c env.c utils.c utils_environnement.c export_whitout_argument.c)
 MINISHELL = $(addprefix srcs/minishell/, minishell.c error.c conditionning.c \
-			signaux.c free_minishell.c error2.c)
+			signaux.c free_minishell.c error2.c create_files.c)
 PARSING = $(addprefix srcs/parsing/, backslash.c parsing.c parsing2.c \
 			first_split.c clean_line.c semicolon.c chevron.c \
 			clean_spaces.c check_start.c dollar.c dollar2.c dollar3.c \
