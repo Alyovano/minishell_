@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 11:09:57 by user42            #+#    #+#             */
-/*   Updated: 2021/01/25 14:33:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 15:10:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	escape_minishell(void)
 {
 	write(1, "exit\n", 5);
-	exit(EXIT_FAILURE);
+	exit(g_errno);
 }
 
 char	*get_input(void)
@@ -35,7 +35,6 @@ char	*get_input(void)
 		free(tmp);
 		if (g_eof == 0)
 		{
-			g_errno = 1;
 			ft_putchar_fd('\n', 1);
 			free(buf);
 			return (NULL);
@@ -43,7 +42,6 @@ char	*get_input(void)
 	}
 	if (!buf)
 		buf = tmp;
-	g_errno = 0;
 	return (buf);
 }
 
