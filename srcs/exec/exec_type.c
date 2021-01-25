@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 15:19:08 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 16:23:13 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 16:21:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ void	exec_type3(t_env *env, t_list *lst)
 		else
 			error_output_token(-6, lst->tab_cmd[0], '\0');
 		free(path);
-		free_paths(paths);
+		if (ft_strcmp("..", lst->tab_cmd[0]) != 0 \
+				&& ft_strcmp(".", lst->tab_cmd[0]) != 0)
+			free_paths(paths);
 		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
