@@ -42,6 +42,12 @@ void	minishell_loop_test(t_user *start, t_env *env, char *argv)
 	}
 }
 
+void	escape_minishell()
+{
+	write(1, "exit\n", 5);
+	exit(EXIT_FAILURE);
+}
+
 char	*get_input()
 {
 	char *buf;
@@ -82,10 +88,7 @@ void	minishell_loop(t_user *start, t_env *env)
 		g_reg = 0;
 		ft_printf("Minishell> ");
 		if (!(user_input = get_input()))
-		{
-			write(1, "exit\n", 5);
-			exit(EXIT_FAILURE);
-		}
+			escape_minishell();
 		g_eof = 0;
 		if (ft_strcmp(user_input, "") != 0)
 		{
