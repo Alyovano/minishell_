@@ -42,9 +42,37 @@ void	minishell_loop_test(t_user *start, t_env *env, char *argv)
 	}
 }
 
+char	*get_input()
+{
+	char *buf;
+	char *tmp;
+
+	buf = NULL;
+	tmp = NULL;
+	while (get_next_line(STDIN_FILENO, &tmp) == 0)
+	{
+		buf = ft_strjoin(buf, tmp);
+		if (tmp[0])
+		{
+			g_eof = 1;
+		}
+		free(tmp);
+		if (g_eof == 0)
+		{
+			g_errno = 1;
+			ft_putchar_fd('\n', 1);
+			free(buf);
+			return (NULL);
+		}
+	}
+	if (!buf)
+		buf = tmp;
+	g_errno = 0;
+	return (buf);
+}
+
 void	minishell_loop(t_user *start, t_env *env)
 {
-	int		ret;
 	char	*user_input;
 
 	change_pwd(env);
@@ -53,8 +81,9 @@ void	minishell_loop(t_user *start, t_env *env)
 	{
 		g_reg = 0;
 		ft_printf("Minishell> ");
-		ret = get_next_line(0, &user_input);
-		verif_ret(ret, user_input);
+		if (!(user_input = get_input()))
+			exit(EXIT_FAILURE);
+		g_eof = 0;
 		if (ft_strcmp(user_input, "") != 0)
 		{
 			if (parsing_input(user_input, start, env) != -1)

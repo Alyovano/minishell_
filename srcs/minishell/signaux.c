@@ -16,6 +16,7 @@ void		sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_eof = 0;
 		wait(NULL);
 		ft_putchar_fd('\n', 1);
 		if (g_reg != 1)
@@ -39,11 +40,10 @@ int			verif_ret(int ret, char *user_input)
 	(void)user_input;
 	if (ret == 0)
 	{
+		printf("%s\n", user_input);
 		kill(-1, 0);
 		write(1, "exit\n", 5);
 		exit(EXIT_SUCCESS);
-		//ICI MEGA FREE SORTIE CTRL-D
-		// NE PAS DELETE CE COM TANT QUE C EST PAS FAIT
 	}
 	return (0);
 }

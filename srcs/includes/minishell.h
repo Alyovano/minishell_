@@ -35,6 +35,7 @@
 
 int					g_reg;
 int					g_errno;
+int					g_eof;
 
 /*
 **               Des structures
