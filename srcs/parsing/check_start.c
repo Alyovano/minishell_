@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:26:17 by user42            #+#    #+#             */
-/*   Updated: 2021/01/25 07:52:08 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 08:11:28 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,47 @@ int			check_redirrections(char *str, t_quote *q)
 					return (-1);
 				}
 			}
+		}
+	}
+	return (0);
+}
+
+int			check_semicolon2(char *str, int *i)
+{
+	if (str[*i] == ';')
+	{
+		(*i)++;
+		next_spaces(str, i);
+		if (str[*i] == ';')
+		{
+			error_output_token(-7, ";;", '\0');
+			return (-1);
+		}
+		else if (str[*i] == '|')
+		{
+			error_output_token(-7, NULL, '|');
+			return (-1);
+		}
+	}
+	return (0);
+}
+
+int			check_semicolon(char *str, t_quote *q)
+{
+	int i;
+
+	i = -1;
+	init_quotes(q, -1, -1);
+	while (str[++i])
+	{
+		if (str[i] == '"' && get_backslash(str, i) == 0)
+			q->dquote *= -1;
+		else if (str[i] == '\'' && get_backslash(str, i) == 0)
+			q->squote *= -1;
+		else if (q->squote == -1 && q->dquote == -1)
+		{
+			if (check_semicolon2(str, &i) == -1)
+				return (-1);
 		}
 	}
 	return (0);

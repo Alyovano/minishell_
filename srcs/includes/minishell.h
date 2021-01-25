@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/25 07:50:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 07:57:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ int					check_backslash(t_list *start);
 int					parsing_input_verif1(char *input, t_user *start);
 int					parsing_input_verif2(t_user *start);
 int					input_to_tab(t_user *start, t_quote *quote);
+int					check_semicolon(char *str, t_quote *q);
 
 /*
 **			FREE
