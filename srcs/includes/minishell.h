@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:32:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/24 15:30:02 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 07:50:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,7 @@ char				*remove_redirrect(char *str);
 int					remove_redirrect_alloc(t_list *lst);
 int					exec_type(int size, int old_fd[2], t_env *env, t_list *lst);
 int					in_out_setup(t_fd *fds, t_list *lst);
+int					check_redirrections(char *str, t_quote *q);
 
 /*
 **          Environnement - Variable - $

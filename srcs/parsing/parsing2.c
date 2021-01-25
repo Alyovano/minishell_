@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 11:15:45 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 16:42:45 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 07:49:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int				parsing_error(t_user *start)
 		error_output_token(error, NULL, '\0');
 		return (-1);
 	}
+	if (check_redirrections(start->user_input, &quote) == -1)
+		return (-1);
 	error = input_to_tab(start, &quote);
 	if (error < 0)
 	{
