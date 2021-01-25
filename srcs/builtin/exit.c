@@ -34,14 +34,37 @@
 **	free(env);
 */
 
-int			ft_exit(t_env *env, t_list *lst, t_user *start)
+void		exit_get_out(t_env *env, t_list *lst, t_user *start, int __status)
 {
-	(void)env;
 	(void)lst;
 	ft_printf("exit\n");
 	free_all(start);
 	free(start);
 	free_double_tab(env->tab);
 	free(env);
-	exit(EXIT_SUCCESS);
+	exit(__status);
+
+}
+
+// int			exit_arg_check(t_list *lst)
+// {
+// 	int i;
+
+// 	i = 1;
+// 	while (lst->tab_cmd[i])
+// 	{
+
+// 	}
+// }
+
+void		ft_exit(t_env *env, t_list *lst, t_user *start)
+{
+	(void)env;
+	if (double_tab_size(lst->tab_cmd) == 1)
+		exit_get_out(env, lst, start, 0);
+	// else
+	// {
+	// 	exit_arg_check(lst);
+	// }
+
 }
