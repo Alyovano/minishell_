@@ -6,48 +6,11 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 16:22:24 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 14:13:05 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void		malloc_error(void)
-{
-	strerror(errno);
-	exit(EXIT_FAILURE);
-}
-
-void		print_trio_error(char *s1, char *s2, char *s3)
-{
-	ft_putstr_fd(s1, STDERR_FILENO);
-	ft_putstr_fd(s2, STDERR_FILENO);
-	ft_putstr_fd(s3, STDERR_FILENO);
-}
-
-/*
-** Error output from CD builtin
-*/
-
-void		var_name_error(int err, char *str)
-{
-	g_errno = err;
-	print_trio_error("minishell: export: « ", str, " » : identifiant non valable\n");
-}
-
-int			dirr_error(char *path)
-{
-	g_errno = 1;
-	print_trio_error("bash: cd: ", path, ": ");
-	ft_putstr_fd(strerror(errno), STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
-	return (0);
-}
-
-void		unset_error(char *str)
-{
-	print_trio_error("minishell: unset: « ", str, "» : identifiant non valable\n");
-}
 
 /*
 ** Function to set gerrno
@@ -81,38 +44,37 @@ void		set_gerrno(t_list *lst, t_env *env)
 		g_errno = 0;
 }
 
-/*
-** Modification de la fonction error_output_token pour permettre l'envoi de
-** chaine de caractères pour imprimer une erreur
-*/
-
-void		error_output_token(int error, char *str, char c)
+void		error_output_token2(int error)
 {
 	if (error == -1)
 	{
-		ft_putstr_fd("minishell: erreur de syntaxe près du symbole inattendu « ; »\n", STDERR_FILENO);
+		ft_putstr_fd("bash: erreur de syntaxe près du symbole inattendu « ; »\n"
+															, STDERR_FILENO);
 		g_errno = 2;
 	}
 	else if (error == -2)
 	{
-		ft_putstr_fd("minishell: erreur de syntaxe près du symbole inattendu « > »\n", STDERR_FILENO);
+		ft_putstr_fd("bash: erreur de syntaxe près du symbole inattendu « > »\n"
+															, STDERR_FILENO);
 		g_errno = 2;
 	}
-	else if (error == -3)
-	{
-		ft_putstr_fd("Minishell cannot do that: No multilines : « < »\n", STDERR_FILENO);
-		g_errno = 444;
-	}
 	else if (error == -4)
-		ft_putstr_fd("bash: erreur de syntaxe près du symbole inattendu « newline »\n", STDERR_FILENO);
+		ft_putstr_fd(
+			"bash: erreur de syntaxe près du symbole inattendu « newline »\n"
+			, STDERR_FILENO);
 	else if (error == -5)
 	{
-		ft_putstr_fd("Minishell cannot do that: No multilines\n", STDERR_FILENO);
+		ft_putstr_fd("Minishell cannot do that: No multilines\n"
+															, STDERR_FILENO);
 		g_errno = 444;
 	}
-	else if (error == -6)
+}
+
+void		error_output_token3(int error, char *str, char c)
+{
+	if (error == -6)
 	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd("bash: ", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": commande introuvable\n", STDERR_FILENO);
 		g_errno = 127;
@@ -121,19 +83,25 @@ void		error_output_token(int error, char *str, char c)
 	{
 		if (str == NULL)
 		{
-			ft_putstr_fd("bash: erreur de syntaxe près du symbole inattendu « ", STDERR_FILENO);
+			ft_putstr_fd("bash: erreur de syntaxe près du symbole inattendu « "
+															, STDERR_FILENO);
 			ft_putchar_fd(c, STDERR_FILENO);
 			ft_putstr_fd(" »\n", STDERR_FILENO);
 		}
 		else
 		{
-			ft_putstr_fd("bash: erreur de syntaxe près du symbole inattendu « ", STDERR_FILENO);
+			ft_putstr_fd("bash: erreur de syntaxe près du symbole inattendu « "
+															, STDERR_FILENO);
 			ft_putstr_fd(str, STDERR_FILENO);
 			ft_putstr_fd(" »\n", STDERR_FILENO);
 		}
 		g_errno = 2;
 	}
-	else if (error == -8)
+}
+
+void		error_output_token4(int error, char *str)
+{
+	if (error == -8)
 	{
 		ft_putstr_fd("bash: ", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
@@ -152,10 +120,21 @@ void		error_output_token(int error, char *str, char c)
 		ft_putstr_fd("Minishell: fork error\n", STDERR_FILENO);
 		g_errno = 444;
 	}
-	else if (error == -11)
+}
+
+/*
+** Modification de la fonction error_output_token pour permettre l'envoi de
+** chaine de caractères pour imprimer une erreur
+*/
+
+void		error_output_token(int error, char *str, char c)
+{
+	error_output_token2(error);
+	error_output_token3(error, str, c);
+	error_output_token4(error, str);
+	if (error == -11)
 	{
 		ft_putstr_fd("Minishell: dup error\n", STDERR_FILENO);
 		g_errno = 444;
 	}
-	//Ici ca va free comme jaja  --> free dans minishell avant de reprendre boucle while
 }
