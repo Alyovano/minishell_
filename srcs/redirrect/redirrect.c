@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:51:22 by user42            #+#    #+#             */
-/*   Updated: 2021/01/24 14:33:31 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/25 07:24:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int		get_redirrect(t_list *lst, t_quote *quote)
 	int		i;
 
 	i = -1;
-	tmp = ft_strdup(lst->content);
+	tmp = lst->content;
 	init_quotes(quote, -1, -1);
 	while (tmp[++i])
 	{
@@ -123,6 +123,5 @@ int		get_redirrect(t_list *lst, t_quote *quote)
 				return (-1);
 		}
 	}
-	free(tmp);
 	return (1);
 }
