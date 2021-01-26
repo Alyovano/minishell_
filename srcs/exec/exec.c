@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 10:14:42 by user42            #+#    #+#             */
-/*   Updated: 2021/01/23 13:03:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/26 14:55:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ int			execution(t_user *start, t_env *env)
 		error_output_token(-5, NULL, '\0');
 		return (-1);
 	}
+	g_child_running = 1;
 	while (start->line)
 	{
 		lst = start->line->content;
@@ -128,6 +129,7 @@ int			execution(t_user *start, t_env *env)
 			return (-1);
 		start->line = start->line->next;
 	}
+	g_child_running = 0;
 	start->line = tmp;
 	return (0);
 }

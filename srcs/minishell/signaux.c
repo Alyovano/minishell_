@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 08:42:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/25 10:53:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/26 14:53:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,17 @@ void		sig_handler(int sig)
 			ft_printf("Minishell> ");
 		g_reg = -1;
 	}
+	else if (sig == SIGQUIT)
+	{
+		if (g_child_running)
+			ft_printf("Quitter (core dumped)\n", sig);
+	}
 }
 
 void		catch_signal(void)
 {
 	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, sig_handler);
 }
 
 /*
