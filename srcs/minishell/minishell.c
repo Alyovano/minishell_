@@ -35,7 +35,6 @@ char	*get_input(void)
 		free(tmp);
 		if (g_eof == 0)
 		{
-			ft_putchar_fd('\n', 1);
 			free(buf);
 			return (NULL);
 		}
