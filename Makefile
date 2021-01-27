@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/18 12:22:19 by alyovano          #+#    #+#              #
-#    Updated: 2021/01/25 15:57:19 by user42           ###   ########.fr        #
+#    Updated: 2021/01/27 15:21:36 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,11 +56,6 @@ ${NAME}:	${OBJS}
 			${CC} -o ${NAME} ${OBJS} ${LIBFTPRINTF}
 
 all:		${NAME}
-
-
-debug:
-			echo "CREATION DE L'EXECUTABLE debug"
-			gcc -fsanitize=address -o debug ${OBJS} ${LIBFTPRINTF}
 
 clean:
 			${RM} ${OBJS}
