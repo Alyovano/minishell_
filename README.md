@@ -1,5 +1,7 @@
-# minishell_
+# minishell
 
-cd ./srcs
-sh start.sh
-voila`
+$ make && ./minishell
+
+![](name-of-giphy.gif)
+
+enjoy !
