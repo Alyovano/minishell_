@@ -2,6 +2,6 @@
 
 $ make && ./minishell
 
-![](name-of-giphy.gif)
+![](minishell.gif)
 
 enjoy !
